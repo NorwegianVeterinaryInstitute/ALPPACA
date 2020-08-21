@@ -1,26 +1,21 @@
 // PhyloFlow Pipeline
 
-// Channels
-Channel
-	.fromPath(params.assemblies, checkIfExists: true)
-	.collect()
-	.set { assemblies_ch }
-
+// Activate dsl2
+nextflow.enable.dsl=2
 
 // Processes
 process PARSNP {
 	conda "/cluster/projects/nn9305k/src/miniconda/envs/ParSNP"
-	publishDir "${params.outdir}/logs", pattern: "parsnp.log", mode: "copy"
-	publishDir "${params.outdir}", pattern: "results/parsnpAligner.log", mode: "copy"
+	publishDir "${params.outdir}/logs", pattern: "*.log", mode: "copy"
+	publishDir "${params.outdir}", pattern: "results/*.log", mode: "copy"
 
 	label 'regular'
 
 	input:
-	file("*") from assemblies_ch
+	file("*")
 
 	output:
-	file("*")
-	file("results/*.xmfa") into convert_ch
+	file("results/*.xmfa")
 
 	script:
 	"""
@@ -33,11 +28,10 @@ process CONVERT {
 	publishDir "${params.outdir}", pattern: "parsnp_alignment.fasta", mode: "copy"
 
 	input:
-	file(xmfa) from convert_ch
+	file(xmfa)
 
 	output:
-	file("*")
-	file("parsnp_alignment.fasta") into gubbins_ch
+	file("parsnp_alignment.fasta")
 
 	script:
 	"""
@@ -50,16 +44,15 @@ process GUBBINS {
 	conda "/cluster/projects/nn9305k/src/miniconda/envs/Gubbins"
 	publishDir "${params.outdir}/logs", pattern: "gubbins.log", mode: "copy"
 	publishDir "${params.outdir}", pattern: "*filtered_polymorphic_sites.fasta", mode: "copy"
-	publishDir "${params.outdir}", pattern: "parsnp_alignment.per_branch_statistics.csv", mode: "copy"
+	publishDir "${params.outdir}", pattern: "*per_branch_statistics.csv", mode: "copy"
 
 	label 'regular'
 	
 	input:
-	file(alignment) from gubbins_ch
+	file(alignment)
 
 	output:
-	file("*")
-	file("*filtered_polymorphic_sites.fasta") into (iqtree_ch, snpdist_ch)
+	file("*filtered_polymorphic_sites.fasta")
 	
 	script:
 	"""
@@ -69,14 +62,14 @@ process GUBBINS {
 
 process IQTREE {
 	conda "/cluster/projects/nn9305k/src/miniconda/envs/IQTree"
-	publishDir "${params.outdir}/logs", pattern: "iqtree.log", mode: "copy"
-	publishDir "${params.outdir}", pattern: "iqtree.contree", mode: "copy"
-	publishDir "${params.outdir}", pattern: "iqtree.iqtree", mode: "copy"
+	publishDir "${params.outdir}/logs", pattern: "*.log", mode: "copy"
+	publishDir "${params.outdir}", pattern: "*.contree", mode: "copy"
+	publishDir "${params.outdir}", pattern: "*.iqtree", mode: "copy"
 
 	label 'regular'	
 
 	input:
-	file(alignment_filtered) from iqtree_ch
+	file(alignment_filtered)
 
 	output:
 	file("*")
@@ -92,7 +85,7 @@ process SNPDIST {
 	publishDir "${params.outdir}", pattern: "gubbins_snp_dists.tab", mode: "copy"
 	
 	input:
-	file(snp_alignment) from snpdist_ch
+	file(snp_alignment)
 
 	output:
 	file("*")
@@ -101,4 +94,18 @@ process SNPDIST {
 	"""
 	snp-dists $snp_alignment > gubbins_snp_dists.tab
 	"""
+}
+
+
+// workflow
+
+workflow {
+	assemblies_ch=channel.fromPath(params.assemblies, checkIfExists: true)
+			     .collect()
+
+	PARSNP(assemblies_ch)
+	CONVERT(PARSNP.out)
+	GUBBINS(CONVERT.out)
+	SNPDIST(CONVERT.out)
+	IQTREE(GUBBINS.out)
 }
