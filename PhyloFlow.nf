@@ -23,6 +23,25 @@ process PARSNP {
 	"""
 }
 
+process SNIPPY {
+	conda "/cluster/projects/nn9305k/src/miniconda/envs/Snippy"
+	
+	label 'medium'
+
+	input:
+	file("*")
+
+	output:
+	file("core.full.aln")
+
+	script:
+	"""
+	$baseDir/bin/snippyfy.bash
+	snippy-multi snippy_samples.list --ref $params.snippyref --cpus $task.cpus > snippy.sh
+	sh snippy.sh
+	"""
+}
+
 process CONVERT {
 	conda "/cluster/projects/nn9305k/src/miniconda/envs/Harvesttools"
 	publishDir "${params.outdir}", pattern: "parsnp_alignment.fasta", mode: "copy"
@@ -97,9 +116,9 @@ process SNPDIST {
 }
 
 
-// workflow
+// workflows
 
-workflow {
+workflow PARSNP_PHYLO {
 	assemblies_ch=channel.fromPath(params.assemblies, checkIfExists: true)
 			     .collect()
 
@@ -108,4 +127,24 @@ workflow {
 	GUBBINS(CONVERT.out)
 	SNPDIST(CONVERT.out)
 	IQTREE(GUBBINS.out)
+}
+
+workflow SNIPPY_PHYLO {
+	reads_ch=channel.fromPath(params.reads, checkIfExists: true)
+                        .collect()
+
+        SNIPPY(reads_ch)
+        GUBBINS(SNIPPY.out)
+        SNPDIST(SNIPPY.out)
+        IQTREE(GUBBINS.out)
+}
+
+workflow {
+if (params.snippy) {
+	SNIPPY_PHYLO()
+	}
+
+if (!params.snippy) {
+	PARSNP_PHYLO()
+	}
 }
