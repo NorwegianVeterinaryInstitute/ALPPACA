@@ -25,7 +25,10 @@ process PARSNP {
 
 process SNIPPY {
 	conda "/cluster/projects/nn9305k/src/miniconda/envs/Snippy"
-	
+	publishDir "${params.outdir}", pattern: "core.full.aln", mode: "copy"	
+	publishDir "${params.outdir}", pattern: "core.txt", mode: "copy"
+	publishDir "${params.outdir}/logs", pattern: "snippy.log", mode: "copy"
+
 	label 'medium'
 
 	input:
@@ -38,7 +41,7 @@ process SNIPPY {
 	"""
 	$baseDir/bin/snippyfy.bash
 	snippy-multi snippy_samples.list --ref $params.snippyref --cpus $task.cpus > snippy.sh
-	sh snippy.sh
+	sh snippy.sh &> snippy.log
 	"""
 }
 
@@ -101,7 +104,7 @@ process IQTREE {
 
 process SNPDIST {
 	conda "/cluster/projects/nn9305k/src/miniconda/envs/snp-dists"
-	publishDir "${params.outdir}", pattern: "gubbins_snp_dists.tab", mode: "copy"
+	publishDir "${params.outdir}", pattern: "snp_dists.tab", mode: "copy"
 	
 	input:
 	file(snp_alignment)
@@ -111,10 +114,64 @@ process SNPDIST {
 
 	script:
 	"""
-	snp-dists $snp_alignment > gubbins_snp_dists.tab
+	snp-dists $snp_alignment > snp_dists.tab
 	"""
 }
 
+process PROKKA {
+	conda "/cluster/projects/nn9305k/src/miniconda/envs/Panaroo"
+
+	input:
+	file(assembly)
+
+	output:
+	file("*.gff")
+
+	script:
+	"""
+	prokka --addgenes --compliant --prefix $assembly.baseName --outdir . --force $assembly
+	"""
+}
+
+process PANAROO_QC {
+	conda "/cluster/projects/nn9305k/src/miniconda/envs/Panaroo"
+	publishDir "${params.outdir}", pattern: "*.png", mode: "copy"
+	publishDir "${params.outdir}", pattern: "mash_dist.txt", mode: "copy"
+	publishDir "${params.outdir}/logs", pattern: "panaroo_qc.log", mode: "copy"
+
+	label 'heavy'
+
+	input:
+	file(gffs)
+
+	output:
+	file("*")
+
+	script:
+	"""
+	panaroo-qc -i $gffs -o . -t $task.cpus --graph_type all --ref_db $params.refdb &> panaroo_qc.log
+	"""
+}
+
+process PANAROO_PANGENOME {
+	conda "/cluster/projects/nn9305k/src/miniconda/envs/Panaroo"
+	publishDir "${params.outdir}", pattern: "core_gene_alignment.aln", mode: "copy"
+	publishDir "${params.outdir}", pattern: "summary_statistics.txt", mode: "copy"
+	publishDir "${params.outdir}/logs", pattern: "panaroo_pangenome.log", mode: "copy"
+
+	label 'heavy'
+
+        input:
+        file(gffs)
+
+        output:
+        file("core_gene_alignment.aln")
+
+        script:
+        """
+	panaroo -i $gffs -o . -t $task.cpus -a core --clean-mode $params.clean_mode --aligner mafft &> panaroo_pangenome.log
+	"""
+}
 
 // workflows
 
@@ -139,12 +196,26 @@ workflow SNIPPY_PHYLO {
         IQTREE(GUBBINS.out)
 }
 
+workflow CORE_PHYLO {
+	assemblies_ch=channel.fromPath(params.assemblies, checkIfExists: true)
+
+	PROKKA(assemblies_ch)
+	PANAROO_QC(PROKKA.out.collect())
+	PANAROO_PANGENOME(PROKKA.out.collect())
+	SNPDIST(PANAROO_PANGENOME.out)
+	IQTREE(PANAROO_PANGENOME.out)
+}
+
 workflow {
-if (params.snippy) {
+if (params.type == "reads") {
 	SNIPPY_PHYLO()
 	}
 
-if (!params.snippy) {
+if (params.type == "assembly") {
 	PARSNP_PHYLO()
+	}
+
+if (params.type == "core") {
+	CORE_PHYLO()
 	}
 }
