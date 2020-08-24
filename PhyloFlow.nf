@@ -9,8 +9,6 @@ process PARSNP {
 	publishDir "${params.outdir}/logs", pattern: "*.log", mode: "copy"
 	publishDir "${params.outdir}", pattern: "results/*.log", mode: "copy"
 
-	label 'regular'
-
 	input:
 	file("*")
 
@@ -68,8 +66,6 @@ process GUBBINS {
 	publishDir "${params.outdir}", pattern: "*filtered_polymorphic_sites.fasta", mode: "copy"
 	publishDir "${params.outdir}", pattern: "*per_branch_statistics.csv", mode: "copy"
 
-	label 'regular'
-	
 	input:
 	file(alignment)
 
@@ -87,8 +83,6 @@ process IQTREE {
 	publishDir "${params.outdir}/logs", pattern: "*.log", mode: "copy"
 	publishDir "${params.outdir}", pattern: "*.contree", mode: "copy"
 	publishDir "${params.outdir}", pattern: "*.iqtree", mode: "copy"
-
-	label 'regular'	
 
 	input:
 	file(alignment_filtered)
