@@ -1,14 +1,17 @@
 #!/bin/bash
 
 # Get input data
+R1_reg=$1
+R2_reg=$2
+outname=$3
 
-R1=`ls -C1 *1.fastq.gz`
-R2=`ls -C1 *2.fastq.gz`
+R1=`ls -C1 $R1_reg`
+R2=`ls -C1 $R2_reg`
 
 # Create files to merge
 for i in $R1; do
 	basename=`basename $i`
-	samplename=${basename%%_1.fastq.gz}
+	samplename=${basename%%$outname}
 	echo $samplename >> samplename.list
 done
 
