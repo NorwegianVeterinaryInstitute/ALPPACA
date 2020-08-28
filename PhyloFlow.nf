@@ -138,7 +138,7 @@ process PANAROO_QC {
 	publishDir "${params.outdir}/results", pattern: "mash_dist.txt", mode: "copy", saveAs: {"PANAROO_mashdist.txt"}
 	publishDir "${params.outdir}", pattern: "panaroo_qc.log", mode: "copy"
 
-	label 'heavy'
+	label 'bigmem'
 
 	input:
 	file(gffs)
