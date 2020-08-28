@@ -4,6 +4,7 @@ Nextflow pipeline for phylogenetic analysis.
 ## Disclaimer
 This pipeline is currently under development. Contact Håkon Kaspersen for more information.
 
+## Tracks
 The pipeline consist of three tracks:
 
 ### CORE
@@ -35,6 +36,11 @@ by IQTree. SNP-distances are calculated with snp-dists.
 [6] 10.1093/nar/gku1196
 
 [7] https://github.com/tseemann/snippy
+
+
+
+
+
 
 Håkon Kaspersen,
 14.08.2020
