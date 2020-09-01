@@ -6,8 +6,8 @@ nextflow.enable.dsl=2
 // Processes
 process PARSNP {
 	conda "/cluster/projects/nn9305k/src/miniconda/envs/ParSNP"
-	publishDir "${params.outdir}", pattern: "parsnp.log", mode: "copy"
-	publishDir "${params.outdir}/results", pattern: "results/*.log", mode: "copy", saveAs: {"PARSNP_results.txt"}
+	publishDir "${params.out_dir}", pattern: "parsnp.log", mode: "copy"
+	publishDir "${params.out_dir}/results", pattern: "results/*.log", mode: "copy", saveAs: {"PARSNP_results.txt"}
 
 	input:
 	file("*")
@@ -25,9 +25,9 @@ process PARSNP {
 
 process SNIPPY {
 	conda "/cluster/projects/nn9305k/src/miniconda/envs/Snippy"
-	publishDir "${params.outdir}/results", pattern: "core.full.aln", mode: "copy", saveAs: {"SNIPPY_alignment.aln"}
-	publishDir "${params.outdir}/results", pattern: "core.txt", mode: "copy", saveAs: {"SNIPPY_results.txt"}
-	publishDir "${params.outdir}", pattern: "snippy.log", mode: "copy"
+	publishDir "${params.out_dir}/results", pattern: "core.full.aln", mode: "copy", saveAs: {"SNIPPY_alignment.aln"}
+	publishDir "${params.out_dir}/results", pattern: "core.txt", mode: "copy", saveAs: {"SNIPPY_results.txt"}
+	publishDir "${params.out_dir}", pattern: "snippy.log", mode: "copy"
 
 	label 'medium'
 
@@ -48,7 +48,7 @@ process SNIPPY {
 
 process CONVERT {
 	conda "/cluster/projects/nn9305k/src/miniconda/envs/Harvesttools"
-	publishDir "${params.outdir}/results", pattern: "parsnp_alignment.fasta", mode: "copy", saveAs: {"PARSNP_alignment.aln"}
+	publishDir "${params.out_dir}/results", pattern: "parsnp_alignment.fasta", mode: "copy", saveAs: {"PARSNP_alignment.aln"}
 
 	input:
 	file(xmfa)
@@ -65,9 +65,9 @@ process CONVERT {
 
 process GUBBINS {
 	conda "/cluster/projects/nn9305k/src/miniconda/envs/Gubbins"
-	publishDir "${params.outdir}", pattern: "gubbins.log", mode: "copy"
-	publishDir "${params.outdir}/results", pattern: "*filtered_polymorphic_sites.fasta", mode: "copy", saveAs: {"GUBBINS_filtered_alignment.aln"}
-	publishDir "${params.outdir}/results", pattern: "*per_branch_statistics.csv", mode: "copy", saveAs: {"GUBBINS_statistics.txt"}
+	publishDir "${params.out_dir}", pattern: "gubbins.log", mode: "copy"
+	publishDir "${params.out_dir}/results", pattern: "*filtered_polymorphic_sites.fasta", mode: "copy", saveAs: {"GUBBINS_filtered_alignment.aln"}
+	publishDir "${params.out_dir}/results", pattern: "*per_branch_statistics.csv", mode: "copy", saveAs: {"GUBBINS_statistics.txt"}
 
 	input:
 	file(alignment)
@@ -84,9 +84,9 @@ process GUBBINS {
 
 process IQTREE {
 	conda "/cluster/projects/nn9305k/src/miniconda/envs/IQTree"
-	publishDir "${params.outdir}", pattern: "*.log", mode: "copy"
-	publishDir "${params.outdir}/results", pattern: "*.contree", mode: "copy", saveAs: {"IQTREE_tree.phylo"}
-	publishDir "${params.outdir}/results", pattern: "*.iqtree", mode: "copy", saveAs: {"IQTREE_results.txt"}
+	publishDir "${params.out_dir}", pattern: "*.log", mode: "copy"
+	publishDir "${params.out_dir}/results", pattern: "*.contree", mode: "copy", saveAs: {"IQTREE_tree.phylo"}
+	publishDir "${params.out_dir}/results", pattern: "*.iqtree", mode: "copy", saveAs: {"IQTREE_results.txt"}
 
 	input:
 	file(alignment_filtered)
@@ -102,7 +102,7 @@ process IQTREE {
 
 process SNPDIST {
 	conda "/cluster/projects/nn9305k/src/miniconda/envs/snp-dists"
-	publishDir "${params.outdir}/results", pattern: "snp_dists.tab", mode: "copy", saveAs: {"SNPDIST_results.txt"}
+	publishDir "${params.out_dir}/results", pattern: "snp_dists.tab", mode: "copy", saveAs: {"SNPDIST_results.txt"}
 	
 	input:
 	file(snp_alignment)
@@ -134,9 +134,9 @@ process PROKKA {
 
 process PANAROO_QC {
 	conda "/cluster/projects/nn9305k/src/miniconda/envs/Panaroo"
-	publishDir "${params.outdir}/results", pattern: "*.png", mode: "copy"
-	publishDir "${params.outdir}/results", pattern: "mash_dist.txt", mode: "copy", saveAs: {"PANAROO_mashdist.txt"}
-	publishDir "${params.outdir}", pattern: "panaroo_qc.log", mode: "copy"
+	publishDir "${params.out_dir}/results", pattern: "*.png", mode: "copy"
+	publishDir "${params.out_dir}/results", pattern: "mash_dist.txt", mode: "copy", saveAs: {"PANAROO_mashdist.txt"}
+	publishDir "${params.out_dir}", pattern: "panaroo_qc.log", mode: "copy"
 
 	label 'bigmem'
 
@@ -154,9 +154,9 @@ process PANAROO_QC {
 
 process PANAROO_PANGENOME {
 	conda "/cluster/projects/nn9305k/src/miniconda/envs/Panaroo"
-	publishDir "${params.outdir}/results", pattern: "core_gene_alignment.aln", mode: "copy", saveAs: {"PANAROO_core_gene_alignment.aln"}
-	publishDir "${params.outdir}/results", pattern: "summary_statistics.txt", mode: "copy", saveAs: {"PANAROO_pangenome_results.txt"}
-	publishDir "${params.outdir}", pattern: "panaroo_pangenome.log", mode: "copy"
+	publishDir "${params.out_dir}/results", pattern: "core_gene_alignment.aln", mode: "copy", saveAs: {"PANAROO_core_gene_alignment.aln"}
+	publishDir "${params.out_dir}/results", pattern: "summary_statistics.txt", mode: "copy", saveAs: {"PANAROO_pangenome_results.txt"}
+	publishDir "${params.out_dir}", pattern: "panaroo_pangenome.log", mode: "copy"
 
 	label 'heavy'
 
