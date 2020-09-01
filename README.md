@@ -22,6 +22,15 @@ In this track, the core genome is generated through Snippy [7], which use reads
 as input. Here too, recombinant areas are removed with Gubbins, and the tree generated
 by IQTree. SNP-distances are calculated with snp-dists.
 
+## Usage
+Copy the main.config file to your workspace and make necessary changes.
+Then run the following:
+```
+module load Java/1.8.0_212
+
+./PhyloFlow.sh /path/to/main.nf /path/to/main.config /path/to/outdir
+```
+
 ## References
 [1] 10.1093/bioinformatics/btu153
 
