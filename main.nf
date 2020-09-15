@@ -88,6 +88,8 @@ process IQTREE {
 	publishDir "${params.out_dir}/results", pattern: "*.contree", mode: "copy", saveAs: {"IQTREE_tree.phylo"}
 	publishDir "${params.out_dir}/results", pattern: "*.iqtree", mode: "copy", saveAs: {"IQTREE_results.txt"}
 
+	label 'longtime'
+
 	input:
 	file(alignment_filtered)
 
