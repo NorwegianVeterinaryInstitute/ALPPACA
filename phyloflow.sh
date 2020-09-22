@@ -10,4 +10,4 @@ mkdir -p ${outdir}/config_files
 cp ${script_directory}/main.nf ${outdir}/config_files
 cp ${config} ${outdir}/config_files
 
-nextflow run main.nf -c ${config} --out_dir=${outdir} -work-dir ${workdir} -resume
+nextflow run ${script_directory}/main.nf -c ${config} --out_dir=${outdir} -work-dir ${workdir} -resume
