@@ -1,17 +1,13 @@
 #!/bin/bash
 
 # Get input data
-R1_reg=$1
-R2_reg=$2
-outname=$3
-
-R1=`ls -C1 $R1_reg`
-R2=`ls -C1 $R2_reg`
+R1=`ls -C1 $1`
+R2=`ls -C1 $2`
 
 # Create files to merge
 for i in $R1; do
 	basename=`basename $i`
-	samplename=${basename%%$outname}
+	samplename=${basename%%$3}
 	echo $samplename >> samplename.list
 done
 
