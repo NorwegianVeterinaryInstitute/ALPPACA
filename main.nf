@@ -166,7 +166,7 @@ process SNPDIST {
 process PROKKA {
 	conda "/cluster/projects/nn9305k/src/miniconda/envs/Panaroo"
 
-	label 'heavy'
+	label 'medium'
 
 	input:
 	file(assembly)
