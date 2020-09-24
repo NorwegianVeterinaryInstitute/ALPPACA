@@ -177,7 +177,7 @@ process PROKKA {
 
 	script:
 	"""
-	prokka --addgenes --compliant --prefix $assembly.baseName --cpus $task.cpus --outdir . --force $assembly
+	prokka --addgenes --compliant --prefix $assembly.baseName --cpus $task.cpus --outdir . --force $params.prokka_additional $assembly
 	"""
 }
 
