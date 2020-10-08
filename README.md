@@ -36,6 +36,9 @@ module load Java/1.8.0_212
 ```
 
 ## Output files
+Three output folders are generated, config_files, logs, and results.
+Config_files contain the nextflow script and config files used in that specific run. The logs folder contain the logs of each program used in the pipeline. Finally, the files listed below is placed in the results folder.
+
 ### CORE
 #### PANAROO_mashdist.txt
 Mash distances, from PANAROO QC.
@@ -50,10 +53,10 @@ Number of contigs for each included genome, from PANAROO QC.
 Number of genes per included genome, from PANAROO PANGENOME.
 
 #### PANAROO_pangenome_results.txt
-Number of core genes, accessory genes and total genes, from PANAROO PANGENOME
+Number of core genes, accessory genes and total genes, from PANAROO PANGENOME.
 
 #### PANAROO_core_gene_alignment.aln
-The concatenated core gene alignment of all included genomes, from PANAROO PANGENOME
+The concatenated core gene alignment of all included genomes in FASTA format, from PANAROO PANGENOME.
 
 ### ASSEMBLY
 #### PARSNP_alignment.aln
@@ -67,14 +70,14 @@ Result file that contains information about the size (bp) and the percent covera
 
 ### READS
 #### SNIPPY_alignment.aln
-Alignment of all included genomes, from SNIPPY.
+Alignment of all included genomes in FASTA format, from SNIPPY.
 
 #### SNIPPY_results.txt
 File that contains the result statistics, from SNIPPY.
 
 ### SHARED OUTPUT FILES
 #### SEQKIT_deduplicated_alignment.fasta
-Deduplicated alignment, from SEQKIT.
+Deduplicated alignment in FASTA format, from SEQKIT.
 
 #### SEQKIT_deduplicated_sequences.fasta
 The FASTA sequence of each duplicated genome, from SEQKIT.
@@ -83,13 +86,13 @@ The FASTA sequence of each duplicated genome, from SEQKIT.
 List of duplicated sequence IDs, from SEQKIT.
 
 #### GUBBINS_filtered_alignment.aln (not in CORE track)
-Alignment with recombinant sites removed, from GUBBINS. 
+Alignment with recombinant sites removed in FASTA format, from GUBBINS. 
 
 #### GUBBINS_statistics.txt (not in CORE track)
 Text file with the result statistics, from GUBBINS.
 
 #### MASKRC_masked_alignment.aln (not in CORE track)
-Alignment with masked recombinant sites, from MASKRC.
+Alignment with masked recombinant sites in FASTA format, from MASKRC.
 
 #### MASKRC_recombinant_regions.txt (not in CORE track)
 Text file with information about the recombinant regions, from MASKRC.
@@ -98,13 +101,13 @@ Text file with information about the recombinant regions, from MASKRC.
 Figure that shows the position of the recombinant areas, from MASKRC.
 
 #### IQTREE_tree.phylo
-Concensus tree, from IQTREE.
+Concensus tree with bootstrap values in NEXUS format, from IQTREE.
 
 #### IQTREE_results.txt
 Text file with results, from IQTREE.
 
 #### SNPDIST_results.txt
-The SNP distances calculated from the alignment, from SNPDIST.
+The SNP distance matrix calculated from the alignment, from SNPDIST.
 
 
 ## References
