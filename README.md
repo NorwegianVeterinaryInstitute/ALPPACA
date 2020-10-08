@@ -35,6 +35,78 @@ module load Java/1.8.0_212
 ./PhyloFlow.sh /path/to/main.config /path/to/outdir
 ```
 
+## Output files
+### CORE
+#### PANAROO_mashdist.txt
+Mash distances, from PANAROO QC.
+
+#### MDS_mash_plot.png
+MDS plot of the mash results, from PANAROO QC. 
+
+#### ncontigs_barplot.png
+Number of contigs for each included genome, from PANAROO QC.
+
+#### ngenes_barplot.png
+Number of genes per included genome, from PANAROO PANGENOME.
+
+#### PANAROO_pangenome_results.txt
+Number of core genes, accessory genes and total genes, from PANAROO PANGENOME
+
+#### PANAROO_core_gene_alignment.aln
+The concatenated core gene alignment of all included genomes, from PANAROO PANGENOME
+
+### ASSEMBLY
+#### PARSNP_alignment.aln
+The converted FASTA alignment of all included genomes, from PARSNP.
+
+#### PARSNP_gingr_archive.ggr
+Gingr-file used for visualizing the alignment, from PARSNP.
+
+#### PARSNP_results.txt
+Result file that contains information about the size (bp) and the percent coverage of each genome, from PARSNP. 
+
+### READS
+#### SNIPPY_alignment.aln
+Alignment of all included genomes, from SNIPPY.
+
+#### SNIPPY_results.txt
+File that contains the result statistics, from SNIPPY.
+
+### SHARED OUTPUT FILES
+#### SEQKIT_deduplicated_alignment.fasta
+Deduplicated alignment, from SEQKIT.
+
+#### SEQKIT_deduplicated_sequences.fasta
+The FASTA sequence of each duplicated genome, from SEQKIT.
+
+#### SEQKIT_duplicated_list.txt
+List of duplicated sequence IDs, from SEQKIT.
+
+#### GUBBINS_filtered_alignment.aln (not in CORE track)
+Alignment with recombinant sites removed, from GUBBINS. 
+
+#### GUBBINS_statistics.txt (not in CORE track)
+Text file with the result statistics, from GUBBINS.
+
+#### MASKRC_masked_alignment.aln (not in CORE track)
+Alignment with masked recombinant sites, from MASKRC.
+
+#### MASKRC_recombinant_regions.txt (not in CORE track)
+Text file with information about the recombinant regions, from MASKRC.
+
+#### MASKRC_recombinant_plot.svg (not in CORE track)
+Figure that shows the position of the recombinant areas, from MASKRC.
+
+#### IQTREE_tree.phylo
+Concensus tree, from IQTREE.
+
+#### IQTREE_results.txt
+Text file with results, from IQTREE.
+
+#### SNPDIST_results.txt
+The SNP distances calculated from the alignment, from SNPDIST.
+
+
 ## References
 [1] 10.1093/bioinformatics/btu153
 
@@ -60,4 +132,4 @@ module load Java/1.8.0_212
 
 
 Håkon Kaspersen,
-22.09.2020
+08.10.2020
