@@ -4,8 +4,8 @@
 log.info "=========================================================="
 log.info "||                  P-H-Y-L-O-F-L-O-W                   ||"
 log.info "=========================================================="
-log.info "||                 Run track: $params.type              ||"
-log.info "||                                                      ||"
+log.info "                   Run track: $params.type                "
+log.info "                                                          "
 log.info "=========================================================="
 
 // Activate dsl2
