@@ -41,96 +41,96 @@ Config_files contain the nextflow script and config files used in that specific 
 
 ### CORE
 
-- PANAROO_mashdist.txt
+- **PANAROO_mashdist.txt**
 
    Mash distances, from PANAROO QC.
 
-- MDS_mash_plot.png
+- **MDS_mash_plot.png**
 
    MDS plot of the mash results, from PANAROO QC. 
 
-- ncontigs_barplot.png
+- **ncontigs_barplot.png**
 
    Number of contigs for each included genome, from PANAROO QC.
 
-- ngenes_barplot.png
+- **ngenes_barplot.png**
 
    Number of genes per included genome, from PANAROO PANGENOME.
 
-- PANAROO_pangenome_results.txt
+- **PANAROO_pangenome_results.txt**
 
    Number of core genes, accessory genes and total genes, from PANAROO PANGENOME.
 
-- PANAROO_core_gene_alignment.aln
+- **PANAROO_core_gene_alignment.aln**
 
    The concatenated core gene alignment of all included genomes in FASTA format, from PANAROO PANGENOME.
 
 ### ASSEMBLY
 
-- PARSNP_alignment.aln
+- **PARSNP_alignment.aln**
 
    The converted FASTA alignment of all included genomes, from PARSNP.
 
-- PARSNP_gingr_archive.ggr
+- **PARSNP_gingr_archive.ggr**
 
    Gingr-file used for visualizing the alignment, from PARSNP.
 
-- PARSNP_results.txt
+- **PARSNP_results.txt**
 
    Result file that contains information about the size (bp) and the percent coverage of each genome, from PARSNP. 
 
 ### READS
 
-- SNIPPY_alignment.aln
+- **SNIPPY_alignment.aln**
 
    Alignment of all included genomes in FASTA format, from SNIPPY.
 
-- SNIPPY_results.txt
+- **SNIPPY_results.txt**
 
    File that contains the result statistics, from SNIPPY.
 
 ### SHARED OUTPUT FILES
-- SEQKIT_deduplicated_alignment.fasta
+- **SEQKIT_deduplicated_alignment.fasta**
 
    Deduplicated alignment in FASTA format, from SEQKIT.
 
-- SEQKIT_deduplicated_sequences.fasta
+- **SEQKIT_deduplicated_sequences.fasta**
 
    The FASTA sequence of each duplicated genome, from SEQKIT.
 
-- SEQKIT_duplicated_list.txt
+- **SEQKIT_duplicated_list.txt**
 
    List of duplicated sequence IDs, from SEQKIT.
 
-- GUBBINS_filtered_alignment.aln (not in CORE track)
+- **GUBBINS_filtered_alignment.aln** (not in CORE track)
 
    Alignment with recombinant sites removed in FASTA format, from GUBBINS. 
 
-- GUBBINS_statistics.txt (not in CORE track)
+- **GUBBINS_statistics.txt** (not in CORE track)
 
    Text file with the result statistics, from GUBBINS.
 
-- MASKRC_masked_alignment.aln (not in CORE track)
+- **MASKRC_masked_alignment.aln** (not in CORE track)
 
    Alignment with masked recombinant sites in FASTA format, from MASKRC.
 
-- MASKRC_recombinant_regions.txt (not in CORE track)
+- **MASKRC_recombinant_regions.txt** (not in CORE track)
 
    Text file with information about the recombinant regions, from MASKRC.
 
-- MASKRC_recombinant_plot.svg (not in CORE track)
+- **MASKRC_recombinant_plot.svg** (not in CORE track)
 
    Figure that shows the position of the recombinant areas, from MASKRC.
 
-- IQTREE_tree.phylo
+- **IQTREE_tree.phylo**
 
    Concensus tree with bootstrap values in NEXUS format, from IQTREE.
 
-- IQTREE_results.txt
+- **IQTREE_results.txt**
 
    Text file with results, from IQTREE.
 
-- SNPDIST_results.txt
+- **SNPDIST_results.txt**
 
    The SNP distance matrix calculated from the alignment, from SNPDIST.
 
