@@ -1,5 +1,5 @@
-# PhyloFlow
-Nextflow pipeline for phylogenetic analysis.
+# ALPPACA
+A tool for prokaryotic phylogeny and clustering analysis
 
 ## Disclaimer
 This pipeline is currently under development. Contact Håkon Kaspersen for more information.
@@ -32,7 +32,7 @@ Then run the following:
 ```
 module load Java/1.8.0_212
 
-./PhyloFlow.sh /path/to/main.config /path/to/outdir
+./alppaca.sh /path/to/main.config /path/to/outdir
 ```
 
 ## Output files
@@ -157,7 +157,3 @@ Config_files contain the nextflow script and config files used in that specific 
 
 
 
-
-
-Håkon Kaspersen,
-08.10.2020

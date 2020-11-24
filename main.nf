@@ -1,8 +1,8 @@
-// PhyloFlow Pipeline
+// ALPPACA Pipeline
 
 
 log.info "=========================================================="
-log.info "||                  P-H-Y-L-O-F-L-O-W                   ||"
+log.info "||                     A-L-P-P-A-C-A                    ||"
 log.info "=========================================================="
 log.info "                   Run track: $params.type                "
 log.info "                                                          "
