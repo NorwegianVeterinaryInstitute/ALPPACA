@@ -1,3 +1,5 @@
+<p align="center"><img src="logo.png" alt="Ellipsis" width="600"></p>
+
 # ALPPACA
 A tool for prokaryotic phylogeny and clustering analysis
 
