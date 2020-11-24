@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/287467158.svg)](https://zenodo.org/badge/latestdoi/287467158)
+
 <p align="center"><img src="logo.png" alt="Ellipsis" width="600"></p>
 
 # ALPPACA
