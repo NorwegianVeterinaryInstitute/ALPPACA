@@ -6,9 +6,9 @@ config=$1
 outdir=$2
 type=`grep "params.type" $config`
 
-if [[ $type =~ "assembly" ]]; then workdir=${3:-$USERWORK/phyloflow_assembly}; fi
-if [[ $type =~ "reads" ]]; then workdir=${3:-$USERWORK/phyloflow_reads}; fi
-if [[ $type =~ "core" ]]; then workdir=${3:-$USERWORK/phyloflow_core}; fi
+if [[ $type =~ "assembly" ]]; then workdir=${3:-$USERWORK/alppaca_assembly}; fi
+if [[ $type =~ "reads" ]]; then workdir=${3:-$USERWORK/alppaca_reads}; fi
+if [[ $type =~ "core" ]]; then workdir=${3:-$USERWORK/alppaca_core}; fi
 
 mkdir -p ${outdir}/config_files
 cp ${script_directory}/main.nf ${outdir}/config_files
