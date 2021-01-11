@@ -30,6 +30,7 @@ workflow SNIPPY_PHYLO {
         }
         SNPDIST(MASKRC.out.masked_ch)
         IQTREE(MASKRC.out.masked_ch)
+	GENTREE(IQTREE.out.R_tree)
 }
 
 workflow PARSNP_PHYLO {
@@ -51,6 +52,7 @@ workflow PARSNP_PHYLO {
         }
         SNPDIST(MASKRC.out.masked_ch)
         IQTREE(MASKRC.out.masked_ch)
+	GENTREE(IQTREE.out.R_tree)
 }
 
 workflow CORE_PHYLO {
@@ -68,6 +70,7 @@ workflow CORE_PHYLO {
                 SNPDIST(PANAROO_PANGENOME.out.core_alignment_ch)
                 IQTREE(PANAROO_PANGENOME.out.core_alignment_ch)
         }
+	GENTREE(IQTREE.out.R_tree)
 }
 
 workflow {
@@ -78,6 +81,7 @@ if (params.type == "reads") {
         include { MASKRC } from "${params.module_dir}/MASKRC.nf"
         include { SNPDIST } from "${params.module_dir}/SNPDIST.nf"
         include { IQTREE } from "${params.module_dir}/IQTREE.nf"
+	include { GENTREE } from "${params.module_dir}/GENTREE.nf"
 	
 	SNIPPY_PHYLO()
 	}
@@ -89,7 +93,8 @@ include { PARSNP } from "${params.module_dir}/PARSNP.nf"
         include { GUBBINS } from "${params.module_dir}/GUBBINS.nf"
         include { MASKRC } from "${params.module_dir}/MASKRC.nf"
         include { SNPDIST } from "${params.module_dir}/SNPDIST.nf"
-        include { IQTREE } from "${params.module_dir}/IQTREE.nf"	
+        include { IQTREE } from "${params.module_dir}/IQTREE.nf"
+	include { GENTREE } from "${params.module_dir}/GENTREE.nf"	
 	
 	PARSNP_PHYLO()
 	}
@@ -99,7 +104,8 @@ if (params.type == "core") {
         include { PANAROO_QC; PANAROO_PANGENOME } from "${params.module_dir}/PANAROO.nf"
         include { DEDUPLICATE } from "${params.module_dir}/SEQKIT.nf"
         include { SNPDIST } from "${params.module_dir}/SNPDIST.nf"
-        include { IQTREE } from "${params.module_dir}/IQTREE.nf"	
+        include { IQTREE } from "${params.module_dir}/IQTREE.nf"
+	include { GENTREE } from "${params.module_dir}/GENTREE.nf"	
 	
 	CORE_PHYLO()
 	}
