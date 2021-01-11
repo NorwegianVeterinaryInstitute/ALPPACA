@@ -11,6 +11,7 @@ process IQTREE {
 
         output:
         file("*")
+	path "*.contree", emit: R_tree
 
         script:
         """
