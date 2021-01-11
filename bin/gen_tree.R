@@ -22,9 +22,9 @@ gen_tree <- function(tree,
     geom_treescale() +
     hexpand(expand_x)
   
-  ggsave("tree.jpg",
+  ggsave("tree.png",
          p,
-         device = "jpg",
+         device = "png",
          units = "cm",
          dpi = 600,
          height = plot_height,
