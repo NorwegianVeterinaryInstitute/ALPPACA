@@ -5,7 +5,7 @@
 <p align="center"><img src="logo.png" alt="Ellipsis" width="600"></p>
 
 # ALPPACA
-A tool for prokaryotic phylogeny and clustering analysis
+A tool for prokaryotic phylogeny and clustering analysis.
 
 ## Disclaimer
 This pipeline is currently under development. Contact Håkon Kaspersen for more information.
@@ -36,8 +36,6 @@ Copy the main.config file to your workspace and make necessary changes.
 Then run the following:
 
 ```
-module load Java/1.8.0_212
-
 ./alppaca.sh /path/to/main.config /path/to/outdir
 ```
 
@@ -140,6 +138,8 @@ Config_files contain the nextflow script and config files used in that specific 
 
    The SNP distance matrix calculated from the alignment, from SNPDIST.
 
+- **tree.png** 
+   Figure of the resulting tree, green nodes are supported with bootstrapping.
 
 ## References
 [1] 10.1093/bioinformatics/btu153
