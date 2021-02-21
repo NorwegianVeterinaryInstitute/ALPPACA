@@ -15,7 +15,7 @@ cp ${script_directory}/main.nf ${outdir}/config_files
 cp ${config} ${outdir}/config_files
 commitid=$(git --git-dir ${script_directory}/.git branch -v | grep "\*" | awk '{print $2, $3}')
 version=$(git --git-dir ${script_directory}/.git tag | tail -1)
-echo "Ellipsis version $version, commit-id $commitid" > ${outdir}/config_files/version.log
+echo "ALPPACA version $version, commit-id $commitid" > ${outdir}/config_files/version.log
 
 module load Java/11.0.2
 nextflow run ${script_directory}/main.nf -c ${config} --out_dir=${outdir} -work-dir ${workdir} -resume
