@@ -1,5 +1,5 @@
 process SNPSITES_FCONST {
-        conda "/cluster/projects/nn9305k/src/miniconda/envs/snp-sites"
+        container "${params.container_dir}/snp-sites:2.5.1--h5bf99c6_1"
 
 	label 'shorttime'
 
@@ -17,7 +17,7 @@ process SNPSITES_FCONST {
 }
 
 process SNPSITES {
-        conda "/cluster/projects/nn9305k/src/miniconda/envs/snp-sites"
+        container "${params.container_dir}/snp-sites:2.5.1--h5bf99c6_1"
 
 	publishDir "${params.out_dir}/results", pattern: "snp_sites_alignment.aln", mode: "copy", saveAs: {"SNP_sites_alignment.aln"}
 	publishDir "${params.out_dir}/logs", pattern: "snp_sites.log", mode: "copy"
