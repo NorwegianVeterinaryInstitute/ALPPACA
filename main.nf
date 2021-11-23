@@ -49,15 +49,14 @@ workflow PARSNP_PHYLO {
                              .collect()
 
         PARSNP(assemblies_ch)
-        CONVERT(PARSNP.out.xmfa_ch)
         if (params.deduplicate) {
-                DEDUPLICATE(CONVERT.out.fasta_alignment_ch)
+                DEDUPLICATE(PARSNP.out.fasta_alignment_ch)
                 GUBBINS(DEDUPLICATE.out.seqkit_ch)
                 MASKRC(GUBBINS.out.gubbins_ch,
                        DEDUPLICATE.out.seqkit_ch)
         }
         if (!params.deduplicate) {
-                GUBBINS(CONVERT.out.fasta_alignment_ch)
+                GUBBINS(PARSNP.out.fasta_alignment_ch)
                 MASKRC(GUBBINS.out.gubbins_ch,
                        CONVERT.out.fasta_alignment_ch)
         }
