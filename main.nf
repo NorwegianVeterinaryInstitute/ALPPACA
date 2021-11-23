@@ -132,8 +132,7 @@ if (params.type == "reads") {
 	}
 
 if (params.type == "assembly") {
-include { PARSNP } from "${params.module_dir}/PARSNP.nf"
-        include { CONVERT } from "${params.module_dir}/HARVESTTOOLS.nf"
+	include { PARSNP } from "${params.module_dir}/PARSNP.nf"
         include { DEDUPLICATE } from "${params.module_dir}/SEQKIT.nf"
         include { GUBBINS } from "${params.module_dir}/GUBBINS.nf"
         include { MASKRC } from "${params.module_dir}/MASKRC.nf"
