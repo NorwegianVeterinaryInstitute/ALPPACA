@@ -1,0 +1,10 @@
+https://depot.galaxyproject.org/singularity/iqtree:2.1.4_beta--hdcc8f71_0
+https://depot.galaxyproject.org/singularity/gubbins:3.1.3--py38h390ddb8_0
+https://depot.galaxyproject.org/singularity/parsnp:1.5.6--h9a82719_1
+https://depot.galaxyproject.org/singularity/maskrc-svg:0.5--1
+https://depot.galaxyproject.org/singularity/panaroo:1.2.9--pyhdfd78af_0
+https://depot.galaxyproject.org/singularity/prokka:1.14.6--pl5262hdfd78af_1
+https://depot.galaxyproject.org/singularity/seqkit:2.1.0--h9ee0642_0
+https://depot.galaxyproject.org/singularity/snippy:4.6.0--hdfd78af_1
+https://depot.galaxyproject.org/singularity/snp-dists:0.8.2--h5bf99c6_0
+https://depot.galaxyproject.org/singularity/snp-sites:2.5.1--h5bf99c6_1
