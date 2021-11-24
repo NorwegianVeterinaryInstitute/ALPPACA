@@ -1,12 +1,19 @@
 // ALPPACA Pipeline
 
 
-log.info "=========================================================="
-log.info "||                     A-L-P-P-A-C-A                    ||"
-log.info "=========================================================="
-log.info "                   Run track: $params.type                "
-log.info "                                                          "
-log.info "=========================================================="
+log.info "============================================================="
+log.info ".          -------------------------------                  ."
+log.info ".          |                             |                  ."
+log.info ".   ----------------               -------------            ."
+log.info ".   |              |               |           |            ."
+log.info ".-------     -------------         |     ------------       ."
+log.info ".|     |     |           |         |     |          |       ."
+log.info ".A     L     P           P         A     C          A       ."
+log.info ".A  tooL for Prokaryotic Phylogeny And   Clustering Analysis."
+log.info "============================================================="
+log.info " Run track: $params.type                                     "
+log.info " ALPPACA Version: 1.0.0                                      "
+log.info "=============================================================".stripIndent()
 
 // Activate dsl2
 nextflow.enable.dsl=2
@@ -116,7 +123,7 @@ workflow CORE_PHYLO {
 }
 
 workflow {
-if (params.type == "reads") {
+if (params.type == "mapping") {
 	include { SNIPPY } from "${params.module_dir}/SNIPPY.nf"
         include { DEDUPLICATE } from "${params.module_dir}/SEQKIT.nf"
         include { GUBBINS } from "${params.module_dir}/GUBBINS.nf"
@@ -131,7 +138,7 @@ if (params.type == "reads") {
 	SNIPPY_PHYLO()
 	}
 
-if (params.type == "assembly") {
+if (params.type == "core_genome") {
 	include { PARSNP } from "${params.module_dir}/PARSNP.nf"
         include { DEDUPLICATE } from "${params.module_dir}/SEQKIT.nf"
         include { GUBBINS } from "${params.module_dir}/GUBBINS.nf"
@@ -146,7 +153,7 @@ if (params.type == "assembly") {
 	PARSNP_PHYLO()
 	}
 
-if (params.type == "core") {
+if (params.type == "core_gene") {
 	include { PROKKA } from "${params.module_dir}/PROKKA.nf"
         include { PANAROO_QC; PANAROO_PANGENOME } from "${params.module_dir}/PANAROO.nf"
         include { DEDUPLICATE } from "${params.module_dir}/SEQKIT.nf"
