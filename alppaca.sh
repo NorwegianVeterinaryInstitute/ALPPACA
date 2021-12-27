@@ -5,7 +5,7 @@ script_directory=$(dirname ${BASH_SOURCE[0]})
 config=$1
 outdir=$2
 type=`grep "params.type" $config`
-container_dir='/cluster/projects/nn9305k/nextflow/alppaca_images'
+container_dir='file:////cluster/projects/nn9305k/nextflow/alppaca_images'
 DATE=($(date "+%Y%m%d_%R"))
 
 if [[ $type =~ "core_genome" ]]; then workdir=${3:-$USERWORK/alppaca_core_genome}; fi
