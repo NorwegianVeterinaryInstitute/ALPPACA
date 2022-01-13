@@ -10,19 +10,6 @@ then
     exit
 fi
 
-#### Check if all images can be downloaded
-echo "Checking to see if all containers can be downloaded..."
-
-for url in $(cat container_paths) 
-do 
-	if curl --output /dev/null --silent --head --fail "$url"; then
-		echo "URL exists: $url"
-	else
-		echo "URL does not exist: $url"
-		exit
-	fi 
-done
-
 #### Move to ouput directory and pull images
 mkdir ${container_dir}/alppaca_images
 
