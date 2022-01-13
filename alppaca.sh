@@ -6,7 +6,7 @@ config=$1
 outdir=$2
 type=`grep "params.type" $config`
 container_dir='file:////cluster/projects/nn9305k/nextflow/alppaca_images'
-DATE=($(date "+%Y%m%d_%R"))
+DATE=($(date "+%Y%m%d"))
 
 if [[ $type =~ "core_genome" ]]; then workdir=${3:-$USERWORK/alppaca_core_genome}; fi
 if [[ $type =~ "mapping" ]]; then workdir=${3:-$USERWORK/alppaca_mapping}; fi
@@ -19,6 +19,4 @@ commitid=$(git --git-dir ${script_directory}/.git branch -v | grep "\*" | awk '{
 version=$(git --git-dir ${script_directory}/.git tag | tail -1)
 echo "ALPPACA version $version, commit-id $commitid" > ${outdir}/config_files/version.log
 
-module load Java/11.0.2
-nextflow run ${script_directory}/main.nf -c ${config} --out_dir=${outdir} --container_dir=${container_dir} -work-dir ${workdir} -resume -with-report ${DATE}.report.html -with-trace
-module unload Java/11.0.2
+nextflow run ${script_directory}/main.nf -c ${config} --out_dir=${outdir} --container_dir=${container_dir} -work-dir ${workdir} -resume -with-report ${outdir}/logs/${DATE}_run_report.html
