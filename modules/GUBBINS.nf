@@ -1,6 +1,4 @@
 process GUBBINS {
-        container "${params.container_dir}/gubbins:3.1.3--py38h390ddb8_0"
-
         publishDir "${params.out_dir}/logs", pattern: "gubbins.log", mode: "copy"
         publishDir "${params.out_dir}/results", pattern: "*filtered_polymorphic_sites.fasta", mode: "copy", saveAs: {"GUBBINS_filtered_alignment.aln"}
         publishDir "${params.out_dir}/results", pattern: "*per_branch_statistics.csv", mode: "copy", saveAs: {"GUBBINS_statistics.txt"}

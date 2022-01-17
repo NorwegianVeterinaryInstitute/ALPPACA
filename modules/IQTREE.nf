@@ -1,6 +1,4 @@
 process IQTREE {
-        container "${params.container_dir}/iqtree:2.1.4_beta--hdcc8f71_0"
-
         publishDir "${params.out_dir}/logs", pattern: "*.log", mode: "copy"
         publishDir "${params.out_dir}/results", pattern: "*.contree", mode: "copy", saveAs: {"IQTREE_tree.phylo"}
         publishDir "${params.out_dir}/results", pattern: "*.iqtree", mode: "copy", saveAs: {"IQTREE_results.txt"}
@@ -33,8 +31,6 @@ process IQTREE {
 }
 
 process IQTREE_FCONST {
-        container "${params.container_dir}/iqtree:2.1.4_beta--hdcc8f71_0"
-
         publishDir "${params.out_dir}/logs", pattern: "*.log", mode: "copy"
         publishDir "${params.out_dir}/results", pattern: "*.contree", mode: "copy", saveAs: {"IQTREE_tree.phylo"}
         publishDir "${params.out_dir}/results", pattern: "*.iqtree", mode: "copy", saveAs: {"IQTREE_results.txt"}

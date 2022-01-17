@@ -1,6 +1,4 @@
 process PROKKA {
-        conda "/cluster/projects/nn9305k/src/miniconda/envs/bifrost"
-
         label 'medium'
 
         input:

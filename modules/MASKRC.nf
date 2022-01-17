@@ -1,6 +1,4 @@
 process MASKRC {
-        container "${params.container_dir}/maskrc-svg:0.5--1"
-
         publishDir "${params.out_dir}/logs", pattern: "*.log", mode: "copy"
         publishDir "${params.out_dir}/results", pattern: "masked.aln", mode: "copy", saveAs: {"MASKRC_masked_alignment.aln"}
         publishDir "${params.out_dir}/results", pattern: "recombinant_regions", mode: "copy", saveAs: {"MASKRC_recombinant_regions.txt"}
