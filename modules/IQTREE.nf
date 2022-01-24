@@ -19,6 +19,8 @@ process IQTREE {
         """
         iqtree -s $alignment_filtered\
 		-m $params.iqtree_model\
+		-mset $params.mset\
+                -cmax $params.cmax\
 		-bb $params.bootstrap\
 		-nt AUTO\
 		-pre iqtree\
@@ -52,6 +54,8 @@ process IQTREE_FCONST {
         """
         iqtree -s $alignment_filtered\
 		-m $params.iqtree_model\
+		-mset $params.mset\
+		-cmax $params.cmax\
 		-bb $params.bootstrap\
 		-nt AUTO\
 		-pre iqtree\
