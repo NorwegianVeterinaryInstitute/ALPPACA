@@ -4,13 +4,13 @@ script_directory=$(dirname ${BASH_SOURCE[0]})
 
 config=$1
 outdir=$2
+work_dir=$3
 type=`grep "params.type" $config`
-container_dir='file:////cluster/projects/nn9305k/nextflow/alppaca_images'
 DATE=($(date "+%Y%m%d"))
 
-if [[ $type =~ "core_genome" ]]; then workdir=${3:-$USERWORK/alppaca_core_genome}; fi
-if [[ $type =~ "mapping" ]]; then workdir=${3:-$USERWORK/alppaca_mapping}; fi
-if [[ $type =~ "core_gene" ]]; then workdir=${3:-$USERWORK/alppaca_core_gene}; fi
+if [[ $type =~ "core_genome" ]]; then workdir=${3:-$work_dir/alppaca_core_genome}; fi
+if [[ $type =~ "mapping" ]]; then workdir=${3:-$work_dir/alppaca_mapping}; fi
+if [[ $type =~ "core_gene" ]]; then workdir=${3:-$work_dir/alppaca_core_gene}; fi
 
 mkdir -p ${outdir}/config_files
 cp ${script_directory}/main.nf ${outdir}/config_files
@@ -19,4 +19,4 @@ commitid=$(git --git-dir ${script_directory}/.git branch -v | grep "\*" | awk '{
 version=$(git --git-dir ${script_directory}/.git tag | tail -1)
 echo "ALPPACA version $version, commit-id $commitid" > ${outdir}/config_files/version.log
 
-nextflow run ${script_directory}/main.nf -c ${config} --out_dir=${outdir} --container_dir=${container_dir} -work-dir ${workdir} -resume -with-report ${outdir}/logs/${DATE}_run_report.html
+nextflow_21.10.6 run ${script_directory}/main.nf -c ${config} --out_dir=${outdir} -work-dir ${workdir} -profile singularity -resume
