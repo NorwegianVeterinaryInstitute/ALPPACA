@@ -6,7 +6,6 @@ config=$1
 outdir=$2
 work_dir=$3
 type=`grep "params.type" $config`
-DATE=($(date "+%Y%m%d"))
 
 if [[ $type =~ "core_genome" ]]; then workdir=${3:-$work_dir/alppaca_core_genome}; fi
 if [[ $type =~ "mapping" ]]; then workdir=${3:-$work_dir/alppaca_mapping}; fi
@@ -19,4 +18,4 @@ commitid=$(git --git-dir ${script_directory}/.git branch -v | grep "\*" | awk '{
 version=$(git --git-dir ${script_directory}/.git tag | tail -1)
 echo "ALPPACA version $version, commit-id $commitid" > ${outdir}/config_files/version.log
 
-nextflow_21.10.6 run ${script_directory}/main.nf -c ${config} --out_dir=${outdir} -work-dir ${workdir} -profile singularity -resume
+nextflow_21.10.6 run ${script_directory}/main.nf -c ${config} --out_dir=${outdir} -work-dir ${workdir} -profile singularity -resume -with-trace ${outdir}/results/NEXTFLOW_trace.txt -with-timeline ${outdir}/results/NEXTFLOW_timeline.html
