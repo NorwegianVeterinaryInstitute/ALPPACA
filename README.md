@@ -4,11 +4,7 @@
 
 <p align="center"><img src="logo.png" alt="Ellipsis" width="600"></p>
 
-# ALPPACA
-A tooL for Prokaryotic Phylogeny and Clustering Analysis.
-
-## Disclaimer
-This pipeline is currently under development. Contact Håkon Kaspersen for more information.
-
-## Information
+# Information
+ALPPACA is a pipeline for various phylogenetic analyses of prokaryotic isolates. 
+The pipeline includes core genome-, core gene-, and reference-based (mapping) phylogeny. 
 Please check the wiki for more information on usage and programs.
