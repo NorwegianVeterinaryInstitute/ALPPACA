@@ -9,6 +9,10 @@ process PANAROO_QC {
         file(gffs)
 
         output:
+	path "mds_coords.txt", emit: panaroo_mds_coords_ch
+	path "ncontigs.txt", emit: panaroo_ncontigs_ch
+	path "ngenes.txt", emit: panaroo_ngenes_ch
+	path "mash_contamination_hits.tab", emit: panaroo_mash_ch
         file("*")
 
         script:
