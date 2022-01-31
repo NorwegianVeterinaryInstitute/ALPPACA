@@ -1,0 +1,287 @@
+---
+title: "ALPPACA Core Genome Report"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    mathjax: null
+    code_folding: "hide"
+    toc: true
+    toc_float:
+      collapsed: false
+params:
+  parsnp_report:
+    value: x
+  seqkit_report:
+    value: x
+  snpdist_report:
+    value: x
+  phylo_tree:
+    value: x
+  phylo_data:
+    value: x
+---
+# Run information
+
+Date generated: `r Sys.Date()`
+
+## R Packages used
+These are the R packages used to generate this report.
+```{r, message=FALSE, warning=FALSE}
+library(stringr)
+library(readr)
+library(dplyr)
+library(tidyr)
+library(rlang)
+library(ggtree)
+library(plotly)
+library(ggplot2)
+library(viridis)
+library(formattable)
+library(kableExtra)
+
+packages <- (.packages())
+
+clean_pkg_version <- function(x) {
+  y <- getNamespaceVersion(x)
+  
+  z <- data.frame("Package" = x,
+                  "Version" = y)
+  
+  row.names(z) <- NULL
+  
+  return(z)
+}
+
+lapply(packages, function(x) clean_pkg_version(x)) %>%
+  bind_rows() %>%
+  kbl() %>%
+  kable_styling(bootstrap_options = c("striped",
+                                      "hover",
+                                      "responsive"),
+                full_width = TRUE)
+```
+
+<br>
+
+## Tool versions
+These are the tools used to run the analysis within the core genome workflow of ALPPACA.
+```{r, message=FALSE, warning=FALSE}
+tool_data <- data.frame(
+  Tool = c("ParSNP",
+           "Seqkit",
+           "Gubbins",
+           "MaskRC",
+           "Snp-dists",
+           "Snp-sites",
+           "IQTree"),
+  Version = c("1.5.6",
+              "2.1.0",
+              "3.1.3",
+              "0.5",
+              "0.8.2",
+              "2.5.1",
+              "2.1.4")
+)
+
+tool_data %>%
+  kbl() %>%
+  kable_styling(bootstrap_options = c("striped",
+                                      "hover",
+                                      "responsive"),
+                full_width = TRUE)
+```
+
+<br>
+
+<br>
+
+# Tool information
+## ParSNP
+
+<center>***Table 1**: ParSNP average coverage report. The "Type" column refers to which of the samples were used as a reference in the analysis. The "Percent Coverage" column represents the % coverage of each genome that was used to generate the core genome alignment. The green bar is relative to 100%. The total coverage is the average across all samples. Samples with expected high similarity (e.g. outbreak or same ST) are expected to have a high percent coverage.*</center>
+
+```{r, message=FALSE, warning=FALSE}
+# Courtesy of Eve Zeyl Fiskebeck for the script!
+# Read PARSNP results file
+parsnp_data <- readLines(params$parsnp_report)
+
+# Extract the data needed
+parsnp_cov <- parsnp_data[str_detect(parsnp_data, "(Cluster coverage in sequence)|(Total coverage among all sequences)")]
+parsnp_samples <- parsnp_data[str_detect(parsnp_data, "(Sequence)|(q value)")]
+
+df_samples <- as.data.frame(cbind(parsnp_samples)) %>%
+  head(-1) %>%
+  separate("parsnp_samples", into = c("Sequence", "Sample"), sep = " :") %>%
+  mutate(Sample = basename(Sample))
+
+# Get number of samples in the data
+number_samples <- nrow(df_samples)
+
+# Create nice table
+as.data.frame(cbind(parsnp_cov)) %>%
+  separate("parsnp_cov", into = c("Sequence","Percent Coverage"), sep = ":   ") %>%
+  add_row(Sequence = "control_100", `Percent Coverage` = "100%") %>%
+  mutate(Sequence = sub(".+(sequence .+)", "\\1", Sequence),
+         Sequence = ifelse(grepl("coverage", Sequence),
+                           "Total coverage",
+                           sub("sequence ", "Sequence ", Sequence)),
+         `Percent Coverage` = sub("%", "", `Percent Coverage`),
+         `Percent Coverage` = color_bar("lightgreen")(`Percent Coverage`)) %>%
+  filter(Sequence != "control_100") %>%
+  left_join(df_samples, by = "Sequence") %>%
+  mutate(Sample = ifelse(Sequence == "Total coverage", "", Sample),
+         type_ref = case_when(Sequence == "Sequence 1" ~ "Reference",
+                              Sequence == "Total coverage" ~ "",
+                              TRUE ~ "Sample"),
+         Type = cell_spec(type_ref,
+                          color = "white",
+                          background = factor(
+                            type_ref,
+                            c("Reference", "Sample", ""),
+                            c("#fdbf6f", "#a6cee3", "")
+                          ))) %>%
+  select(Sequence, Sample, Type, `Percent Coverage`) %>%
+  kbl(escape = FALSE) %>%
+  row_spec(number_samples + 1, bold = TRUE) %>%
+  kable_styling(bootstrap_options = c("striped",
+                                      "hover",
+                                      "responsive"),
+                full_width = TRUE)
+```
+
+<br>
+
+## Deduplication
+```{r}
+dupl_data <- list.files(params$seqkit_report)
+if(is_null(dupl_data)) {show_table <- FALSE} else {show_table <- TRUE}
+```
+`r if (show_table == FALSE){"No duplicated sequences detected."} else {"<center>***Table 2**: List of duplicated sequences identified in the multiple alignment.*</center>"}`
+
+```{r, message=FALSE, warning=FALSE, eval=show_table}
+read_delim(params$seqkit_report,
+           delim = "\t",
+           show_col_types = FALSE,
+           col_names = FALSE) %>%
+  rename("Number of sequences" = X1) %>%
+  separate(X2,
+           into = c("Kept sequence","Duplicated sequence(s)"),
+           sep = ",",
+           extra = "merge") %>%
+  kbl() %>%
+  kable_styling(bootstrap_options = c("striped",
+                                      "hover",
+                                      "responsive"),
+                full_width = TRUE)
+```
+
+<br>
+
+## SNPdist
+<center>***Table 3**: SNP distance summary statistics for all isolates.*</center>
+```{r, message=FALSE, warning=FALSE}
+snpdist_data <- read_delim(params$snpdist_report,
+                           delim = "\t",
+                           show_col_types = FALSE) %>%
+  rename("isol1" = 1) %>%
+  pivot_longer(cols = -isol1,
+               names_to = "isol2",
+               values_to = "value")
+
+
+snpdist_data %>%
+  filter(isol1 != isol2) %>%
+  mutate(Median = median(value),
+         Mean = round(mean(value), 0),
+         Range = paste0(min(value), " - ", max(value))) %>%
+  select(Mean, Median, Range) %>%
+  head(1) %>%
+  kbl() %>%
+  kable_styling(bootstrap_options = c("striped",
+                                      "hover",
+                                      "responsive"),
+                full_width = TRUE)
+```
+
+
+```{r, message=FALSE, warning=FALSE, dpi=600, fig.cap="**Figure 1**: SNP distance matrix of all included isolates. A lighter color represents a smaller SNP distance.", fig.align='center'}
+ggplot(snpdist_data, aes(isol1, isol2, fill = value)) +
+  geom_tile() +
+  labs(fill = "SNP distance") +
+  scale_fill_viridis(direction = -1,
+                     option = "D") +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.3),
+        panel.grid = element_blank(),
+        axis.title = element_blank()) +
+  coord_fixed()
+```
+
+<br>
+
+## IQTree
+
+```{r, message=FALSE, warning=FALSE}
+# Read IQTree data
+iqtree_data <- readLines(params$phylo_data)
+
+aln_info <- sub(
+  "Input data: ",
+  "",
+  iqtree_data[str_detect(iqtree_data,"Input data:")]
+)
+
+const_sites <- sub(
+  ".+= (.+) of all sites)",
+  "\\1",
+  iqtree_data[str_detect(iqtree_data,"Number of constant sites:")]
+)
+
+parsimony_sites <- sub(
+  "Number of parsimony informative sites: ",
+  "",
+  iqtree_data[str_detect(iqtree_data,"Number of parsimony informative sites:")]
+)
+
+iqtree_model <- sub(
+  "Model of substitution: ",
+  "",
+  iqtree_data[str_detect(iqtree_data,"Model of substitution: ")]
+)
+
+iqtree_cpu <- sub(
+  "Total CPU time used: ",
+  "",
+  iqtree_data[str_detect(iqtree_data,"Total CPU time used:")]
+)
+
+iqtree_wallclock <- sub(
+  "Total wall-clock time used: ",
+  "",
+  iqtree_data[str_detect(iqtree_data,"Total wall-clock time used:")]
+)
+```
+
+IQTree was run on an alignment composed of `r aln_info`, where `r const_sites` of the alignment were constant sites. The number of parsimonious sites were `r parsimony_sites`. IQTree detected the evolutionary model `r iqtree_model`. IQTree used `r iqtree_cpu` of CPU time, which converts to `r iqtree_wallclock` of wall-clock time.
+
+<br>
+
+<br>
+
+# Phylogenetic tree
+
+Here, the phylogenetic tree generated by IQTree is plotted. The figure is interactive, and you can zoom in and out and pan as you see fit.
+
+```{r, warning=FALSE, message=FALSE, fig.width=8, fig.height=8, fig.cap="**Figure 2**: Maximum likelihood phylogenetic tree generated by IQTree. Bootstrap values are presented for each node. The tree is unrooted", fig.align='center'}
+tree <- read.tree(params$phylo_tree)
+
+tree_plot <- ggtree(tree) +
+  geom_text(aes(label = label),
+            hjust = 0) +
+  geom_treescale()
+
+ggplotly(tree_plot) %>%
+  plotly::style(textposition = "right")
+```
+
+
