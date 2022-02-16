@@ -20,11 +20,10 @@ params:
   phylo_data:
     value: x
 ---
-# Run information
+# Version information
+ALPPACA version 1.0.0.
 
-Date generated: `r Sys.Date()`
-
-## R Packages used
+## R Packages
 These are the R packages used to generate this report.
 ```{r, message=FALSE, warning=FALSE}
 library(stringr)
