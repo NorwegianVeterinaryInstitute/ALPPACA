@@ -14,6 +14,7 @@ process IQTREE {
         output:
         file("*")
 	path "*.contree", emit: R_tree
+	path "iqtree.iqtree", emit: iqtree_results_ch
 
         script:
         """
@@ -49,6 +50,7 @@ process IQTREE_FCONST {
         output:
         file("*")
         path "*.contree", emit: R_tree
+	path "iqtree.iqtree", emit: iqtree_results_ch
 
         script:
         """
