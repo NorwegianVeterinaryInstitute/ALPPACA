@@ -1,0 +1,24 @@
+BootStrap: docker
+From: r-base:4.1.2
+
+%post
+apt update
+apt-get -y install libssl-dev/unstable
+apt-get -y install libcurl4-openssl-dev
+apt-get -y install libfontconfig1-dev
+apt-get -y install libxml2-dev
+apt-get -y install procps
+apt-get -y install pandoc
+
+R --slave -e 'install.packages("BiocManager", repos="https://cloud.r-project.org/")'
+R --slave -e 'BiocManager::install("ggtree")'
+R --slave -e 'install.packages("stringr")'
+R --slave -e 'install.packages("readr")'
+R --slave -e 'install.packages("dplyr")'
+R --slave -e 'install.packages("tidyr")'
+R --slave -e 'install.packages("plotly")'
+R --slave -e 'install.packages("ggplot2")'
+R --slave -e 'install.packages("viridis")'
+R --slave -e 'install.packages("formattable")'
+R --slave -e 'install.packages("kableExtra")'
+R --slave -e 'install.packages("patchwork")'
