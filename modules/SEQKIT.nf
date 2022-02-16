@@ -10,6 +10,7 @@ process DEDUPLICATE {
         output:
         file("*")
         path "seqkit_deduplicated.fasta", emit: seqkit_ch
+	path "seqkit_list_duplicated", emit: seqkit_duplicated_ch
 
         script:
         """

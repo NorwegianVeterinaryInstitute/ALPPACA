@@ -6,6 +6,7 @@ process SNPDIST {
 
         output:
         file("*")
+	path "snp_dists.tab", emit: snpdists_results_ch
 
         script:
         """

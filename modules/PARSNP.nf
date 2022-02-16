@@ -9,6 +9,7 @@ process PARSNP {
 
         output:
 	path "parsnp_alignment.fasta", emit: fasta_alignment_ch
+	path "results/parsnpAligner.log", emit: parsnp_results_ch
         file("results/parsnpAligner.log")
         file("results/parsnp.ggr")
         file("parsnp.log")
