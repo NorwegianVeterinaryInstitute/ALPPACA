@@ -19,7 +19,14 @@ params:
     value: x
   phylo_data:
     value: x
+  dedup:
+    value: x
 ---
+
+```{r, include=FALSE}
+dedup <- ifelse(params$dedup == "true", TRUE, FALSE)
+```
+
 # Version information
 ALPPACA version 1.0.0.
 
@@ -150,14 +157,14 @@ as.data.frame(cbind(parsnp_cov)) %>%
 
 <br>
 
-## Deduplication
+`r if (dedup == TRUE){"## Deduplication"}`
 ```{r}
 dupl_data <- list.files(params$seqkit_report)
 if(is_null(dupl_data)) {show_table <- FALSE} else {show_table <- TRUE}
 ```
-`r if (show_table == FALSE){"No duplicated sequences detected."} else {"<center>***Table 2**: List of duplicated sequences identified in the multiple alignment.*</center>"}`
+`r if (show_table == FALSE & dedup == TRUE){"No duplicated sequences detected."} else if (show_table == TRUE & dedup == TRUE){"<center>***Table 2**: List of duplicated sequences identified in the multiple alignment.*</center>"}`
 
-```{r, message=FALSE, warning=FALSE, eval=show_table}
+```{r, message=FALSE, warning=FALSE, eval=dedup}
 read_delim(params$seqkit_report,
            delim = "\t",
            show_col_types = FALSE,
