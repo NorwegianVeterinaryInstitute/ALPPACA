@@ -10,7 +10,7 @@ log.info ".-------     -------------         |     ------------       ."
 log.info ".|     |     |           |         |     |          |       ."
 log.info ".A  tooL for Prokaryotic Phylogeny And   Clustering Analysis."
 log.info "============================================================="
-log.info " Run track: $params.type                                     "
+log.info " Run track: $params.track                                    "
 log.info " ALPPACA Version: 1.0.0                                      "
 log.info "=============================================================".stripIndent()
 
@@ -23,13 +23,13 @@ include { CORE_GENE } from "${params.workflow_dir}/CORE_GENE.nf"
 include { CORE_GENOME } from "${params.workflow_dir}/CORE_GENOME.nf"
 
 workflow {
-	if (params.type == "mapping") {
+	if (params.track == "mapping") {
 		MAPPING()
 	}
-	if (params.type == "core_genome") {
+	if (params.track == "core_genome") {
 		CORE_GENOME()
 	}
-	if (params.type == "core_gene") {
+	if (params.track == "core_gene") {
 		CORE_GENE()
 	}
 }
