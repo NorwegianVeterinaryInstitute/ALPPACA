@@ -5,11 +5,11 @@ script_directory=$(dirname ${BASH_SOURCE[0]})
 config=$1
 outdir=$2
 work_path=${3%/}
-type=`grep "params.type" $config`
+track=`grep "params.track" $config`
 
-if [[ $type =~ core_genome ]]; then workdir=${work_path}/alppaca_core_genome; fi
-if [[ $type =~ mapping ]]; then workdir=${work_path}/alppaca_mapping; fi
-if [[ $type =~ core_gene ]]; then workdir=${work_path}/alppaca_core_gene; fi
+if [[ $track =~ core_genome ]]; then workdir=${work_path}/alppaca_core_genome; fi
+if [[ $track =~ mapping ]]; then workdir=${work_path}/alppaca_mapping; fi
+if [[ $track =~ core_gene ]]; then workdir=${work_path}/alppaca_core_gene; fi
 
 mkdir -p ${outdir}/config_files
 cp ${script_directory}/main.nf ${outdir}/config_files
