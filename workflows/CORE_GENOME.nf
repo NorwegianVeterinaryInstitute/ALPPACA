@@ -21,7 +21,7 @@ workflow CORE_GENOME {
         if (!params.deduplicate) {
                 GUBBINS(PARSNP.out.fasta_alignment_ch)
                 MASKRC(GUBBINS.out.gubbins_ch,
-                       CONVERT.out.fasta_alignment_ch)
+                       PARSNP.out.fasta_alignment_ch)
         }
 
         SNPDIST(MASKRC.out.masked_ch)
