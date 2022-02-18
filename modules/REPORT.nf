@@ -1,5 +1,5 @@
 process REPORT_CORE_GENOME_DEDUP {
-        publishDir "${params.out_dir}/results", pattern: "*report.html", mode: "copy"
+        publishDir "${params.out_dir}/results", pattern: "*.html", mode: "copy"
 
 	label 'shorttime'
 
@@ -13,7 +13,6 @@ process REPORT_CORE_GENOME_DEDUP {
 
         output:
         file("*")
-	path "*report.html", emit: report_ch
 
         script:
         """
@@ -23,7 +22,7 @@ process REPORT_CORE_GENOME_DEDUP {
 }
 
 process REPORT_CORE_GENOME {
-        publishDir "${params.out_dir}/results", pattern: "*report.html", mode: "copy"
+        publishDir "${params.out_dir}/results", pattern: "*.html", mode: "copy"
 
         label 'shorttime'
 
@@ -36,7 +35,6 @@ process REPORT_CORE_GENOME {
 
         output:
         file("*")
-        path "*report.html", emit: report_ch
 
         script:
         """
@@ -46,7 +44,7 @@ process REPORT_CORE_GENOME {
 }
 
 process REPORT_CORE_GENE_DEDUP {
-        publishDir "${params.out_dir}/results", pattern: "*report.html", mode: "copy"
+        publishDir "${params.out_dir}/results", pattern: "*.html", mode: "copy"
 
         label 'shorttime'
 
@@ -63,7 +61,6 @@ process REPORT_CORE_GENE_DEDUP {
 
         output:
         file("*")
-        path "*report.html", emit: report_ch
 
         script:
         """
@@ -73,7 +70,7 @@ process REPORT_CORE_GENE_DEDUP {
 }
 
 process REPORT_CORE_GENE {
-        publishDir "${params.out_dir}/results", pattern: "*report.html", mode: "copy"
+        publishDir "${params.out_dir}/results", pattern: "*.html", mode: "copy"
 
         label 'shorttime'
 
@@ -89,7 +86,6 @@ process REPORT_CORE_GENE {
 
         output:
         file("*")
-        path "*report.html", emit: report_ch
 
         script:
         """
@@ -99,7 +95,7 @@ process REPORT_CORE_GENE {
 }
 
 process REPORT_MAPPING_DEDUP {
-        publishDir "${params.out_dir}/results", pattern: "*report.html", mode: "copy"
+        publishDir "${params.out_dir}/results", pattern: "*.html", mode: "copy"
 
         label 'shorttime'
 
@@ -113,7 +109,6 @@ process REPORT_MAPPING_DEDUP {
 
         output:
         file("*")
-        path "*report.html", emit: report_ch
 
         script:
         """
@@ -123,7 +118,7 @@ process REPORT_MAPPING_DEDUP {
 }
 
 process REPORT_MAPPING {
-        publishDir "${params.out_dir}/results", pattern: "*report.html", mode: "copy"
+        publishDir "${params.out_dir}/results", pattern: "*.html", mode: "copy"
 
         label 'shorttime'
 
@@ -136,7 +131,6 @@ process REPORT_MAPPING {
 
         output:
         file("*")
-        path "*report.html", emit: report_ch
 
         script:
         """
