@@ -10,6 +10,7 @@ process SNIPPY {
 
         output:
         path "core.full.aln", emit: snippy_alignment_ch
+	path "core.txt", emit: results_ch
         file("*")
 
         script:
