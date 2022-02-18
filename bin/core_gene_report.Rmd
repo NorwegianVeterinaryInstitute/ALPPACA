@@ -17,8 +17,6 @@ params:
     value: x
   pangenome_data:
     value: x
-  seqkit_report:
-    value: x
   snpdist_report:
     value: x
   phylo_tree:
@@ -167,33 +165,6 @@ read_delim(params$pangenome_data,
   rename("Type" = X1,
          "Definition" = X2,
          "Number of genes" = X3) %>%
-  kbl() %>%
-  kable_styling(bootstrap_options = c("striped",
-                                      "hover",
-                                      "responsive"),
-                full_width = TRUE)
-```
-
-
-<br>
-
-## Deduplication
-```{r}
-dupl_data <- list.files(params$seqkit_report)
-if(is_null(dupl_data)) {show_table <- FALSE} else {show_table <- TRUE}
-```
-`r if (show_table == FALSE){"No duplicated sequences detected."} else {"<center>***Table 2**: List of duplicated sequences identified in the multiple alignment.*</center>"}`
-
-```{r, message=FALSE, warning=FALSE, eval=show_table}
-read_delim(params$seqkit_report,
-           delim = "\t",
-           show_col_types = FALSE,
-           col_names = FALSE) %>%
-  rename("Number of sequences" = X1) %>%
-  separate(X2,
-           into = c("Kept sequence","Duplicated sequence(s)"),
-           sep = ",",
-           extra = "merge") %>%
   kbl() %>%
   kable_styling(bootstrap_options = c("striped",
                                       "hover",
