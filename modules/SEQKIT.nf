@@ -16,10 +16,7 @@ process DEDUPLICATE {
         """
         seqkit rmdup $fasta -s -D seqkit_list_duplicated -d seqkit_duplicated_seq --alphabet-guess-seq-length 0 --id-ncbi -t dna -w 0 -o seqkit_deduplicated.fasta &> seqkit.log
 	
-	if [ -e seqkit_list_duplicated ]
-	then
-	touch seqkit_list_duplicated
-	fi
+	if [ ! -f seqkit_list_duplicated ]; then touch seqkit_list_duplicated; fi
         """
 }
 
