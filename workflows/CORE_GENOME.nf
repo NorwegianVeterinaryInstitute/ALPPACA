@@ -64,8 +64,8 @@ workflow CORE_GENOME {
 			IQTREE(MASKRC.out.masked_ch)
                 	REPORT_CORE_GENOME(PARSNP.out.parsnp_results_ch,
                                    	   SNPDIST.out.snpdists_results_ch,
-                                   	   IQTREE_FCONST.out.iqtree_results_ch,
-                                   	   IQTREE_FCONST.out.R_tree,
+                                   	   IQTREE.out.iqtree_results_ch,
+                                   	   IQTREE.out.R_tree,
                                    	   params.deduplicate)
 		}
         }
