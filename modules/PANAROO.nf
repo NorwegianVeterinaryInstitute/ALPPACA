@@ -33,6 +33,7 @@ process PANAROO_PANGENOME {
 
         output:
         path "core_gene_alignment.aln", emit: core_alignment_ch
+	path "summary_statistics.txt", emit: pangenome_ch
         file("*")
 
         script:
