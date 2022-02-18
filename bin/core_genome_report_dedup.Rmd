@@ -98,7 +98,7 @@ tool_data %>%
 # Tool information
 ## ParSNP
 
-<center>***Table 1**: ParSNP average coverage report. The "Type" column refers to which of the samples were used as a reference in the analysis. The "Percent Coverage" column represents the % coverage of each genome that was used to generate the core genome alignment. The green bar is relative to 100%. The total coverage is the average across all samples. Samples with expected high similarity (e.g. outbreak or same ST) are expected to have a high percent coverage.*</center>
+<center>*ParSNP average coverage report. The "Type" column refers to which of the samples were used as a reference in the analysis. The "Percent Coverage" column represents the % coverage of each genome that was used to generate the core genome alignment. The green bar is relative to 100%. The total coverage is the average across all samples. Samples with expected high similarity (e.g. outbreak or same ST) are expected to have a high percent coverage.*</center>
 
 ```{r, message=FALSE, warning=FALSE}
 # Courtesy of Eve Zeyl Fiskebeck for the script!
@@ -153,12 +153,11 @@ as.data.frame(cbind(parsnp_cov)) %>%
 
 ## Deduplication
 ```{r}
-dupl_data <- list.files(params$seqkit_report)
-if(file.size(dupl_data) == 0L) {show_table <- FALSE} else {show_table <- TRUE}
+if (file.size(params$seqkit_report) == 0L) {show_table <- FALSE} else {show_table <- TRUE}
 ```
-`r if (show_table == FALSE){"No duplicated sequences detected."} else {"<center>***Table 2**: List of duplicated sequences identified in the multiple alignment.*</center>"}`
+`r if (show_table == FALSE){"No duplicated sequences detected."} else {"<center>*List of duplicated sequences identified in the multiple alignment.*</center>"}`
 
-```{r, message=FALSE, warning=FALSE}
+```{r, message=FALSE, warning=FALSE, eval=show_table}
 read_delim(params$seqkit_report,
            delim = "\t",
            show_col_types = FALSE,
@@ -178,7 +177,7 @@ read_delim(params$seqkit_report,
 <br>
 
 ## SNPdist
-<center>***Table 3**: SNP distance summary statistics for all isolates.*</center>
+<center>*SNP distance summary statistics for all isolates.*</center>
 ```{r, message=FALSE, warning=FALSE}
 snpdist_data <- read_delim(params$snpdist_report,
                            delim = "\t",
