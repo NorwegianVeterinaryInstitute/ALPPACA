@@ -1,14 +1,15 @@
-process REPORT_CORE_GENOME {
+process REPORT_CORE_GENOME_DEDUP {
         publishDir "${params.out_dir}/results", pattern: "*report.html", mode: "copy"
 
 	label 'shorttime'
 
         input:
-	file(parsnp_report)
-	file(snpdist_report)
-	file(seqkit_report)
-	file(iqtree_report)
-        file(phylo_tree)
+        file(parsnp_report)
+	file(phylo_data)
+	file(phylo_tree)
+	file(snpdists)
+	file(duplicates_list)
+	val(dedup)
 
         output:
         file("*")
@@ -16,8 +17,58 @@ process REPORT_CORE_GENOME {
 
         script:
         """
-	cp $baseDir/bin/core_genome_report.Rmd .
-        Rscript $baseDir/bin/gen_report.R "core_genome"
+	cp $baseDir/bin/core_genome_report_dedup.Rmd .
+        Rscript $baseDir/bin/gen_report.R "core_genome" $dedup
+        """
+}
+
+process REPORT_CORE_GENOME {
+        publishDir "${params.out_dir}/results", pattern: "*report.html", mode: "copy"
+
+        label 'shorttime'
+
+        input:
+        file(parsnp_report)
+        file(phylo_data)
+        file(phylo_tree)
+        file(snpdists)
+	val(dedup)
+
+        output:
+        file("*")
+        path "*report.html", emit: report_ch
+
+        script:
+        """
+        cp $baseDir/bin/core_genome_report.Rmd .
+        Rscript $baseDir/bin/gen_report.R "core_genome" $dedup
+        """
+}
+
+process REPORT_CORE_GENE_DEDUP {
+        publishDir "${params.out_dir}/results", pattern: "*report.html", mode: "copy"
+
+        label 'shorttime'
+
+        input:
+        file(ngenes_list)
+        file(ncontigs_list)
+        file(mds_data)
+        file(pangenome_data)
+        file(phylo_data)
+        file(phylo_tree)
+        file(snpdists)
+        file(duplicates_list)
+	val(dedup)
+
+        output:
+        file("*")
+        path "*report.html", emit: report_ch
+
+        script:
+        """
+        cp $baseDir/bin/core_gene_report_dedup.Rmd .
+        Rscript $baseDir/bin/gen_report.R "core_gene" $dedup
         """
 }
 
@@ -27,11 +78,14 @@ process REPORT_CORE_GENE {
         label 'shorttime'
 
         input:
-        file(parsnp_report)
-        file(snpdist_report)
-        file(seqkit_report)
-        file(iqtree_report)
-        file(phylo_tree)
+        file(ngenes_list)
+	file(ncontigs_list)
+	file(mds_data)
+	file(pangenome_data)
+	file(phylo_data)
+	file(phylo_tree)
+	file(snpdists)
+	val(dedup)
 
         output:
         file("*")
@@ -39,7 +93,32 @@ process REPORT_CORE_GENE {
 
         script:
         """
-        Rscript $baseDir/bin/gen_report.R "core_gene"
+	cp $baseDir/bin/core_gene_report.Rmd .
+        Rscript $baseDir/bin/gen_report.R "core_gene" $dedup
+        """
+}
+
+process REPORT_MAPPING_DEDUP {
+        publishDir "${params.out_dir}/results", pattern: "*report.html", mode: "copy"
+
+        label 'shorttime'
+
+        input:
+        file(snippy_data)
+        file(phylo_data)
+        file(phylo_tree)
+        file(snpdists)
+        file(duplicates_list)
+	val(dedup)
+
+        output:
+        file("*")
+        path "*report.html", emit: report_ch
+
+        script:
+        """
+        cp $baseDir/bin/mapping_report_dedup.Rmd .
+        Rscript $baseDir/bin/gen_report.R "mapping" $dedup
         """
 }
 
@@ -49,11 +128,11 @@ process REPORT_MAPPING {
         label 'shorttime'
 
         input:
-        file(parsnp_report)
-        file(snpdist_report)
-        file(seqkit_report)
-        file(iqtree_report)
-        file(phylo_tree)
+        file(snippy_data)
+	file(phylo_data)
+	file(phylo_tree)
+	file(snpdists)
+	val(dedup)
 
         output:
         file("*")
@@ -61,6 +140,7 @@ process REPORT_MAPPING {
 
         script:
         """
-        Rscript $baseDir/bin/gen_report.R "mapping"
+	cp $baseDir/bin/mapping_report.Rmd .
+        Rscript $baseDir/bin/gen_report.R "mapping" $dedup
         """
 }
