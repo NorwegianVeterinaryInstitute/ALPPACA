@@ -237,6 +237,7 @@ ggplot(snpdist_data, aes(isol1, isol2, fill = value)) +
                      option = "D") +
   theme_bw() +
   theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.3),
+	axis.text = element_text(size = 4),
         panel.grid = element_blank(),
         axis.title = element_blank()) +
   coord_fixed()
@@ -302,7 +303,8 @@ tree <- read.tree(params$phylo_tree)
 
 tree_plot <- ggtree(tree) +
   geom_text(aes(label = label),
-            hjust = 0) +
+            hjust = 0,
+	    size = 2) +
   geom_treescale()
 
 ggplotly(tree_plot) %>%
