@@ -17,6 +17,6 @@ cp ${script_directory}/main.nf ${outdir}/config_files
 cp ${config} ${outdir}/config_files
 commitid=$(git --git-dir ${script_directory}/.git branch -v | grep "\*" | awk '{print $2, $3}')
 version=$(git --git-dir ${script_directory}/.git tag | tail -1)
-echo "ALPPACA version $version, commit-id $commitid" > ${outdir}/config_files/version.log
+echo "ALPPACA version $version, commit-id $commitid" > ${outdir}/logs/version.log
 
 nextflow_21.10.6 run ${script_directory}/main.nf -c ${config} --out_dir=${outdir} -work-dir ${workdir} -profile singularity -resume -with-trace ${outdir}/logs/NEXTFLOW_trace.txt -with-timeline ${outdir}/logs/NEXTFLOW_timeline.html
