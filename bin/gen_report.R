@@ -72,7 +72,7 @@ if (workflow == "mapping") {
         phylo_data = "iqtree.iqtree",
         snpdist_report = "snp_dists.tab",
         seqkit_report = "seqkit_list_duplicated",
-        phylo_tree = "iqtree.contree",
+        phylo_tree = "iqtree.contree"
       )
     )
   }
@@ -83,7 +83,7 @@ if (workflow == "mapping") {
         snippy_report = "core.txt",
         phylo_data = "iqtree.iqtree",
         snpdist_report = "snp_dists.tab",
-        phylo_tree = "iqtree.contree",
+        phylo_tree = "iqtree.contree"
       )
     )
   }
