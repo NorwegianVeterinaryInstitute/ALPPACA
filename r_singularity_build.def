@@ -9,7 +9,9 @@ apt-get -y install libfontconfig1-dev
 apt-get -y install libxml2-dev
 apt-get -y install procps
 apt-get -y install pandoc
-apt-get -y install libmariadbclient-dev
+apt-get -y install libmariadb-dev
+apt-get -y install libmagick++-dev
+apt-get -y install libudunits2-dev
 
 R --slave -e 'install.packages("devtools")'
 R --slave -e 'devtools::install_url("https://bioconductor.org/packages/release/bioc/src/contrib/ggtree_3.2.1.tar.gz", dependencies = TRUE, upgrade = "always")'
