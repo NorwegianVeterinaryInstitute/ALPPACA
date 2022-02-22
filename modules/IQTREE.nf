@@ -5,6 +5,7 @@ process IQTREE {
 	publishDir "${params.out_dir}/results", pattern: "*.alninfo", mode: "copy", saveAs: {"IQTREE_alninfo.txt"}
 	publishDir "${params.out_dir}/results", pattern: "*.splits.nex", mode: "copy", saveAs: {"IQTREE_splits.nex"}
 	publishDir "${params.out_dir}/results", pattern: "*.ufboot", mode: "copy", saveAs: {"IQTREE_bootstrap_trees.ufboot"}
+	publishDir "${params.out_dir}/results", pattern: "*.treefile", mode: "copy", saveAs: {"IQTREE_ml_tree.phylo"}
 
         label 'longtime'
 
@@ -40,6 +41,7 @@ process IQTREE_FCONST {
 	publishDir "${params.out_dir}/results", pattern: "*.alninfo", mode: "copy", saveAs: {"IQTREE_alninfo.txt"}
 	publishDir "${params.out_dir}/results", pattern: "*.splits.nex", mode: "copy", saveAs: {"IQTREE_splits.nex"}
 	publishDir "${params.out_dir}/results", pattern: "*.ufboot", mode: "copy", saveAs: {"IQTREE_bootstrap_trees.ufboot"}
+	publishDir "${params.out_dir}/results", pattern: "*.treefile", mode: "copy", saveAs: {"IQTREE_ml_tree.phylo"}
 
 	label 'longtime'
 
