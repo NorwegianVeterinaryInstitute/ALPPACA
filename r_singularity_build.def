@@ -14,6 +14,8 @@ apt-get -y install libmagick++-dev
 apt-get -y install libudunits2-dev
 apt-get -y install libharfbuzz-dev
 apt-get -y install libfribidi-dev
+apt-get -y install libgdal-dev
+apt-get -y install libpq-dev
 
 R --slave -e 'install.packages("devtools")'
 R --slave -e 'devtools::install_url("https://bioconductor.org/packages/release/bioc/src/contrib/ggtree_3.2.1.tar.gz", dependencies = TRUE, upgrade = "always")'
