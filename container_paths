@@ -8,3 +8,4 @@ https://depot.galaxyproject.org/singularity/seqkit:2.1.0--h9ee0642_0
 https://depot.galaxyproject.org/singularity/snippy:4.6.0--hdfd78af_1
 https://depot.galaxyproject.org/singularity/snp-dists:0.8.2--h5bf99c6_0
 https://depot.galaxyproject.org/singularity/snp-sites:2.5.1--h5bf99c6_1
+library://hkaspersen/alppaca/r_base_4.1.2_alppaca:latest
