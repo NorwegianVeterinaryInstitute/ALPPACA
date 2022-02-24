@@ -7,4 +7,4 @@
 # Information
 ALPPACA is a pipeline for various phylogenetic analyses of prokaryotic isolates. 
 The pipeline includes core genome-, core gene-, and reference-based (mapping) phylogeny. 
-Please check the wiki for more information on usage and programs.
+Please check the wiki for more information on the pipeline.
