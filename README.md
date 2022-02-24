@@ -3,6 +3,7 @@
 ![License](https://img.shields.io/github/license/NorwegianVeterinaryInstitute/ALPPACA)
 
 <p align="center"><img src="logo.png" alt="Ellipsis" width="600"></p>
+*Logo generated with www.biorender.com*
 
 # Information
 ALPPACA is a pipeline for various phylogenetic analyses of prokaryotic isolates. 
