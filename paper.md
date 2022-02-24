@@ -3,6 +3,7 @@ title: 'ALPPACA - A tooL for Prokaryotic Phylogeny And Clustering Analysis'
 tags:
   - Nextflow
   - Phylogeny
+  - Prokaryote
   - R
 authors:
   - name: Håkon Kaspersen
