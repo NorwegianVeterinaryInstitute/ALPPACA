@@ -19,13 +19,13 @@ bibliography: paper.bib
 ---
 
 # Summary
-ALPPACA (A tooL for Prokaryotic Phylogeny And Clustering Analysis) is a Nextflow pipeline created to make it easier to run phylogenetic analysis on prokaryotic datasets. 
+ALPPACA (A tooL for Prokaryotic Phylogeny And Clustering Analysis) is a Nextflow pipeline created to make it easier to run phylogenetic analysis on prokaryotic datasets. The pipeline consists of three tracks; core gene, core genome, and reference-based phylogeny. 
 
 # Statement of need
 
 
 # Acknowledgements
-
+QREC-MaP & KLEB-GAP
 
 # Citations
 
