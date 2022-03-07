@@ -1,4 +1,4 @@
-[![DOI](https://zenodo.org/badge/287467158.svg)](https://zenodo.org/badge/latestdoi/287467158)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.6334769.svg)](https://doi.org/10.5281/zenodo.6334769)
 ![Platform](https://img.shields.io/badge/Platform-Nextflow-green)
 ![License](https://img.shields.io/github/license/NorwegianVeterinaryInstitute/ALPPACA)
 
