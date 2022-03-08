@@ -33,6 +33,6 @@ The pipeline consists of three separate tracks (Figure 1), depending on the need
 # Acknowledgements
 QREC-MaP & KLEB-GAP
 
-# Citations
+# References
 
 
