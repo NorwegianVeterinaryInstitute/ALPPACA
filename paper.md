@@ -26,7 +26,7 @@ Phylogenetic analysis has during recent years become more and more popular, also
 
 
 # Workflows
-The pipeline consists of three separate tracks (Figure 1), depending on the needs of the user. The core gene track takes assemblies as input, and starts by running annotations with Prokka [@Seeman2014]. Then, a pangenome analysis is run with Panaroo [@Tonkin-Hill2020]. After the pangenome analysis, different optional paths can be taken, such as deduplication with Seqkit [@Shen2016] and removal of constant sites with snp-sites [@Page2016]. SNP distances are calculated from either the deduplicated alignment or full alignment using snp-dists (https://github.com/tseemann/snp-dists). Lastly, the phylogenetic tree is calculated by using IQTree (Nguyen2015).
+The pipeline consists of three separate tracks (Figure 1), depending on the needs of the user. The core gene track takes assemblies as input, and starts by running annotations with Prokka [@Seeman2014]. Then, a pangenome analysis is run with Panaroo [@Tonkin-Hill2020]. After the pangenome analysis, different optional paths can be taken, such as deduplication with Seqkit [@Shen2016] and removal of constant sites with snp-sites [@Page2016]. SNP distances are calculated from either the deduplicated alignment or full alignment using snp-dists (https://github.com/tseemann/snp-dists). Lastly, the phylogenetic tree is calculated by using IQTree [@Nguyen2015].
 ![Figure 1](https://github.com/NorwegianVeterinaryInstitute/ALPPACA/blob/joss_paper/pipeline.png)
 **Figure 1:** ALPPACA tracks overview, created with www.biorender.com.
 
