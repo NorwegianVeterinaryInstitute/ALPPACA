@@ -29,6 +29,8 @@ The pipeline utilize singularity containers for running the different tools, whi
 
 As ALPPACA is a Nextflow pipeline, each process (tool) has been tested and given the time, memory, and CPU it requires to run various dataset sizes. However, the pipeline is not meant for very large datasets, such as thousands of isolates. The user may however change these settings in the nextflow.config file to reflect their systems and needs. 
 
+To test the pipeline after installation, the user may download a test dataset described in the documentation. The user may compare to existing results from the same version of the pipeline. This ensures that the pipeline is running correctly.
+
 ![Figure 1.\label{fig:figure1}](https://github.com/NorwegianVeterinaryInstitute/ALPPACA/blob/joss_paper/pipeline.png)
 **Figure 1:** ALPPACA tracks overview, created with www.biorender.com.
 
