@@ -31,6 +31,8 @@ As ALPPACA is a Nextflow pipeline, each process (tool) has been tested and given
 
 To test the pipeline after installation, the user may download a test dataset described in the documentation. The user may compare to existing results from the same version of the pipeline. This ensures that the pipeline is running correctly.
 
+![Overview of the three tracks in ALPPACA](pipeline.png)
+
 # Acknowledgements
 The project QREC-MaP, funded by the Research Funding for Agriculture and the Food Industry (NFR project 255383), and the project KLEB-GAP, funded by the Trond Mohn Foundation (project number TMS2019TMT03) are acknowledged for providing the research platform for this work. The computations were performed on resources provided by UNINETT Sigma2 - the National Infrastructure for High Performance Computing and Data Storage in Norway.
 
