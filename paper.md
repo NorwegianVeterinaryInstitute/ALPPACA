@@ -41,6 +41,6 @@ Lastly, the third track, mapping, is designed to be used for datasets with an ex
 ![Overview of the three tracks in ALPPACA](pipeline.png)
 
 # Acknowledgements
-The project QREC-MaP, funded by the Research Funding for Agriculture and the Food Industry (NFR project 255383), the project KLEB-GAP, funded by the Trond Mohn Foundation (project number TMS2019TMT03), and the project Yersiniosis at sea (NFR project 901505) are acknowledged for providing the research platform for this work. The computations were performed on resources provided by UNINETT Sigma2 - the National Infrastructure for High Performance Computing and Data Storage in Norway.
+The project QREC-MaP (Research Funding for Agriculture and the Food Industry, Norwegian Research Council, project number 255383), the project KLEB-GAP (Trond Mohn Foundation, project number TMS2019TMT03), and the project Yersiniosis at Sea (Norwegian Seafood Research Fund grant, project number 901505) are acknowledged for providing the research platform for this work. The computations were performed on resources provided by UNINETT Sigma2 - the National Infrastructure for High Performance Computing and Data Storage in Norway.
 
 # References
