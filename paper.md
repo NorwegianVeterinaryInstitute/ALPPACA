@@ -30,7 +30,7 @@ Unraveling the evolutionary relationship between organisms is a crucial part of 
 ALPPACA is a nextflow pipeline hosted on github (https://github.com/NorwegianVeterinaryInstitute/ALPPACA). The pipeline utilize singularity containers for running the various tools, which can be easily downloaded by using the setup shell script included in the repository. These images ensures that the user runs the correct versions of the tools, and makes the pipeline portable and reproducible. All images, except the R image, are verified and hosted by galaxyproject.org. The R image is curated by the authors and hosted at [sylabs.io](https://sylabs.io/singularity/). The pipeline has been tested on datasets of various sizes and species to ensure proper memory and CPU requirements for different dataset sizes. However, the user may change these settings to reflect their own system requirements.
 
 ## Tracks
-The pipeline consists of three separate tracks depending on the objectives and data available to the user (Figure 1).
+The pipeline consists of three separate tracks depending on the objectives and data available to the user \autoref{fig:figure1}.
 First, the core gene track is designed to be used for datasets that are expected to have a relatively high level of genetic diversity. It takes assemblies as input, and starts by running annotations with Prokka [@Seemann:2014]. Then, a pangenome analysis is run with Panaroo [@Tonkin-Hill:2020]. After the pangenome analysis, different optional paths can be taken, such as deduplication with Seqkit [@Shen:2016] and removal of constant sites with snp-sites [@Page:2016]. Removing constant sites is an option that decreases the computational load for larger datasets, in such cases our pipeline automatically provide the frequency of constant sites required to IQTREE, ensuring that analyses will be run with the proper options. SNP distances are calculated from either the deduplicated alignment or full alignment using snp-dists (https://github.com/tseemann/snp-dists). Lastly, the phylogenetic tree is reconstructed with IQTree [@Nguyen:2015]. The user has an option for automatic model testing in IQTree or to supply a specific evolutionary model.
 
 The second track, core genome, is designed to be used for datasets with a medium or low level of genetic diversity. 
@@ -38,7 +38,7 @@ It takes assemblies as input and runs ParSNP [@Treangen:2014] to generate a core
 
 Lastly, the third track, mapping, is designed to be used for datasets with an expected low genetic diversity, or if comparing to a specific reference genome is of interest. This track takes reads as input, and maps these to a reference genome provided by the user and reconstruct the multiple-genome alignment with Snippy (https://github.com/tseemann/snippy). Then, it follows the same workflow as the core genome track described above.
 
-![Overview of the three tracks in ALPPACA](pipeline.png)
+![Overview of the three tracks in ALPPACA.\label{fig:figure1}](pipeline.png)
 
 # Acknowledgements
 The projects QREC-MaP (Research Funding for Agriculture and the Food Industry, Norwegian Research Council, project number 255383), KLEB-GAP (Trond Mohn Foundation, project number TMS2019TMT03), and Yersiniosis at Sea (Norwegian Seafood Research Fund grant, project number 901505) are acknowledged for providing the research platform for this work. The computations were performed on resources provided by UNINETT Sigma2 - the National Infrastructure for High Performance Computing and Data Storage in Norway.
