@@ -55,20 +55,38 @@ process IQTREE_FCONST {
 	path "iqtree.iqtree", emit: iqtree_results_ch
 
         script:
-        """
-        iqtree -s $alignment_filtered\
-		-m $params.iqtree_model\
-		-mset $params.mset\
-		-cmax $params.cmax\
-		-bb $params.bootstrap\
-		-nt AUTO\
-		-pre iqtree\
-		-v\
-		-alninfo\
-		-wbtl\
-		$params.outgroup\
-		-fconst $fconst\
-		&> iqtree.log
-        """
+        if (params.test)
+		"""
+        	iqtree -s $alignment_filtered\
+			-m $params.iqtree_model\
+			-mset $params.mset\
+			-cmax $params.cmax\
+			-bb $params.bootstrap\
+			-nt AUTO\
+			-pre iqtree\
+			-v\
+			-alninfo\
+			-wbtl\
+			$params.outgroup\
+			-fconst $fconst\
+			-seed 1234\
+			&> iqtree.log
+        	"""
+	else
+		"""
+                iqtree -s $alignment_filtered\
+                        -m $params.iqtree_model\
+                        -mset $params.mset\
+                        -cmax $params.cmax\
+                        -bb $params.bootstrap\
+                        -nt AUTO\
+                        -pre iqtree\
+                        -v\
+                        -alninfo\
+                        -wbtl\
+                        $params.outgroup\
+                        -fconst $fconst\
+                        &> iqtree.log
+                """
 }
 
