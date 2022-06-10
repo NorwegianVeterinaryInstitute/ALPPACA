@@ -12,7 +12,7 @@ log.info ".A  tooL for Prokaryotic Phylogeny And   Clustering Analysis."
 log.info "============================================================="
 log.info " Run track: $params.track                                    "
 log.info " Work directory: $workDir                                    "
-log.info " ALPPACA Version: 1.0.2                                      "
+log.info " ALPPACA Version: 1.0.4                                      "
 log.info "=============================================================".stripIndent()
 
 // Activate dsl2
