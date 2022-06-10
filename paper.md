@@ -27,7 +27,7 @@ Unraveling the evolutionary relationship between organisms is a crucial part of 
 
 # Pipeline and track descriptions
 ## Pipeline
-ALPPACA is a nextflow pipeline hosted on github (https://github.com/NorwegianVeterinaryInstitute/ALPPACA). The pipeline utilize singularity containers for running the various tools, which can be easily downloaded by using the setup shell script included in the repository. These images ensures that the user runs the correct versions of the tools, and makes the pipeline portable and reproducible. All images, except the R image, are verified and hosted by galaxyproject.org. The R image is curated by the authors and hosted at [sylabs.io](https://sylabs.io/singularity/). The pipeline has been tested on datasets of various sizes and species to ensure proper memory and CPU requirements for different dataset sizes. However, the user may change these settings to reflect their own system requirements.
+ALPPACA is a nextflow pipeline hosted on github (https://github.com/NorwegianVeterinaryInstitute/ALPPACA). The pipeline utilize singularity containers for running the various tools, which can be easily downloaded by using the setup shell script included in the repository. These images ensures that the user runs the correct versions of the tools, and makes the pipeline portable and reproducible. All images, except the R image, are verified and hosted by galaxyproject.org. The R image is curated by the authors and hosted at [sylabs.io](https://sylabs.io/singularity/). The pipeline has been tested on datasets of various sizes and species to ensure proper memory and CPU requirements for different dataset sizes. However, the user may change these settings to reflect their own system requirements and dataset sizes.
 
 ## Tracks
 The pipeline consists of three separate tracks depending on the objectives and data available to the user (\autoref{fig:figure1}).
@@ -39,6 +39,9 @@ It takes assemblies as input and runs ParSNP [@Treangen:2014] to generate a core
 Lastly, the third track, mapping, is designed to be used for datasets with an expected low genetic diversity, or if comparing to a specific reference genome is of interest. This track takes reads as input, and maps these to a reference genome provided by the user and reconstruct the multiple-genome alignment with Snippy (https://github.com/tseemann/snippy). Then, it follows the same workflow as the core genome track described above.
 
 ![Overview of the three tracks in ALPPACA.\label{fig:figure1}](pipeline.png)
+
+# Conclusion
+The ALPPACA pipeline offers a user-friendly way of running phylogenetic analysis on different datasets. The pipeline is reproducible and flexible, and only requires a few options and parameters to run. Further development and additions to the pipeline will be done in the near future.
 
 # Acknowledgements
 The projects QREC-MaP (Research Funding for Agriculture and the Food Industry, Norwegian Research Council, project number 255383), KLEB-GAP (Trond Mohn Foundation, project number TMS2019TMT03), and Yersiniosis at Sea (Norwegian Seafood Research Fund grant, project number 901505) are acknowledged for providing the research platform for this work. The computations were performed on resources provided by UNINETT Sigma2 - the National Infrastructure for High Performance Computing and Data Storage in Norway.
