@@ -2,10 +2,11 @@
 
 script_directory=$(dirname ${BASH_SOURCE[0]})
 
-config=$1
-outdir=$2
-work_path=${3%/}
-track=`grep "params.track" $config`
+track=$1
+config=$2
+profile=$3
+outdir=$4
+work_path=${5%/}
 
 if [[ $track =~ core_genome ]]; then workdir=${work_path}/alppaca_core_genome; fi
 if [[ $track =~ mapping ]]; then workdir=${work_path}/alppaca_mapping; fi
@@ -19,4 +20,4 @@ commitid=$(git --git-dir ${script_directory}/.git branch -v | grep "\*" | awk '{
 version=$(git --git-dir ${script_directory}/.git tag | tail -1)
 echo "ALPPACA version $version, commit-id $commitid" > ${outdir}/logs/version.log
 
-nextflow_21.10.6 run ${script_directory}/main.nf -c ${config} --out_dir=${outdir} -work-dir ${workdir} -profile singularity -resume -with-trace ${outdir}/logs/NEXTFLOW_trace.txt -with-timeline ${outdir}/logs/NEXTFLOW_timeline.html
+nextflow_21.10.6 run ${script_directory}/main.nf -c ${config} --out_dir=${outdir} --track ${track} -work-dir ${workdir} -profile $profile -resume -with-trace ${outdir}/logs/NEXTFLOW_trace.txt -with-timeline ${outdir}/logs/NEXTFLOW_timeline.html
