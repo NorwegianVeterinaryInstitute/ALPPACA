@@ -41,7 +41,7 @@ Lastly, the third track, mapping, is designed to be used for datasets with an ex
 ![Overview of the three tracks in ALPPACA.\label{fig:figure1}](pipeline.png)
 
 # Conclusion
-The ALPPACA pipeline offers a user-friendly way of running phylogenetic analysis on different datasets. The pipeline is reproducible and flexible, and only requires a few options and parameters to run. Further development and additions to the pipeline will be done in the near future.
+The ALPPACA pipeline offers a user-friendly way of running phylogenetic analysis on different datasets. The pipeline is reproducible and flexible, and only requires a few options and parameters to run. The Nextflow framework allows for easy development and additions to the pipeline in the future.
 
 # Acknowledgements
 The projects QREC-MaP (Research Funding for Agriculture and the Food Industry, Norwegian Research Council, project number 255383), KLEB-GAP (Trond Mohn Foundation, project number TMS2019TMT03), and Yersiniosis at Sea (Norwegian Seafood Research Fund grant, project number 901505) are acknowledged for providing the research platform for this work. The computations were performed on resources provided by UNINETT Sigma2 - the National Infrastructure for High Performance Computing and Data Storage in Norway.
