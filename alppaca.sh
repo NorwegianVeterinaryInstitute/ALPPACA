@@ -20,4 +20,4 @@ commitid=$(git --git-dir ${script_directory}/.git branch -v | grep "\*" | awk '{
 version=$(git --git-dir ${script_directory}/.git tag | tail -1)
 echo "ALPPACA version $version, commit-id $commitid" > ${outdir}/logs/version.log
 
-nextflow_21.10.6 run ${script_directory}/main.nf -c ${config} --out_dir=${outdir} --track ${track} --test=false -work-dir ${workdir} -profile $profile -resume -with-trace ${outdir}/logs/NEXTFLOW_trace.txt -with-timeline ${outdir}/logs/NEXTFLOW_timeline.html
+nextflow run ${script_directory}/main.nf -c ${config} --out_dir=${outdir} --track ${track} --test=false -work-dir ${workdir} -profile $profile -resume -with-trace ${outdir}/logs/NEXTFLOW_trace.txt -with-timeline ${outdir}/logs/NEXTFLOW_timeline.html
