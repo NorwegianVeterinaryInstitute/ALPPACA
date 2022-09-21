@@ -8,4 +8,7 @@ Logo generated with www.biorender.com
 # Information
 ALPPACA is a pipeline for various phylogenetic analyses of prokaryotic isolates. 
 The pipeline includes core genome-, core gene-, and reference-based (mapping) phylogeny. 
-Please check the wiki for more information on the pipeline.
+
+# Installation and Running
+Please check the [wiki](https://github.com/NorwegianVeterinaryInstitute/ALPPACA/wiki) on how to install and run the pipeline.
+
