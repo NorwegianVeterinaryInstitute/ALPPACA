@@ -4,6 +4,8 @@ process MASKRC {
         publishDir "${params.out_dir}/results", pattern: "recombinant_regions", mode: "copy", saveAs: {"MASKRC_recombinant_regions.txt"}
         publishDir "${params.out_dir}/results", pattern: "recombinant_plot", mode: "copy", saveAs: {"MASKRC_recombinant_plot.svg"}
 
+	container 'quay.io/biocontainers/maskrc-svg:0.5--1'
+
         input:
         path(gubbins_folder)
         path(alignment)

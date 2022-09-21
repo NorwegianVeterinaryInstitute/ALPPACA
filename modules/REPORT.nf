@@ -1,6 +1,8 @@
 process REPORT_CORE_GENOME_DEDUP {
         publishDir "${params.out_dir}/results", pattern: "*.html", mode: "copy"
 
+	container 'library://hkaspersen/alppaca/r_base_4.1.2_alppaca:latest'
+
 	label 'shorttime'
 
         input:
@@ -24,6 +26,8 @@ process REPORT_CORE_GENOME_DEDUP {
 process REPORT_CORE_GENOME {
         publishDir "${params.out_dir}/results", pattern: "*.html", mode: "copy"
 
+	container 'library://hkaspersen/alppaca/r_base_4.1.2_alppaca:latest'
+
         label 'shorttime'
 
         input:
@@ -45,6 +49,8 @@ process REPORT_CORE_GENOME {
 
 process REPORT_CORE_GENE_DEDUP {
         publishDir "${params.out_dir}/results", pattern: "*.html", mode: "copy"
+
+	container 'library://hkaspersen/alppaca/r_base_4.1.2_alppaca:latest'
 
         label 'shorttime'
 
@@ -72,6 +78,8 @@ process REPORT_CORE_GENE_DEDUP {
 process REPORT_CORE_GENE {
         publishDir "${params.out_dir}/results", pattern: "*.html", mode: "copy"
 
+	container 'library://hkaspersen/alppaca/r_base_4.1.2_alppaca:latest'
+
         label 'shorttime'
 
         input:
@@ -97,6 +105,8 @@ process REPORT_CORE_GENE {
 process REPORT_MAPPING_DEDUP {
         publishDir "${params.out_dir}/results", pattern: "*.html", mode: "copy"
 
+	container 'library://hkaspersen/alppaca/r_base_4.1.2_alppaca:latest'
+
         label 'shorttime'
 
         input:
@@ -119,6 +129,8 @@ process REPORT_MAPPING_DEDUP {
 
 process REPORT_MAPPING {
         publishDir "${params.out_dir}/results", pattern: "*.html", mode: "copy"
+
+	container 'library://hkaspersen/alppaca/r_base_4.1.2_alppaca:latest'
 
         label 'shorttime'
 

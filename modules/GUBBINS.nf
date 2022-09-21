@@ -3,6 +3,8 @@ process GUBBINS {
         publishDir "${params.out_dir}/results", pattern: "*filtered_polymorphic_sites.fasta", mode: "copy", saveAs: {"GUBBINS_filtered_alignment.aln"}
         publishDir "${params.out_dir}/results", pattern: "*per_branch_statistics.csv", mode: "copy", saveAs: {"GUBBINS_statistics.txt"}
 
+	container 'quay.io/biocontainers/gubbins:3.2.0--py39pl5321h87d955d_1'
+
 	label 'bigmem_gubbins'
 
         input:

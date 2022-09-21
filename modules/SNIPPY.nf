@@ -3,6 +3,8 @@ process SNIPPY {
         publishDir "${params.out_dir}/results", pattern: "core.txt", mode: "copy", saveAs: {"SNIPPY_results.txt"}
         publishDir "${params.out_dir}/logs", pattern: "snippy.log", mode: "copy"
 
+	container 'quay.io/biocontainers/snippy:4.6.0--hdfd78af_1'
+
         label 'medium'
 
         input:
