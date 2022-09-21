@@ -31,8 +31,7 @@ process IQTREE {
 		-v\
 		-alninfo\
 		-wbtl\
-		$params.outgroup\
-		&> iqtree.log
+		$params.outgroup
         """
 }
 
@@ -73,8 +72,7 @@ process IQTREE_FCONST {
 			-wbtl\
 			$params.outgroup\
 			-fconst $fconst\
-			-seed 1234\
-			&> iqtree.log
+			-seed 1234
         	"""
 	else
 		"""
@@ -89,8 +87,7 @@ process IQTREE_FCONST {
                         -alninfo\
                         -wbtl\
                         $params.outgroup\
-                        -fconst $fconst\
-                        &> iqtree.log
+                        -fconst $fconst
                 """
 }
 
