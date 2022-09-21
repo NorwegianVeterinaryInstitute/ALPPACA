@@ -10,5 +10,8 @@ ALPPACA is a pipeline for various phylogenetic analyses of prokaryotic isolates.
 The pipeline includes core genome-, core gene-, and reference-based (mapping) phylogeny. 
 
 # Installation and Running
-Please check the [wiki](https://github.com/NorwegianVeterinaryInstitute/ALPPACA/wiki) on how to install and run the pipeline.
-
+Please check the [wiki](https://github.com/NorwegianVeterinaryInstitute/ALPPACA/wiki).
+- [Description](https://github.com/NorwegianVeterinaryInstitute/ALPPACA/wiki/2.-Pipeline-and-program-descriptions)
+- [Installation](https://github.com/NorwegianVeterinaryInstitute/ALPPACA/wiki/1.-Installation)
+- [How to run](https://github.com/NorwegianVeterinaryInstitute/ALPPACA/wiki/3.-Input-and-usage)
+- [Output file descriptions](https://github.com/NorwegianVeterinaryInstitute/ALPPACA/wiki/4.-Output-files)
