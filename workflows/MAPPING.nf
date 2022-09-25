@@ -1,11 +1,11 @@
-include { SNIPPY } from "${params.module_dir}/SNIPPY.nf"
-include { DEDUPLICATE } from "${params.module_dir}/SEQKIT.nf"
-include { GUBBINS } from "${params.module_dir}/GUBBINS.nf"
-include { MASKRC } from "${params.module_dir}/MASKRC.nf"
-include { SNPDIST } from "${params.module_dir}/SNPDIST.nf"
-include { SNPSITES; SNPSITES_FCONST } from "${params.module_dir}/SNPSITES.nf"
-include { IQTREE; IQTREE_FCONST } from "${params.module_dir}/IQTREE.nf"
-include { REPORT_MAPPING_DEDUP;REPORT_MAPPING } from "${params.module_dir}/REPORT.nf"
+include { SNIPPY                              } from "../modules/SNIPPY.nf"
+include { DEDUPLICATE                         } from "../modules/SEQKIT.nf"
+include { GUBBINS                             } from "../modules/GUBBINS.nf"
+include { MASKRC                              } from "../modules/MASKRC.nf"
+include { SNPDIST                             } from "../modules/SNPDIST.nf"
+include { SNPSITES; SNPSITES_FCONST           } from "../modules/SNPSITES.nf"
+include { IQTREE; IQTREE_FCONST               } from "../modules/IQTREE.nf"
+include { REPORT_MAPPING_DEDUP;REPORT_MAPPING } from "../modules/REPORT.nf"
 
 
 workflow MAPPING {
