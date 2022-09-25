@@ -1,7 +1,7 @@
 process SNPSITES_FCONST {
 	container 'quay.io/biocontainers/snp-sites:2.5.1--h5bf99c6_1'
 
-	label 'shorttime'
+	label 'process_short'
 
         input:
         file(snp_alignment)
@@ -22,7 +22,7 @@ process SNPSITES {
 
 	container 'quay.io/biocontainers/snp-sites:2.5.1--h5bf99c6_1'
 
-	label 'shorttime'
+	label 'process_short'
 
         input:
         file(snp_alignment)

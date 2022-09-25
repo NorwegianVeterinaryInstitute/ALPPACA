@@ -3,7 +3,7 @@ process REPORT_CORE_GENOME_DEDUP {
 
 	container 'library://hkaspersen/alppaca/r_base_4.1.2_alppaca:latest'
 
-	label 'shorttime'
+	label 'process_short'
 
         input:
         file(parsnp_report)
@@ -28,7 +28,7 @@ process REPORT_CORE_GENOME {
 
 	container 'library://hkaspersen/alppaca/r_base_4.1.2_alppaca:latest'
 
-        label 'shorttime'
+        label 'process_short'
 
         input:
         file(parsnp_report)
@@ -52,7 +52,7 @@ process REPORT_CORE_GENE_DEDUP {
 
 	container 'library://hkaspersen/alppaca/r_base_4.1.2_alppaca:latest'
 
-        label 'shorttime'
+        label 'process_short'
 
         input:
         file(ngenes_list)
@@ -80,7 +80,7 @@ process REPORT_CORE_GENE {
 
 	container 'library://hkaspersen/alppaca/r_base_4.1.2_alppaca:latest'
 
-        label 'shorttime'
+        label 'process_short'
 
         input:
         file(ngenes_list)
@@ -107,7 +107,7 @@ process REPORT_MAPPING_DEDUP {
 
 	container 'library://hkaspersen/alppaca/r_base_4.1.2_alppaca:latest'
 
-        label 'shorttime'
+        label 'process_short'
 
         input:
         file(snippy_data)
@@ -132,7 +132,7 @@ process REPORT_MAPPING {
 
 	container 'library://hkaspersen/alppaca/r_base_4.1.2_alppaca:latest'
 
-        label 'shorttime'
+        label 'process_short'
 
         input:
         file(snippy_data)

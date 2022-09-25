@@ -5,7 +5,7 @@ process SNIPPY {
 
 	container 'quay.io/biocontainers/snippy:4.6.0--hdfd78af_1'
 
-        label 'medium'
+        label 'process_high,process_long'
 
         input:
         file("*")

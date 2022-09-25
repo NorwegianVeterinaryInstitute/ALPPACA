@@ -9,7 +9,7 @@ process IQTREE {
 
 	container 'quay.io/biocontainers/iqtree:2.1.4_beta--hdcc8f71_0'
 
-        label 'longtime'
+        label 'process_long'
 
         input:
         file(alignment_filtered)
@@ -46,7 +46,7 @@ process IQTREE_FCONST {
 
 	container 'quay.io/biocontainers/iqtree:2.1.4_beta--hdcc8f71_0'
 
-	label 'longtime'
+	label 'process_long'
 
         input:
         file(alignment_filtered)

@@ -5,7 +5,7 @@ process PANAROO_QC {
 
 	container 'quay.io/biocontainers/panaroo:1.2.9--pyhdfd78af_0'
 
-        label 'bigmem'
+        label 'process_high_memory,process_long'
 
         input:
         file(gffs)
@@ -30,7 +30,7 @@ process PANAROO_PANGENOME {
 
 	container 'quay.io/biocontainers/panaroo:1.2.9--pyhdfd78af_0'
 
-        label 'heavy'
+        label 'process_high,process_long'
 
         input:
         file(gffs)

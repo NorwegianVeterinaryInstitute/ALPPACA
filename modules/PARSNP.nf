@@ -6,6 +6,8 @@ process PARSNP {
 
 	container 'quay.io/biocontainers/parsnp:1.6.1--h9a82719_0'
 
+	label 'process_long'
+
         input:
         file("*")
 
