@@ -19,9 +19,9 @@ log.info "=============================================================".stripIn
 nextflow.enable.dsl=2
 
 // Define workflows
-include { MAPPING } from "${params.workflow_dir}/MAPPING.nf"
-include { CORE_GENE } from "${params.workflow_dir}/CORE_GENE.nf"
-include { CORE_GENOME } from "${params.workflow_dir}/CORE_GENOME.nf"
+include { MAPPING     } from "./workflows/MAPPING.nf"
+include { CORE_GENE   } from "./workflows/CORE_GENE.nf"
+include { CORE_GENOME } from "./workflows/CORE_GENOME.nf"
 
 workflow {
 	if (params.track == "mapping") {
