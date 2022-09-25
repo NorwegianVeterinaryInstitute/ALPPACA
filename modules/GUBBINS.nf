@@ -5,7 +5,7 @@ process GUBBINS {
 
 	container 'quay.io/biocontainers/gubbins:3.2.0--py39pl5321h87d955d_1'
 
-	label 'process_high_memory,process_long'
+	label 'process_high_memory_time'
 
         input:
         file(alignment)

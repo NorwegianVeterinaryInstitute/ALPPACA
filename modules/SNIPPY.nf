@@ -5,7 +5,7 @@ process SNIPPY {
 
 	container 'quay.io/biocontainers/snippy:4.6.0--hdfd78af_1'
 
-        label 'process_high,process_long'
+        label 'process_high_cpu_time'
 
         input:
         file("*")
