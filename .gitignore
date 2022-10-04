@@ -1,4 +1,3 @@
 .nextflow*
-.Rproj.user/
-PhyloFlow.Rproj
-.Rhistory
+work/
+test/
