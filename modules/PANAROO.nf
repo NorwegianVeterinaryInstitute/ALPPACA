@@ -5,6 +5,9 @@ process PANAROO_QC {
 
         label 'process_high_memory_time'
 
+	conda (params.enable_conda ? 'bioconda::panaroo=1.2.9' : null)
+	container 'quay.io/biocontainers/panaroo:1.2.9--pyhdfd78af_0'
+
         input:
         file(gffs)
 
@@ -27,6 +30,9 @@ process PANAROO_PANGENOME {
         publishDir "${params.out_dir}/logs", pattern: "panaroo_pangenome.log", mode: "copy"
 
         label 'process_high_cpu_time'
+
+	conda (params.enable_conda ? 'bioconda::panaroo=1.2.9' : null)
+        container 'quay.io/biocontainers/panaroo:1.2.9--pyhdfd78af_0'
 
         input:
         file(gffs)

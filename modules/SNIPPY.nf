@@ -5,6 +5,9 @@ process SNIPPY {
 
         label 'process_high_cpu_time'
 
+	conda (params.enable_conda ? 'bioconda::snippy=4.6.0' : null)
+	container 'quay.io/biocontainers/snippy:4.6.0--hdfd78af_1'
+
         input:
         file("*")
 

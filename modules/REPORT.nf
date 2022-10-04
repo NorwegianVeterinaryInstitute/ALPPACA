@@ -1,6 +1,8 @@
 process REPORT_CORE_GENOME_DEDUP {
         publishDir "${params.out_dir}/results", pattern: "*.html", mode: "copy"
 
+	container 'evezeyl/r_docker'
+
 	label 'process_short'
 
         input:
@@ -26,6 +28,8 @@ process REPORT_CORE_GENOME {
 
         label 'process_short'
 
+	container 'evezeyl/r_docker'
+
         input:
         file(parsnp_report)
         file(phylo_data)
@@ -47,6 +51,8 @@ process REPORT_CORE_GENE_DEDUP {
         publishDir "${params.out_dir}/results", pattern: "*.html", mode: "copy"
 
         label 'process_short'
+
+	container 'evezeyl/r_docker'
 
         input:
         file(ngenes_list)
@@ -74,6 +80,8 @@ process REPORT_CORE_GENE {
 
         label 'process_short'
 
+	container 'evezeyl/r_docker'
+
         input:
         file(ngenes_list)
 	file(ncontigs_list)
@@ -99,6 +107,8 @@ process REPORT_MAPPING_DEDUP {
 
         label 'process_short'
 
+	container 'evezeyl/r_docker'
+
         input:
         file(snippy_data)
         file(phylo_data)
@@ -121,6 +131,8 @@ process REPORT_MAPPING {
         publishDir "${params.out_dir}/results", pattern: "*.html", mode: "copy"
 
         label 'process_short'
+
+	container 'evezeyl/r_docker'
 
         input:
         file(snippy_data)

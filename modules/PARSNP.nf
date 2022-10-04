@@ -6,6 +6,9 @@ process PARSNP {
 
 	label 'process_long'
 
+	conda (params.enable_conda ? 'bioconda::parsnp=1.6.1' : null)
+	container 'quay.io/biocontainers/parsnp:1.6.1--h9a82719_0'
+
         input:
         file("*")
 

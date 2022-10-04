@@ -1,4 +1,7 @@
 process PROKKA {
+	conda (params.enable_conda ? 'bioconda::prokka=1.14.6' : null)
+	container 'quay.io/biocontainers/prokka:1.14.6--pl5262hdfd78af_1'
+
         input:
         file(assembly)
 

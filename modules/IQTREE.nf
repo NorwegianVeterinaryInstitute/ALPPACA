@@ -9,6 +9,9 @@ process IQTREE {
 
         label 'process_long'
 
+	conda (params.enable_conda ? 'bioconda::iqtree=2.1.4_beta' : null)
+	container 'quay.io/biocontainers/iqtree:2.1.4_beta--hdcc8f71_0'
+
         input:
         file(alignment_filtered)
 
@@ -44,6 +47,9 @@ process IQTREE_FCONST {
 
 	label 'process_long'
 
+	conda (params.enable_conda ? 'bioconda::iqtree=2.1.4_beta' : null)
+	container 'quay.io/biocontainers/iqtree:2.1.4_beta--hdcc8f71_0'
+
         input:
         file(alignment_filtered)
         val(fconst)
@@ -54,23 +60,6 @@ process IQTREE_FCONST {
 	path "iqtree.iqtree", emit: iqtree_results_ch
 
         script:
-        if (params.test)
-		"""
-        	iqtree -s $alignment_filtered\
-			-m $params.iqtree_model\
-			-mset $params.mset\
-			-cmax $params.cmax\
-			-bb $params.bootstrap\
-			-nt AUTO\
-			-pre iqtree\
-			-v\
-			-alninfo\
-			-wbtl\
-			$params.outgroup\
-			-fconst $fconst\
-			-seed 1234
-        	"""
-	else
 		"""
                 iqtree -s $alignment_filtered\
                         -m $params.iqtree_model\
