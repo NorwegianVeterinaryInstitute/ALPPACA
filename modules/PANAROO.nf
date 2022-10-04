@@ -3,8 +3,6 @@ process PANAROO_QC {
         publishDir "${params.out_dir}/results", pattern: "mash_dist.txt", mode: "copy", saveAs: {"PANAROO_mashdist.txt"}
         publishDir "${params.out_dir}/logs", pattern: "panaroo_qc.log", mode: "copy"
 
-	container 'quay.io/biocontainers/panaroo:1.2.9--pyhdfd78af_0'
-
         label 'process_high_memory_time'
 
         input:
@@ -27,8 +25,6 @@ process PANAROO_PANGENOME {
         publishDir "${params.out_dir}/results", pattern: "core_gene_alignment.aln", mode: "copy", saveAs: {"PANAROO_core_gene_alignment.aln"}
         publishDir "${params.out_dir}/results", pattern: "summary_statistics.txt", mode: "copy", saveAs: {"PANAROO_pangenome_results.txt"}
         publishDir "${params.out_dir}/logs", pattern: "panaroo_pangenome.log", mode: "copy"
-
-	container 'quay.io/biocontainers/panaroo:1.2.9--pyhdfd78af_0'
 
         label 'process_high_cpu_time'
 

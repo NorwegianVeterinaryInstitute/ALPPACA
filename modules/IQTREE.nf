@@ -7,8 +7,6 @@ process IQTREE {
 	publishDir "${params.out_dir}/results", pattern: "*.ufboot", mode: "copy", saveAs: {"IQTREE_bootstrap_trees.ufboot"}
 	publishDir "${params.out_dir}/results", pattern: "*.treefile", mode: "copy", saveAs: {"IQTREE_ml_tree.phylo"}
 
-	container 'quay.io/biocontainers/iqtree:2.1.4_beta--hdcc8f71_0'
-
         label 'process_long'
 
         input:
@@ -43,8 +41,6 @@ process IQTREE_FCONST {
 	publishDir "${params.out_dir}/results", pattern: "*.splits.nex", mode: "copy", saveAs: {"IQTREE_splits.nex"}
 	publishDir "${params.out_dir}/results", pattern: "*.ufboot", mode: "copy", saveAs: {"IQTREE_bootstrap_trees.ufboot"}
 	publishDir "${params.out_dir}/results", pattern: "*.treefile", mode: "copy", saveAs: {"IQTREE_ml_tree.phylo"}
-
-	container 'quay.io/biocontainers/iqtree:2.1.4_beta--hdcc8f71_0'
 
 	label 'process_long'
 

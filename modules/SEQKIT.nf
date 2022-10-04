@@ -4,8 +4,6 @@ process DEDUPLICATE {
         publishDir "${params.out_dir}/results", pattern: "seqkit_list_duplicated", mode: "copy", saveAs: {"SEQKIT_duplicated_list.txt"}
         publishDir "${params.out_dir}/results", pattern: "seqkit_duplicated_seq", mode: "copy", saveAs: {"SEQKIT_duplicated_sequences.fasta"}
 
-	container 'quay.io/biocontainers/seqkit:2.1.0--h9ee0642_0'
-
         input:
         file(fasta)
 

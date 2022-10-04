@@ -4,8 +4,6 @@ process PARSNP {
         publishDir "${params.out_dir}/results", pattern: "results/parsnp.ggr", mode: "copy", saveAs: {"PARSNP_gingr_archive.ggr"}
 	publishDir "${params.out_dir}/results", pattern: "parsnp_alignment.fasta", mode: "copy", saveAs: {"PARSNP_alignment.aln"}
 
-	container 'quay.io/biocontainers/parsnp:1.6.1--h9a82719_0'
-
 	label 'process_long'
 
         input:
