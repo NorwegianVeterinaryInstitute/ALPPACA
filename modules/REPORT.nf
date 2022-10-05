@@ -1,7 +1,7 @@
 process REPORT_CORE_GENOME_DEDUP {
         publishDir "${params.out_dir}/results", pattern: "*.html", mode: "copy"
 
-	conda (params.enable_conda ? '../assets/r_env.yml' : null)
+	conda (params.enable_conda ? './assets/r_env.yml' : null)
 	container 'evezeyl/r_docker'
 
 	label 'process_short'
@@ -29,7 +29,7 @@ process REPORT_CORE_GENOME {
 
         label 'process_short'
 
-	conda (params.enable_conda ? '../assets/r_env.yml' : null)
+	conda (params.enable_conda ? './assets/r_env.yml' : null)
 	container 'evezeyl/r_docker'
 
         input:
@@ -54,7 +54,7 @@ process REPORT_CORE_GENE_DEDUP {
 
         label 'process_short'
 	
-	conda (params.enable_conda ? '../assets/r_env.yml' : null)
+	conda (params.enable_conda ? './assets/r_env.yml' : null)
 	container 'evezeyl/r_docker'
 
         input:
@@ -83,7 +83,7 @@ process REPORT_CORE_GENE {
 
         label 'process_short'
 
-	conda (params.enable_conda ? '../assets/r_env.yml' : null)
+	conda (params.enable_conda ? './assets/r_env.yml' : null)
 	container 'evezeyl/r_docker'
 
         input:
@@ -111,7 +111,7 @@ process REPORT_MAPPING_DEDUP {
 
         label 'process_short'
 
-	conda (params.enable_conda ? '../assets/r_env.yml' : null)
+	conda (params.enable_conda ? './assets/r_env.yml' : null)
 	container 'evezeyl/r_docker'
 
         input:
@@ -137,7 +137,7 @@ process REPORT_MAPPING {
 
         label 'process_short'
 
-	conda (params.enable_conda ? '../assets/r_env.yml' : null)
+	conda (params.enable_conda ? './assets/r_env.yml' : null)
 	container 'evezeyl/r_docker'
 
         input:
