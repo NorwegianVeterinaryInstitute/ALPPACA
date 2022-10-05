@@ -1,0 +1,17 @@
+name: my-env
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - bioconductor-ggtree=3.2.0
+  - r-stringr=1.4.0
+  - r-readr=2.1.2
+  - r-dplyr=1.0.8
+  - r-tidyr=1.2.0
+  - r-plotly=4.10.0
+  - r-ggplot2=3.3.5
+  - r-viridis=0.6.2
+  - r-formattable=0.2.1
+  - r-kableExtra=1.3.4
+  - r-patchwork=1.1.1
