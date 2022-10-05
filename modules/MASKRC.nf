@@ -4,7 +4,7 @@ process MASKRC {
         publishDir "${params.out_dir}/results", pattern: "recombinant_regions", mode: "copy", saveAs: {"MASKRC_recombinant_regions.txt"}
         publishDir "${params.out_dir}/results", pattern: "recombinant_plot", mode: "copy", saveAs: {"MASKRC_recombinant_plot.svg"}
 
-	conda (params.enable_conda ? 'bioconda::maskrc-svg=0.5' : null)
+	conda (params.enable_conda ? 'bioconda::maskrc-svg=0.5-1' : null)
 	container 'quay.io/biocontainers/maskrc-svg:0.5--1'
 
         input:
