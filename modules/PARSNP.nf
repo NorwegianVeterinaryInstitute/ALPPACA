@@ -1,13 +1,8 @@
 process PARSNP {
-        publishDir "${params.out_dir}/logs", pattern: "parsnp.log", mode: "copy"
-        publishDir "${params.out_dir}/results", pattern: "results/parsnpAligner.log", mode: "copy", saveAs: {"PARSNP_results.txt"}
-        publishDir "${params.out_dir}/results", pattern: "results/parsnp.ggr", mode: "copy", saveAs: {"PARSNP_gingr_archive.ggr"}
-	publishDir "${params.out_dir}/results", pattern: "parsnp_alignment.fasta", mode: "copy", saveAs: {"PARSNP_alignment.aln"}
-
-	label 'process_long'
-
 	conda (params.enable_conda ? 'bioconda::parsnp=1.6.1' : null)
 	container 'quay.io/biocontainers/parsnp:1.6.1--h9a82719_0'
+
+	label 'process_long'
 
         input:
         file("*")

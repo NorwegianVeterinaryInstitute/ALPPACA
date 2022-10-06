@@ -1,8 +1,8 @@
 process SNPSITES_FCONST {
-	label 'process_short'
-
 	conda (params.enable_conda ? 'bioconda::snp-sites=2.5.1' : null)
 	container 'quay.io/biocontainers/snp-sites:2.5.1--h5bf99c6_1'
+
+	label 'process_short'
 
         input:
         file(snp_alignment)
@@ -18,14 +18,10 @@ process SNPSITES_FCONST {
 }
 
 process SNPSITES {
-	publishDir "${params.out_dir}/results", pattern: "snp_sites_alignment.aln", mode: "copy", saveAs: {"SNP_sites_alignment.aln"}
-	publishDir "${params.out_dir}/logs", pattern: "snp_sites.log", mode: "copy"
-
-	label 'process_short'
-
 	conda (params.enable_conda ? 'bioconda::snp-sites=2.5.1' : null)
         container 'quay.io/biocontainers/snp-sites:2.5.1--h5bf99c6_1'
 
+	label 'process_short'
 
         input:
         file(snp_alignment)

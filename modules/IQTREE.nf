@@ -1,16 +1,8 @@
 process IQTREE {
-        publishDir "${params.out_dir}/logs", pattern: "*.log", mode: "copy"
-        publishDir "${params.out_dir}/results", pattern: "*.contree", mode: "copy", saveAs: {"IQTREE_tree.phylo"}
-        publishDir "${params.out_dir}/results", pattern: "*.iqtree", mode: "copy", saveAs: {"IQTREE_results.txt"}
-	publishDir "${params.out_dir}/results", pattern: "*.alninfo", mode: "copy", saveAs: {"IQTREE_alninfo.txt"}
-	publishDir "${params.out_dir}/results", pattern: "*.splits.nex", mode: "copy", saveAs: {"IQTREE_splits.nex"}
-	publishDir "${params.out_dir}/results", pattern: "*.ufboot", mode: "copy", saveAs: {"IQTREE_bootstrap_trees.ufboot"}
-	publishDir "${params.out_dir}/results", pattern: "*.treefile", mode: "copy", saveAs: {"IQTREE_ml_tree.phylo"}
-
-        label 'process_long'
-
 	conda (params.enable_conda ? 'bioconda::iqtree=2.1.4_beta' : null)
 	container 'quay.io/biocontainers/iqtree:2.1.4_beta--hdcc8f71_0'
+
+	label 'process_long'
 
         input:
         file(alignment_filtered)
@@ -37,18 +29,10 @@ process IQTREE {
 }
 
 process IQTREE_FCONST {
-        publishDir "${params.out_dir}/logs", pattern: "*.log", mode: "copy"
-        publishDir "${params.out_dir}/results", pattern: "*.contree", mode: "copy", saveAs: {"IQTREE_tree.phylo"}
-        publishDir "${params.out_dir}/results", pattern: "*.iqtree", mode: "copy", saveAs: {"IQTREE_results.txt"}
-	publishDir "${params.out_dir}/results", pattern: "*.alninfo", mode: "copy", saveAs: {"IQTREE_alninfo.txt"}
-	publishDir "${params.out_dir}/results", pattern: "*.splits.nex", mode: "copy", saveAs: {"IQTREE_splits.nex"}
-	publishDir "${params.out_dir}/results", pattern: "*.ufboot", mode: "copy", saveAs: {"IQTREE_bootstrap_trees.ufboot"}
-	publishDir "${params.out_dir}/results", pattern: "*.treefile", mode: "copy", saveAs: {"IQTREE_ml_tree.phylo"}
-
-	label 'process_long'
-
 	conda (params.enable_conda ? 'bioconda::iqtree=2.1.4_beta' : null)
 	container 'quay.io/biocontainers/iqtree:2.1.4_beta--hdcc8f71_0'
+
+	label 'process_long'
 
         input:
         file(alignment_filtered)

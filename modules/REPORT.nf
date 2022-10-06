@@ -1,158 +1,44 @@
-process REPORT_CORE_GENOME_DEDUP {
-        publishDir "${params.out_dir}/results", pattern: "*.html", mode: "copy"
-
+process REPORT {
 	conda (params.enable_conda ? './assets/r_env.yml' : null)
-	container 'evezeyl/r_docker'
+	container 'library://hkaspersen/alppaca/r_base_4.1.2_alppaca:latest'
 
 	label 'process_short'
 
         input:
-        file(parsnp_report)
-	file(phylo_data)
-	file(phylo_tree)
-	file(snpdists)
-	file(duplicates_list)
-	val(dedup)
+	file("*")
 
         output:
         file("*")
 
         script:
-        """
-	cp $baseDir/bin/core_genome_report_dedup.Rmd .
-        Rscript $baseDir/bin/gen_report.R "core_genome" $dedup
-        """
-}
-
-process REPORT_CORE_GENOME {
-        publishDir "${params.out_dir}/results", pattern: "*.html", mode: "copy"
-
-        label 'process_short'
-
-	conda (params.enable_conda ? './assets/r_env.yml' : null)
-	container 'evezeyl/r_docker'
-
-        input:
-        file(parsnp_report)
-        file(phylo_data)
-        file(phylo_tree)
-        file(snpdists)
-	val(dedup)
-
-        output:
-        file("*")
-
-        script:
-        """
-        cp $baseDir/bin/core_genome_report.Rmd .
-        Rscript $baseDir/bin/gen_report.R "core_genome" $dedup
-        """
-}
-
-process REPORT_CORE_GENE_DEDUP {
-        publishDir "${params.out_dir}/results", pattern: "*.html", mode: "copy"
-
-        label 'process_short'
-	
-	conda (params.enable_conda ? './assets/r_env.yml' : null)
-	container 'evezeyl/r_docker'
-
-        input:
-        file(ngenes_list)
-        file(ncontigs_list)
-        file(mds_data)
-        file(pangenome_data)
-        file(phylo_data)
-        file(phylo_tree)
-        file(snpdists)
-        file(duplicates_list)
-	val(dedup)
-
-        output:
-        file("*")
-
-        script:
-        """
-        cp $baseDir/bin/core_gene_report_dedup.Rmd .
-        Rscript $baseDir/bin/gen_report.R "core_gene" $dedup
-        """
-}
-
-process REPORT_CORE_GENE {
-        publishDir "${params.out_dir}/results", pattern: "*.html", mode: "copy"
-
-        label 'process_short'
-
-	conda (params.enable_conda ? './assets/r_env.yml' : null)
-	container 'evezeyl/r_docker'
-
-        input:
-        file(ngenes_list)
-	file(ncontigs_list)
-	file(mds_data)
-	file(pangenome_data)
-	file(phylo_data)
-	file(phylo_tree)
-	file(snpdists)
-	val(dedup)
-
-        output:
-        file("*")
-
-        script:
-        """
-	cp $baseDir/bin/core_gene_report.Rmd .
-        Rscript $baseDir/bin/gen_report.R "core_gene" $dedup
-        """
-}
-
-process REPORT_MAPPING_DEDUP {
-        publishDir "${params.out_dir}/results", pattern: "*.html", mode: "copy"
-
-        label 'process_short'
-
-	conda (params.enable_conda ? './assets/r_env.yml' : null)
-	container 'evezeyl/r_docker'
-
-        input:
-        file(snippy_data)
-        file(phylo_data)
-        file(phylo_tree)
-        file(snpdists)
-        file(duplicates_list)
-	val(dedup)
-
-        output:
-        file("*")
-
-        script:
-        """
-        cp $baseDir/bin/mapping_report_dedup.Rmd .
-        Rscript $baseDir/bin/gen_report.R "mapping" $dedup
-        """
-}
-
-process REPORT_MAPPING {
-        publishDir "${params.out_dir}/results", pattern: "*.html", mode: "copy"
-
-        label 'process_short'
-
-	conda (params.enable_conda ? './assets/r_env.yml' : null)
-	container 'evezeyl/r_docker'
-
-        input:
-        file(snippy_data)
-	file(phylo_data)
-	file(phylo_tree)
-	file(snpdists)
-	val(dedup)
-
-        output:
-        file("*")
-
-        script:
-        """
-	cp $baseDir/bin/mapping_report.Rmd .
-        Rscript $baseDir/bin/gen_report.R "mapping" $dedup
-        """
+	if (params.track == "core_genome" && !params.deduplicate)
+		"""
+		cp $baseDir/bin/core_genome_report.Rmd .
+        	Rscript $baseDir/bin/gen_report.R "core_genome" false
+        	"""
+	if (params.track == "core_genome" && params.deduplicate)
+		"""
+		cp $baseDir/bin/core_genome_report_dedup.Rmd .
+                Rscript $baseDir/bin/gen_report.R "core_genome" true
+                """
+	if (params.track == "core_gene" && !params.deduplicate)
+		"""
+		cp $baseDir/bin/core_gene_report.Rmd .
+                Rscript $baseDir/bin/gen_report.R "core_gene" false
+                """
+        if (params.track == "core_gene" && params.deduplicate)
+                """
+		cp $baseDir/bin/core_gene_report_dedup.Rmd .
+                Rscript $baseDir/bin/gen_report.R "core_gene" true
+                """
+        if (params.track == "mapping" && !params.deduplicate)
+                """
+		cp $baseDir/bin/mapping_report.Rmd .
+                Rscript $baseDir/bin/gen_report.R "mapping" false
+                """
+        if (params.track == "mapping" && params.deduplicate)
+                """
+		cp $baseDir/bin/mapping_report_dedup.Rmd .
+                Rscript $baseDir/bin/gen_report.R "mapping" true
+                """
 }

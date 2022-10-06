@@ -1,9 +1,4 @@
 process MASKRC {
-        publishDir "${params.out_dir}/logs", pattern: "*.log", mode: "copy"
-        publishDir "${params.out_dir}/results", pattern: "masked.aln", mode: "copy", saveAs: {"MASKRC_masked_alignment.aln"}
-        publishDir "${params.out_dir}/results", pattern: "recombinant_regions", mode: "copy", saveAs: {"MASKRC_recombinant_regions.txt"}
-        publishDir "${params.out_dir}/results", pattern: "recombinant_plot", mode: "copy", saveAs: {"MASKRC_recombinant_plot.svg"}
-
 	conda (params.enable_conda ? 'bioconda::maskrc-svg=0.5' : null)
 	container 'quay.io/biocontainers/maskrc-svg:0.5--1'
 

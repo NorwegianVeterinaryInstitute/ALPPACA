@@ -1,6 +1,4 @@
 process SNPDIST {
-        publishDir "${params.out_dir}/results", pattern: "snp_dists.tab", mode: "copy", saveAs: {"SNPDIST_results.txt"}
-
 	conda (params.enable_conda ? 'bioconda::snp-dists=0.8.2' : null)
 	container 'quay.io/biocontainers/snp-dists:0.8.2--h5bf99c6_0'
 	
