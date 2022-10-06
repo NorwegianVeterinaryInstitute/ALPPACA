@@ -9,7 +9,7 @@ include { REPORT_MAPPING_DEDUP;REPORT_MAPPING } from "../modules/REPORT.nf"
 
 
 workflow MAPPING {
-        reads_ch=channel.fromPath(params.reads, checkIfExists: true)
+        reads_ch=channel.fromPath(params.input, checkIfExists: true)
                         .collect()
 
         SNIPPY(reads_ch)

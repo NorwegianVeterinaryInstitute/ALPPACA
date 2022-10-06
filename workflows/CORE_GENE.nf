@@ -7,7 +7,7 @@ include { IQTREE; IQTREE_FCONST                   } from "../modules/IQTREE.nf"
 include { REPORT_CORE_GENE_DEDUP;REPORT_CORE_GENE } from "../modules/REPORT.nf"
 
 workflow CORE_GENE {
-        assemblies_ch=channel.fromPath(params.assemblies, checkIfExists: true)
+        assemblies_ch=channel.fromPath(params.input, checkIfExists: true)
 
         PROKKA(assemblies_ch)
         PANAROO_QC(PROKKA.out.prokka_ch.collect())

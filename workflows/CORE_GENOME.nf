@@ -8,7 +8,7 @@ include { REPORT_CORE_GENOME_DEDUP; REPORT_CORE_GENOME } from "../modules/REPORT
 include { PARSNP                                       } from "../modules/PARSNP.nf"
 
 workflow CORE_GENOME {
-        assemblies_ch=channel.fromPath(params.assemblies, checkIfExists: true)
+        assemblies_ch=channel.fromPath(params.input, checkIfExists: true)
                              .collect()
 
         PARSNP(assemblies_ch)
