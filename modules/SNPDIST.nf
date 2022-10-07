@@ -11,6 +11,7 @@ process SNPDIST {
 
         script:
         """
+	snp-dists -v > snp-dists.version
         snp-dists $snp_alignment > snp_dists.tab
         """
 }

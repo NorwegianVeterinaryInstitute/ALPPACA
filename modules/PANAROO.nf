@@ -36,6 +36,7 @@ process PANAROO_PANGENOME {
 
         script:
         """
+	panaroo --version > panaroo.version
         panaroo -i $gffs -o . -t $task.cpus -a core --clean-mode $params.clean_mode --aligner mafft &> panaroo_pangenome.log
         """
 }

@@ -14,7 +14,8 @@ process SNIPPY {
 
         script:
         """
-        $baseDir/bin/snippyfy.bash "$params.R1" "$params.R2" "$params.suffix"
+        snippy --version > snippy.version
+	$baseDir/bin/snippyfy.bash "$params.R1" "$params.R2" "$params.suffix"
         snippy-multi snippy_samples.list --ref $params.snippyref --cpus $task.cpus > snippy.sh
         sh snippy.sh &> snippy.log
         """

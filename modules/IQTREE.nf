@@ -14,6 +14,7 @@ process IQTREE {
 
         script:
         """
+	iqtree --version > iqtree.version
         iqtree -s $alignment_filtered\
 		-m $params.iqtree_model\
 		-mset $params.mset\
@@ -44,19 +45,20 @@ process IQTREE_FCONST {
 	path "iqtree.iqtree", emit: iqtree_results_ch
 
         script:
-		"""
-                iqtree -s $alignment_filtered\
-                        -m $params.iqtree_model\
-                        -mset $params.mset\
-                        -cmax $params.cmax\
-                        -bb $params.bootstrap\
-                        -nt AUTO\
-                        -pre iqtree\
-                        -v\
-                        -alninfo\
-                        -wbtl\
-                        $params.outgroup\
-                        -fconst $fconst
-                """
+	"""
+	iqtree --version > iqtree.version
+        iqtree -s $alignment_filtered\
+               -m $params.iqtree_model\
+               -mset $params.mset\
+               -cmax $params.cmax\
+               -bb $params.bootstrap\
+               -nt AUTO\
+               -pre iqtree\
+               -v\
+               -alninfo\
+               -wbtl\
+               $params.outgroup\
+               -fconst $fconst
+       """
 }
 

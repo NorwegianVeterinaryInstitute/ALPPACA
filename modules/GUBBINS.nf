@@ -13,6 +13,7 @@ process GUBBINS {
 
         script:
         """
+	run_gubbins.py --version > gubbins.version
         run_gubbins.py $alignment --tree-builder $params.treebuilder --model $params.gubbinsmodel --threads $task.cpus -v --prefix gubbins_out &> gubbins.log
         """
 }

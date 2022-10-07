@@ -11,6 +11,7 @@ process PROKKA {
 
         script:
         """
+	prokka --version > prokka.version
         prokka --addgenes --compliant --prefix $assembly.baseName --cpus $task.cpus --outdir . --force $params.prokka_additional $assembly
         """
 }

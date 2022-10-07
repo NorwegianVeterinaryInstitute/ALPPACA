@@ -27,10 +27,12 @@ process SNPSITES {
         file(snp_alignment)
 
         output:
+	file("*")
         path "snp_sites_alignment*", emit: snp_sites_aln_ch
 
         script:
         """
+	snp-sites -V > snp-sites.version
         snp-sites -m -o snp_sites_alignment.aln $snp_alignment &> snp_sites.log
         """
 }
