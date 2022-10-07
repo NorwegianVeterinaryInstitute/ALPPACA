@@ -1,6 +1,6 @@
 process REPORT_CORE_GENOME {
 	conda (params.enable_conda ? './assets/r_env.yml' : null)
-	container 'library://hkaspersen/alppaca/r_base_4.1.2_alppaca:latest'
+	container 'evezeyl/r_docker:latest'
 
 	label 'process_short'
 
@@ -22,7 +22,7 @@ process REPORT_CORE_GENOME {
 
 process REPORT_CORE_GENE {
         conda (params.enable_conda ? './assets/r_env.yml' : null)
-        container 'library://hkaspersen/alppaca/r_base_4.1.2_alppaca:latest'
+        container 'evezeyl/r_docker:latest'
 
         label 'process_short'
 
@@ -47,7 +47,7 @@ process REPORT_CORE_GENE {
 
 process REPORT_MAPPING {
         conda (params.enable_conda ? './assets/r_env.yml' : null)
-        container 'library://hkaspersen/alppaca/r_base_4.1.2_alppaca:latest'
+        container 'evezeyl/r_docker:latest'
 
         label 'process_short'
 
