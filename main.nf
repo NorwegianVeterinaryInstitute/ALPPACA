@@ -1,7 +1,7 @@
 // ALPPACA Pipeline
 
 
-log.info "=========================================================================="
+log.info "".center(74, "=")
 log.info ".                -------------------------------                         ."
 log.info ".                |                             |                         ."
 log.info ".         ----------------               -------------                   ."
@@ -9,11 +9,10 @@ log.info ".         |              |               |           |                
 log.info ".      -------     -------------         |     ------------              ."
 log.info ".      |     |     |           |         |     |          |              ."
 log.info ".      A  tooL for Prokaryotic Phylogeny And   Clustering Analysis       ."
-log.info "=========================================================================="
-log.info " Run track: $params.track                                                 "
-log.info " Git info: $workflow.repository - $workflow.revision [$workflow.commitId] "
-log.info " ALPPACA Version: $workflow.manifest.version                              "
-log.info "==========================================================================".stripIndent()
+log.info "".center(74, "=")
+log.info "Run track: $params.track".center(74)
+log.info "ALPPACA Version: $workflow.manifest.version".center(74)
+log.info "".center(74, "=")
 
 // Activate dsl2
 nextflow.enable.dsl=2
@@ -36,14 +35,14 @@ workflow {
 }
 
 workflow.onComplete {
-	log.info "".center(60, "=")
-	log.info "ALPPACA Complete!".center(60)
-	log.info "Output directory: $params.out_dir".center(60)
-	log.info "Duration: $workflow.duration".center(60)
-	log.info "Nextflow version: $workflow.nextflow.version".center(60)
-	log.info "".center(60, "=")
+	log.info "".center(74, "=")
+	log.info "ALPPACA Complete!".center(74)
+	log.info "Output directory: $params.out_dir".center(74)
+	log.info "Duration: $workflow.duration".center(74)
+	log.info "Nextflow version: $workflow.nextflow.version".center(74)
+	log.info "".center(74, "=")
 }
 
 workflow.onError {
-	println "Pipeline execution stopped with the following message: ${workflow.errorMessage}".center(60, "=")
+	println "Pipeline execution stopped with the following message: ${workflow.errorMessage}".center(74, "=")
 }
