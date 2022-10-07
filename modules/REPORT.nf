@@ -40,7 +40,7 @@ process REPORT_CORE_GENE {
 
         script:
         """
-        cp $baseDir/bin/core_gene_report_dedup.Rmd .
+        cp $baseDir/bin/core_gene_report.Rmd .
         Rscript $baseDir/bin/gen_report.R "core_gene"
         """
 }
@@ -62,7 +62,7 @@ process REPORT_MAPPING {
 
         script:
         """
-        cp $baseDir/bin/mapping_report_dedup.Rmd .
+        cp $baseDir/bin/mapping_report.Rmd .
         Rscript $baseDir/bin/gen_report.R "mapping"
         """
 }
