@@ -1,19 +1,19 @@
 // ALPPACA Pipeline
 
 
-log.info "============================================================="
-log.info ".          -------------------------------                  ."
-log.info ".          |                             |                  ."
-log.info ".   ----------------               -------------            ."
-log.info ".   |              |               |           |            ."
-log.info ".-------     -------------         |     ------------       ."
-log.info ".|     |     |           |         |     |          |       ."
-log.info ".A  tooL for Prokaryotic Phylogeny And   Clustering Analysis."
-log.info "============================================================="
-log.info " Run track: $params.track                                    "
-log.info " Work directory: $workDir                                    "
-log.info " ALPPACA Version: 1.0.4                                      "
-log.info "=============================================================".stripIndent()
+log.info "=========================================================================="
+log.info ".                -------------------------------                         ."
+log.info ".                |                             |                         ."
+log.info ".         ----------------               -------------                   ."
+log.info ".         |              |               |           |                   ."
+log.info ".      -------     -------------         |     ------------              ."
+log.info ".      |     |     |           |         |     |          |              ."
+log.info ".      A  tooL for Prokaryotic Phylogeny And   Clustering Analysis       ."
+log.info "=========================================================================="
+log.info " Run track: $params.track                                                 "
+log.info " Git info: $workflow.repository - $workflow.revision [$workflow.commitId] "
+log.info " ALPPACA Version: $workflow.manifest.version                              "
+log.info "==========================================================================".stripIndent()
 
 // Activate dsl2
 nextflow.enable.dsl=2
@@ -40,7 +40,6 @@ workflow.onComplete {
 	log.info "ALPPACA Complete!".center(60)
 	log.info "Output directory: $params.out_dir".center(60)
 	log.info "Duration: $workflow.duration".center(60)
-	log.info "Command line: $workflow.commandLine".center(60)
 	log.info "Nextflow version: $workflow.nextflow.version".center(60)
 	log.info "".center(60, "=")
 }
