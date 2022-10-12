@@ -43,7 +43,7 @@ All three tracks also generate SNP distance statistics with snp-dists (https://g
 ![Overview of the three tracks in ALPPACA.\label{fig:figure1}](pipeline.png)
 
 # Conclusion
-The ALPPACA pipeline offers a user-friendly way of running phylogenetic analysis on different datasets. The pipeline is reproducible and flexible, and only requires a few options and parameters to run. The Nextflow framework allows for easy development and additions to the pipeline in the future.
+The ALPPACA pipeline provides a suite of phylogenetic analyses for different scenarios, all in one package. This enables a variety of uses without having to download several tools and programs, and the Nextflow framework allows for user-friendly and reproducible use of the pipeline. Additional tracks may be added to ALPPACA in the future, such as clusering based on core/whole genome multi locus sequence typing, or additions to existing tracks, such as recombination detection in the core gene analysis. 
 
 # Acknowledgements
 The projects QREC-MaP (Research Funding for Agriculture and the Food Industry, Norwegian Research Council, project number 255383), KLEB-GAP (Trond Mohn Foundation, project number TMS2019TMT03), and Yersiniosis at Sea (Norwegian Seafood Research Fund grant, project number 901505) are acknowledged for providing the research platform for this work. The computations were performed on resources provided by UNINETT Sigma2 - the National Infrastructure for High Performance Computing and Data Storage in Norway.
