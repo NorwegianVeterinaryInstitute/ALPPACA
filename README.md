@@ -1,6 +1,7 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.6334769.svg)](https://doi.org/10.5281/zenodo.6334769)
 ![Platform](https://img.shields.io/badge/Platform-Nextflow-green)
 ![License](https://img.shields.io/github/license/NorwegianVeterinaryInstitute/ALPPACA)
+[![status](https://joss.theoj.org/papers/182a5557ba7a30fe5c3ea732d2f1b222/status.svg)](https://joss.theoj.org/papers/182a5557ba7a30fe5c3ea732d2f1b222)
 
 <p align="center"><img src="logo.png" alt="Ellipsis" width="600"></p>
 Logo generated with www.biorender.com
