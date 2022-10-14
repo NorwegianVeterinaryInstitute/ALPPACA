@@ -27,7 +27,7 @@ A tooL for Prokaryotic Phylogeny And Clustering Analysis (ALPPACA) is a pipeline
 
 # Pipeline and track descriptions
 ## Pipeline
-The ALPPACA pipeline is written in Nextflow [@DiTommaso:2017], and the code and documentation are publicly available on Github  (https://github.com/NorwegianVeterinaryInstitute/ALPPACA). The user have the option of running the pipeline using different container handlers, such as docker, singularity, or conda. Each track generates a tidy html report with the main results from each analysis.
+The ALPPACA pipeline is written in Nextflow [@DiTommaso:2017], and the code and documentation are publicly available on Github  (https://github.com/NorwegianVeterinaryInstitute/ALPPACA). The user have the option of running the pipeline using different container handlers, such as docker, singularity, or conda. Each track generates a tidy html report summarizing the main results from each analysis.
 
 ## Tracks
 The pipeline consists of three separate tracks depending on the objectives and data available to the user (\autoref{fig:figure1}). Each track differ in the way they detect homologous regions to construct the multiple alignment needed for phylogenetic inference.
