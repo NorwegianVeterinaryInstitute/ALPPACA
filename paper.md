@@ -30,7 +30,7 @@ A tooL for Prokaryotic Phylogeny And Clustering Analysis (ALPPACA) is a pipeline
 The ALPPACA pipeline is written in Nextflow [@DiTommaso:2017], and the code and documentation are publicly available on Github  (https://github.com/NorwegianVeterinaryInstitute/ALPPACA). The user have the option of running the pipeline using different container handlers, such as docker, singularity, or conda. Each track generates a tidy html report with the main results from each analysis.
 
 ## Tracks
-The pipeline consists of three separate tracks depending on the objectives and data available to the user (\autoref{fig:figure1}). Each track differ in the way they they detect homologous regions to construct the multiple alignment needed for phylogenetic inference.
+The pipeline consists of three separate tracks depending on the objectives and data available to the user (\autoref{fig:figure1}). Each track differ in the way they detect homologous regions to construct the multiple alignment needed for phylogenetic inference.
 
 First, the core gene track is designed to be used for datasets that are expected to have a relatively high level of genetic diversity. This track is useful if you have a dataset with different but closely related species, or different STs of the same species. The track provides the means to generate a relatively high resolution phylogeny on diverse datasets. Here, the genomes are annotated with Prokka [@Seeman:2014], the pangenome is inferred using Panaroo [@Tonkin-Hill:2020], and a phylogenetic reconstruction is generated with IQTree [@Nguyen:2015] from a core gene alignment.
 
