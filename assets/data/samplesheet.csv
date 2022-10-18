@@ -1,1 +1,6 @@
-https://raw.githubusercontent.com/NorwegianVeterinaryInstitute/ALPPACA/master/assets/data/isolate1.fasta,https://raw.githubusercontent.com/NorwegianVeterinaryInstitute/ALPPACA/master/assets/data/isolate2.fasta,https://raw.githubusercontent.com/NorwegianVeterinaryInstitute/ALPPACA/master/assets/data/isolate3.fasta,https://raw.githubusercontent.com/NorwegianVeterinaryInstitute/ALPPACA/master/assets/data/isolate4.fasta,https://raw.githubusercontent.com/NorwegianVeterinaryInstitute/ALPPACA/master/assets/data/isolate5.fasta
+sample,path
+isolate1,https://raw.githubusercontent.com/NorwegianVeterinaryInstitute/ALPPACA/master/assets/data/isolate1.fasta
+isolate2,https://raw.githubusercontent.com/NorwegianVeterinaryInstitute/ALPPACA/master/assets/data/isolate2.fasta
+isolate3,https://raw.githubusercontent.com/NorwegianVeterinaryInstitute/ALPPACA/master/assets/data/isolate3.fasta
+isolate4,https://raw.githubusercontent.com/NorwegianVeterinaryInstitute/ALPPACA/master/assets/data/isolate4.fasta
+isolate5,https://raw.githubusercontent.com/NorwegianVeterinaryInstitute/ALPPACA/master/assets/data/isolate5.fasta
