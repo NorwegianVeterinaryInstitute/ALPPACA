@@ -8,8 +8,12 @@ include { REPORT_CORE_GENOME        } from "../modules/REPORT.nf"
 include { PARSNP                    } from "../modules/PARSNP.nf"
 
 workflow CORE_GENOME {
-        assemblies_ch=channel.fromPath(params.input, checkIfExists: true)
-                             .collect()
+	assemblies_ch = Channel
+		.fromPath(params.input)
+		.splitCsv(header:true, sep:",")
+		.map { file(it.path) }
+		.collect()
+		.view()
 
         PARSNP(assemblies_ch)
 
