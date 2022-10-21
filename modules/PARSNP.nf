@@ -9,13 +9,14 @@ process PARSNP {
 
         output:
 	path "parsnp_alignment.fasta", emit: fasta_alignment_ch
-	path "results/parsnpAligner.log", emit: parsnp_results_ch
+	path "parsnpAligner.log", emit: parsnp_results_ch
 	file("*")
 
         script:
         """
 	parsnp --version > parsnp.version
         parsnp -d *.fasta -p 4 --skip-phylogeny -o results -r $params.parsnp_ref -v -c &> parsnp.log
-	harvesttools -x results/*xmfa -M parsnp_alignment.fasta
+	mv results/* .
+	harvesttools -x *xmfa -M parsnp_alignment.fasta
         """
 }
