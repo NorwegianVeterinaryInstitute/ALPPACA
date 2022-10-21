@@ -9,8 +9,11 @@ include { REPORT_MAPPING	    } from "../modules/REPORT.nf"
 
 
 workflow MAPPING {
-        reads_ch=channel.fromPath(params.input, checkIfExists: true)
-                        .collect()
+	reads_ch = Channel
+		.fromPath(params.input)
+		.splitCsv(header:true, sep:",")
+		.map { file(it.path) }
+		.collect()
 
         SNIPPY(reads_ch)
 
