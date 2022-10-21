@@ -13,7 +13,6 @@ workflow CORE_GENOME {
 		.splitCsv(header:true, sep:",")
 		.map { file(it.path) }
 		.collect()
-		.view()
 
         PARSNP(assemblies_ch)
 
