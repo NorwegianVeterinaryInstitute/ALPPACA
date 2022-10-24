@@ -28,7 +28,7 @@ params:
 
 Date generated: `r Sys.Date()`
 
-## R Packages used
+## R Packages
 These are the R packages used to generate this report.
 ```{r, message=FALSE, warning=FALSE}
 library(stringr)
