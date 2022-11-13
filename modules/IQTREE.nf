@@ -1,6 +1,6 @@
 process IQTREE {
-	conda (params.enable_conda ? 'bioconda::iqtree=2.1.4_beta' : null)
-	container 'quay.io/biocontainers/iqtree:2.1.4_beta--hdcc8f71_0'
+	conda (params.enable_conda ? 'bioconda::iqtree=2.2.0.3' : null)
+	container 'quay.io/biocontainers/iqtree:2.2.0.3--hb97b32f_0'
 
 	label 'process_long'
 
@@ -30,8 +30,8 @@ process IQTREE {
 }
 
 process IQTREE_FCONST {
-	conda (params.enable_conda ? 'bioconda::iqtree=2.1.4_beta' : null)
-	container 'quay.io/biocontainers/iqtree:2.1.4_beta--hdcc8f71_0'
+	conda (params.enable_conda ? 'bioconda::iqtree=2.2.0.3'' : null)
+	container 'quay.io/biocontainers/iqtree:2.2.0.3--hb97b32f_0'
 
 	label 'process_long'
 
