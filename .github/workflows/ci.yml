@@ -40,4 +40,4 @@ jobs:
 
       - name: Run core gene track test
         run: |
-	  nextflow run ${GITHUB_WORKSPACE} -profile test_core_gene,docker --out_dir ./results
+          nextflow run ${GITHUB_WORKSPACE} -profile test_core_gene,docker --out_dir ./results
