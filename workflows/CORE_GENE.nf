@@ -12,8 +12,12 @@ workflow CORE_GENE {
 		.splitCsv(header:true, sep:",")
 		.map { file(it.path) }
 
+	refdb_ch = Channel
+		.fromPath(params.refdb)
+
         PROKKA(assemblies_ch)
-        PANAROO_QC(PROKKA.out.prokka_ch.collect())
+        PANAROO_QC(PROKKA.out.prokka_ch.collect(),
+		   refdb_ch)
         PANAROO_PANGENOME(PROKKA.out.prokka_ch.collect())
         if (params.deduplicate) {
                 DEDUPLICATE(PANAROO_PANGENOME.out.core_alignment_ch)
