@@ -36,8 +36,8 @@ jobs:
 
       - name: Run core genome track test
         run: |
-          nextflow run ${GITHUB_WORKSPACE} -profile test_core_genome,docker --out_dir ./results_core_genome
+          nextflow run ${GITHUB_WORKSPACE} -profile test_core_genome,docker --out_dir ./results
 
       - name: Run core gene track test
         run: |
-	  nextflow run ${GITHUB_WORKSPACE} -profile test_core_gene,docker --out_dir ./results_core_gene
+	  nextflow run ${GITHUB_WORKSPACE} -profile test_core_gene,docker --out_dir ./results
