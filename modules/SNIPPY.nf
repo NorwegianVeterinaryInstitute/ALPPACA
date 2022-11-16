@@ -6,7 +6,8 @@ process SNIPPY {
 
         input:
         file("*")
-
+	file(ref)
+	
         output:
         path "core.full.aln", emit: snippy_alignment_ch
 	path "core.txt", emit: results_ch
@@ -16,7 +17,7 @@ process SNIPPY {
         """
         snippy --version > snippy.version
 	$baseDir/bin/snippyfy.bash "$params.R1" "$params.R2" "$params.suffix"
-        snippy-multi snippy_samples.list --ref $params.snippyref --cpus $task.cpus > snippy.sh
+        snippy-multi snippy_samples.list --ref $ref --cpus $task.cpus > snippy.sh
         sh snippy.sh &> snippy.log
         """
 }
