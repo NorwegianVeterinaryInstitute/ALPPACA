@@ -42,7 +42,7 @@ jobs:
         run: |
           nextflow run ${GITHUB_WORKSPACE} -profile test_core_gene,docker --out_dir ./results
 
-     - name: Run mapping track test
-       run: |
+      - name: Run mapping track test
+        run: |
           nextflow run ${GITHUB_WORKSPACE} -profile test_mapping,docker --out_dir ./results
 
