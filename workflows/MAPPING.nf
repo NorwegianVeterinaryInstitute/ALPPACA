@@ -15,7 +15,11 @@ workflow MAPPING {
 		.map { file(it.path) }
 		.collect()
 
-        SNIPPY(reads_ch)
+	ref_ch = Channel
+		.fromPath(params.snippyref)
+
+        SNIPPY(reads_ch,
+	       ref_ch)
 
         if (params.deduplicate) {
                 DEDUPLICATE(SNIPPY.out.snippy_alignment_ch)

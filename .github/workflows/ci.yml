@@ -30,12 +30,19 @@ jobs:
       - name: Install Nextflow
         env:
           NXF_VER: ${{ matrix.NXF_VER }}
-          # Uncomment only if the edge release is more recent than the latest stable release
-          # See https://github.com/nextflow-io/nextflow/issues/2467
-          # NXF_EDGE: ${{ matrix.NXF_EDGE }}
         run: |
           wget -qO- get.nextflow.io | bash
           sudo mv nextflow /usr/local/bin/
-      - name: Run pipeline with test data
+
+      - name: Run core genome track test
         run: |
-          nextflow run ${GITHUB_WORKSPACE} -profile test,docker --out_dir ./results
+          nextflow run ${GITHUB_WORKSPACE} -profile test_core_genome,docker --out_dir ./results
+
+      - name: Run core gene track test
+        run: |
+          nextflow run ${GITHUB_WORKSPACE} -profile test_core_gene,docker --out_dir ./results
+
+      - name: Run mapping track test
+        run: |
+          nextflow run ${GITHUB_WORKSPACE} -profile test_mapping,docker --out_dir ./results
+

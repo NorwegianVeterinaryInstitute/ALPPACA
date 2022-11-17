@@ -1,0 +1,11 @@
+sample,path
+isolate1,https://raw.githubusercontent.com/NorwegianVeterinaryInstitute/ALPPACA/master/assets/data/reads/isolate1_1.fastq.gz
+isolate1,https://raw.githubusercontent.com/NorwegianVeterinaryInstitute/ALPPACA/master/assets/data/reads/isolate1_2.fastq.gz
+isolate2,https://raw.githubusercontent.com/NorwegianVeterinaryInstitute/ALPPACA/master/assets/data/reads/isolate2_1.fastq.gz
+isolate2,https://raw.githubusercontent.com/NorwegianVeterinaryInstitute/ALPPACA/master/assets/data/reads/isolate2_2.fastq.gz
+isolate3,https://raw.githubusercontent.com/NorwegianVeterinaryInstitute/ALPPACA/master/assets/data/reads/isolate3_1.fastq.gz
+isolate3,https://raw.githubusercontent.com/NorwegianVeterinaryInstitute/ALPPACA/master/assets/data/reads/isolate3_2.fastq.gz
+isolate4,https://raw.githubusercontent.com/NorwegianVeterinaryInstitute/ALPPACA/master/assets/data/reads/isolate4_1.fastq.gz
+isolate4,https://raw.githubusercontent.com/NorwegianVeterinaryInstitute/ALPPACA/master/assets/data/reads/isolate4_2.fastq.gz
+isolate5,https://raw.githubusercontent.com/NorwegianVeterinaryInstitute/ALPPACA/master/assets/data/reads/isolate5_1.fastq.gz
+isolate5,https://raw.githubusercontent.com/NorwegianVeterinaryInstitute/ALPPACA/master/assets/data/reads/isolate5_2.fastq.gz

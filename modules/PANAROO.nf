@@ -6,6 +6,7 @@ process PANAROO_QC {
 
         input:
         file(gffs)
+	file(refdb)
 
         output:
 	path "mds_coords.txt", emit: panaroo_mds_coords_ch
@@ -16,7 +17,7 @@ process PANAROO_QC {
 
         script:
         """
-        panaroo-qc -i $gffs -o . -t $task.cpus --graph_type all --ref_db $params.refdb &> panaroo_qc.log
+        panaroo-qc -i $gffs -o . -t $task.cpus --graph_type all --ref_db $refdb &> panaroo_qc.log
         """
 }
 
