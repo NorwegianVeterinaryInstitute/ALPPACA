@@ -12,12 +12,16 @@ workflow CORE_GENE {
 		.splitCsv(header:true, sep:",")
 		.map { file(it.path) }
 
-	refdb_ch = Channel
-		.fromPath(params.refdb)
-
         PROKKA(assemblies_ch)
-        PANAROO_QC(PROKKA.out.prokka_ch.collect(),
-		   refdb_ch)
+
+	if (params.qc) {
+		refdb_ch = Channel
+                	.fromPath(params.refdb)
+
+        	PANAROO_QC(PROKKA.out.prokka_ch.collect(),
+		   	   refdb_ch)
+	}
+
         PANAROO_PANGENOME(PROKKA.out.prokka_ch.collect())
         if (params.deduplicate) {
                 DEDUPLICATE(PANAROO_PANGENOME.out.core_alignment_ch)
@@ -28,20 +32,14 @@ workflow CORE_GENE {
                         SNPSITES_FCONST(DEDUPLICATE.out.seqkit_ch)
                         IQTREE_FCONST(SNPSITES.out.snp_sites_aln_ch,
                                       SNPSITES_FCONST.out.fconst_ch)
-                        REPORT_CORE_GENE(PANAROO_QC.out.panaroo_ngenes_ch,
-                                         PANAROO_QC.out.panaroo_ncontigs_ch,
-                               		 PANAROO_QC.out.panaroo_mds_coords_ch,
-                               		 PANAROO_PANGENOME.out.pangenome_ch,
+                        REPORT_CORE_GENE(PANAROO_PANGENOME.out.pangenome_ch,
                                		 SNPDIST.out.snpdists_results_ch,
                                		 IQTREE_FCONST.out.iqtree_results_ch,
                                		 IQTREE_FCONST.out.R_tree)
                 }
                 if (!params.filter_snps) {
                         IQTREE(DEDUPLICATE.out.seqkit_ch)
-                        REPORT_CORE_GENE(PANAROO_QC.out.panaroo_ngenes_ch,
-			       		 PANAROO_QC.out.panaroo_ncontigs_ch,
-			       		 PANAROO_QC.out.panaroo_mds_coords_ch,
-			       		 PANAROO_PANGENOME.out.pangenome_ch,
+                        REPORT_CORE_GENE(PANAROO_PANGENOME.out.pangenome_ch,
 			       		 SNPDIST.out.snpdists_results_ch,
 			       		 IQTREE.out.iqtree_results_ch,
 			       		 IQTREE.out.R_tree)
@@ -55,20 +53,14 @@ workflow CORE_GENE {
                         SNPSITES_FCONST(PANAROO_PANGENOME.out.core_alignment_ch)
                         IQTREE_FCONST(SNPSITES.out.snp_sites_aln_ch,
                                       SNPSITES_FCONST.out.fconst_ch)
-                        REPORT_CORE_GENE(PANAROO_QC.out.panaroo_ngenes_ch,
-                               		 PANAROO_QC.out.panaroo_ncontigs_ch,
-                               		 PANAROO_QC.out.panaroo_mds_coords_ch,
-                               		 PANAROO_PANGENOME.out.pangenome_ch,
+                        REPORT_CORE_GENE(PANAROO_PANGENOME.out.pangenome_ch,
                                		 SNPDIST.out.snpdists_results_ch,
                                		 IQTREE_FCONST.out.iqtree_results_ch,
                                		 IQTREE_FCONST.out.R_tree)
                 }
                 if (!params.filter_snps) {
                         IQTREE(PANAROO_PANGENOME.out.core_alignment_ch)
-                        REPORT_CORE_GENE(PANAROO_QC.out.panaroo_ngenes_ch,
-                               		 PANAROO_QC.out.panaroo_ncontigs_ch,
-                               		 PANAROO_QC.out.panaroo_mds_coords_ch,
-                               		 PANAROO_PANGENOME.out.pangenome_ch,
+                        REPORT_CORE_GENE(PANAROO_PANGENOME.out.pangenome_ch,
                                		 SNPDIST.out.snpdists_results_ch,
                                		 IQTREE.out.iqtree_results_ch,
                                		 IQTREE.out.R_tree)

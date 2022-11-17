@@ -27,9 +27,6 @@ process REPORT_CORE_GENE {
         label 'process_short'
 
         input:
-        file(ngenes_list)
-	file(ncontigs_list)
-	file(mds_data)
 	file(pangenome_data)
 	file(phylo_data)
 	file(phylo_tree)

@@ -20,10 +20,7 @@ if (workflow == "core_gene") {
     rmarkdown::render(
       input  = 'core_gene_report.Rmd',
       params = list(
-        ngenes_data = "ngenes.txt",
-        ncontigs_data = "ncontigs.txt",
         pangenome_data = "summary_statistics.txt",
-        mds_data = "mds_coords.txt",
         phylo_data = "iqtree.iqtree",
         snpdist_report = "snp_dists.tab",
         phylo_tree = "iqtree.contree"

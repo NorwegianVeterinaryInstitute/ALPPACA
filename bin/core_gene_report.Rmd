@@ -9,12 +9,6 @@ output:
     toc_float:
       collapsed: false
 params:
-  ngenes_data:
-    value: x
-  ncontigs_data:
-    value: x
-  mds_data:
-    value: x
   pangenome_data:
     value: x
   snpdist_report:
@@ -97,61 +91,6 @@ tool_data %>%
 <br>
 
 # Tool information
-
-## Panaroo QC
-```{r, message=FALSE, warning=FALSE, fig.width=10, dpi=600, fig.cap="<center>***Figure 1:** Number of genes and contigs in all samples.*"}
-panaroo_ngenes_data <- read_delim(
-  params$ngenes_data,
-  delim = "\t",
-  show_col_types = FALSE
-)
-
-panaroo_ncontigs_data <- read_delim(
-  params$ncontigs_data,
-  delim = "\t",
-  show_col_types = FALSE
-)
-
-plot_ncontigs <- ggplot(panaroo_ncontigs_data, aes(no_contigs, sample)) +
-  geom_col() +
-  scale_x_reverse() +
-  labs(x = "Number of contigs") +
-  theme_bw() +
-  theme(axis.text.y = element_blank(),
-        axis.ticks.y = element_blank(),
-        axis.title.y = element_blank())
-
-plot_ngenes <- ggplot(panaroo_ngenes_data, aes(no_genes, sample)) +
-  geom_col() +
-  labs(x = "Number of genes") +
-  theme_bw() +
-  theme(axis.text.y = element_blank(),
-        axis.title.y = element_blank(),
-        axis.ticks.y = element_blank())
-
-plot_names <- ggplot(panaroo_ncontigs_data, aes(1, sample)) +
-  geom_text(aes(label = sample)) +
-  scale_x_reverse() +
-  theme_void()
-
-plot_ncontigs + plot_names + plot_ngenes +
-  plot_layout(widths = c(4, 2, 4))
-
-```
-
-
-```{r, message=FALSE, warning=FALSE, fig.width=8, fig.cap="<center>***Figure 2:** MDS analysis based on pairwise mash distances between all samples. Outliers should be investigated.*"}
-panaroo_mds_data <- read_delim(params$mds_data,
-                               delim = "\t",
-                               show_col_types = FALSE)
-
-mds_plot <- ggplot(panaroo_mds_data, aes(coordx, coordy, text = sample)) +
-  geom_point() +
-  theme_bw()
-
-ggplotly(mds_plot, tooltip = "text")
-
-```
 
 ## Pangenome analysis
 <center>*Number of genes detected in the pangenome analysis. The core genes were aligned and used in the phylogenetic analysis.*</center>
