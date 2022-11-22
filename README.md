@@ -1,4 +1,4 @@
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7271324.svg)](https://doi.org/10.5281/zenodo.7271324)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7331351.svg)](https://doi.org/10.5281/zenodo.7331351)
 ![Platform](https://img.shields.io/badge/Platform-Nextflow-green)
 ![License](https://img.shields.io/github/license/NorwegianVeterinaryInstitute/ALPPACA)
 [![status](https://joss.theoj.org/papers/182a5557ba7a30fe5c3ea732d2f1b222/status.svg)](https://joss.theoj.org/papers/182a5557ba7a30fe5c3ea732d2f1b222)
