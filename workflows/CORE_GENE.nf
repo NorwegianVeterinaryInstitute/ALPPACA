@@ -8,9 +8,9 @@ include { REPORT_CORE_GENE		} from "../modules/REPORT.nf"
 
 workflow CORE_GENE {
 	assemblies_ch = Channel
-		.fromPath(params.input)
+		.fromPath(params.input, checkIfExists: true)
 		.splitCsv(header:true, sep:",")
-		.map { file(it.path) }
+		.map { file(it.path, checkIfExists: true) }
 
         PROKKA(assemblies_ch)
 

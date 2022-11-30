@@ -9,9 +9,9 @@ include { PARSNP                    } from "../modules/PARSNP.nf"
 
 workflow CORE_GENOME {
 	assemblies_ch = Channel
-		.fromPath(params.input)
+		.fromPath(params.input, checkIfExists: true)
 		.splitCsv(header:true, sep:",")
-		.map { file(it.path) }
+		.map { file(it.path, checkIfExists: true) }
 		.collect()
 
         PARSNP(assemblies_ch)

@@ -10,9 +10,9 @@ include { REPORT_MAPPING	    } from "../modules/REPORT.nf"
 
 workflow MAPPING {
 	reads_ch = Channel
-		.fromPath(params.input)
+		.fromPath(params.input, checkIfExists: true)
 		.splitCsv(header:true, sep:",")
-		.map { file(it.path) }
+		.map { file(it.path, checkIfExists: true) }
 		.collect()
 
 	ref_ch = Channel
