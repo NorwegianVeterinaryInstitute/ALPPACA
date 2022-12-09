@@ -25,6 +25,7 @@ process IQTREE {
 		-v\
 		-alninfo\
 		-wbtl\
+		-seed $params.seed\
 		$params.outgroup
         """
 }
@@ -57,6 +58,7 @@ process IQTREE_FCONST {
                -v\
                -alninfo\
                -wbtl\
+	       -seed $params.seed\
                $params.outgroup\
                -fconst $fconst
        """
