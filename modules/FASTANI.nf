@@ -15,7 +15,14 @@ process FASTANI {
         script:
         """
 	fastANI --version > fastani.version
-	fastANI -q $fasta --rl $reflist -o ${id}_fastani.txt	
+	fastANI -q $fasta\
+		--rl $reflist\
+		-k $params.kmer_size\
+		--fragLen $params.fragment_length\
+		--minFraction $params.min_fraction\
+		--matrix\
+		-t 4\
+		-o ${id}_fastani.txt	
         """
 }
 
