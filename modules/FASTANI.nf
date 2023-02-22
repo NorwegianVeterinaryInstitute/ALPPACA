@@ -6,17 +6,17 @@ process FASTANI {
 
         input:
         tuple val(id), path(fasta)
-	path(reflist)
+	path(refs)
 
         output:
-        file("*")
+        path("*")
 	path "*_fastani.txt", emit: fastani_ch
 
         script:
         """
 	fastANI --version &> fastani.version
 	fastANI -q $fasta\
-		--rl $reflist\
+		--rl $refs\
 		-k $params.kmer_size\
 		--fragLen $params.fragment_length\
 		--minFraction $params.min_fraction\

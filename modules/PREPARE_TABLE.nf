@@ -8,8 +8,7 @@ process PREPARE_TABLE {
 
         shell:
         """
-	awk -F"," '{print \$2}' $input > reflist.txt
-	sed -i '1d' reflist.txt
+	readlink -f *fasta > reflist.txt
         """
 }
 
