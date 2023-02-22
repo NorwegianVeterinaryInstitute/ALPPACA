@@ -35,7 +35,7 @@ jobs:
           sudo mv nextflow /usr/local/bin/
 
       - name: Run ani track test
-          run: |
+        run: |
           nextflow run ${GITHUB_WORKSPACE} -profile test_ani,docker --out_dir ./results
 
       - name: Run core genome track test
