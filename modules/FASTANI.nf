@@ -6,7 +6,7 @@ process FASTANI {
 
         input:
         tuple val(id), path(fasta)
-	file(reflist)
+	path(reflist)
 
         output:
         file("*")
@@ -14,7 +14,7 @@ process FASTANI {
 
         script:
         """
-	fastANI --version > fastani.version
+	fastANI --version &> fastani.version
 	fastANI -q $fasta\
 		--rl $reflist\
 		-k $params.kmer_size\
