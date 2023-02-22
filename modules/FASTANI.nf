@@ -21,7 +21,7 @@ process FASTANI {
 		--fragLen $params.fragment_length\
 		--minFraction $params.min_fraction\
 		--matrix\
-		-t 4\
+		-t $task.cpus\
 		-o ${id}_fastani.txt	
         """
 }
