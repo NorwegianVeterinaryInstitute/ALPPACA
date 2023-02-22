@@ -16,6 +16,6 @@ workflow ANI {
 	
 	FASTANI.out.fastani_ch
 		.collectFile(name:'FASTANI_results.txt',
-			     storeDir:'results')
+			     storeDir:"${params.out_dir}/results")
 
 }
