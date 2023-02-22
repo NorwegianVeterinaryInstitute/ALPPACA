@@ -9,6 +9,8 @@ workflow ANI {
 
 	input_list_ch = Channel
 		.fromPath(params.input, checkIfExists: true)
+		.splitCsv(header:true, sep:",")
+		.map { file(it.path, checkIfExists: true) }
 		.collect()
 
 	PREPARE_TABLE(input_list_ch)
