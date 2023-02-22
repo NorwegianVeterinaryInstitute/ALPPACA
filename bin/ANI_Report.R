@@ -77,3 +77,8 @@ ggsave("ANI_distribution.png",
        units = "cm",
        dpi = 300)
 
+write.table(fastani, "fastani.tsv",
+            quote = F, sep = "\t",
+            row.names = FALSE, col.names = TRUE)
+
+
