@@ -19,7 +19,7 @@ RUN R --slave -e 'devtools::install_url("https://cran.r-project.org/src/contrib/
 RUN R --slave -e 'devtools::install_url("https://cran.r-project.org/src/contrib/formattable_0.2.1.tar.gz", dependencies = TRUE, upgrade = "always")'
 RUN R --slave -e 'devtools::install_url("https://cran.r-project.org/src/contrib/kableExtra_1.3.4.tar.gz", dependencies = TRUE, upgrade = "always")'
 RUN R --slave -e 'devtools::install_url("https://cran.r-project.org/src/contrib/patchwork_1.1.2.tar.gz", dependencies = TRUE, upgrade = "always")' 
-RUN R --slave -e 'devtools::install_url("https://cran.r-project.org/src/contrib/ggdist_3.2.1.tar.gz", dependencies = TRUE, upgrade = "always"'
+RUN R --slave -e 'devtools::install_url("https://cran.r-project.org/src/contrib/ggdist_3.2.1.tar.gz", dependencies = TRUE, upgrade = "always")'
 
 # Environments
 ENV LC_ALL=C
