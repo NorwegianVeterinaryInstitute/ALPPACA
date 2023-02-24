@@ -1,3 +1,22 @@
+process REPORT_ANI {
+        conda (params.enable_conda ? './assets/r_env.yml' : null)
+        container 'evezeyl/r_docker:latest'
+
+        label 'process_short'
+
+        input:
+        file(ani_reports)
+
+        output:
+        file("*")
+
+        script:
+        """
+        cp $baseDir/bin/ani_report.Rmd .
+        Rscript $baseDir/bin/gen_report.R "ani"
+        """
+}
+
 process REPORT_CORE_GENOME {
 	conda (params.enable_conda ? './assets/r_env.yml' : null)
 	container 'evezeyl/r_docker:latest'

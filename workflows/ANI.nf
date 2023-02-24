@@ -1,5 +1,6 @@
 include { PREPARE_TABLE  } from "../modules/PREPARE_TABLE.nf"
 include { FASTANI        } from "../modules/FASTANI.nf"
+include { REPORT_ANI     } from "../modules/REPORT.nf"
 
 workflow ANI {
 	assemblies_ch = Channel
@@ -20,4 +21,5 @@ workflow ANI {
 		.collectFile(name:'FASTANI_results.txt',
 			     storeDir:"${params.out_dir}/results")
 
+	REPORT_ANI(FASTANI.out.fastani_ch.collect())
 }
