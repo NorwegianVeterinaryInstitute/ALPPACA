@@ -20,7 +20,6 @@ process FASTANI {
 		-k $params.kmer_size\
 		--fragLen $params.fragment_length\
 		--minFraction $params.min_fraction\
-		--matrix\
 		-t $task.cpus\
 		-o ${id}_fastani.txt	
         """
