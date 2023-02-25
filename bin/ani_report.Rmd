@@ -23,6 +23,10 @@ library(dplyr)
 library(stringr)
 library(ggplot2)
 library(patchwork)
+library(readr)
+library(formattable)
+library(kableExtra)
+library(ggdist)
 
 packages <- (.packages())
 clean_pkg_version <- function(x) {
@@ -47,7 +51,7 @@ lapply(packages, function(x) clean_pkg_version(x)) %>%
 <br>
 
 ## Tool versions
-These are the tools used to run the analysis within the core genome workflow of ALPPACA.
+These are the tools used to run the analysis within the ani workflow of ALPPACA.
 ```{r, message=FALSE, warning=FALSE}
 tool_data <- data.frame(
   Tool = c("FastANI"),
@@ -68,8 +72,13 @@ tool_data %>%
 # Tool information
 
 ## FastANI
-<center>*The average nucleotide identity (ANI) for all-against-all isolates.*</center>
-```{r, dpi=600, fig.height=6, fig.width=10}
+The figure below presents the summarised average nucleotide identity (ANI)
+density for all included isolates. The black diamond and the bold line 
+in the boxplot represent the median value. Vertical blue lines represent
+each data point. The blue area above the horizontal line represent the
+density of samples for each ANI value. 
+
+```{r, dpi=600, fig.height=6, fig.width=10, message=FALSE, warning=FALSE}
 # helper Sorting order to remove duplicates
 keysort <- function(x,y) {
   sorted <- sort(c(x,y))
@@ -90,12 +99,13 @@ fastani_data <- lapply(file_list, function(x) {
     col_names = FALSE
     )
   }
-) bind_rows() %>%
+) %>% 
+  bind_rows() %>%
   rename("ID1" = X1,
          "ID2" = X2,
          "ANI" = X3,
          "Count Bidirectional Fragments Mappings" = X4,
-         "Total Query Fragments" = X5)) %>%
+         "Total Query Fragments" = X5) %>%
   dplyr::mutate(ID1 = str_remove_all(ID1, regex_pattern),
                 ID2 = str_remove_all(ID2,  regex_pattern),
                 ANI = as.numeric(ANI),
@@ -133,7 +143,7 @@ ggplot(fastani_data, aes(x = ANI, y = 1)) +
     width = 0.05,
     fill = "#a6cee3"
   ) +
-  ggdist::stat_halfeye(
+  stat_halfeye(
     shape = 18,
     point_size = 4,
     interval_size = 1.8,
@@ -148,6 +158,7 @@ ggplot(fastani_data, aes(x = ANI, y = 1)) +
         axis.text.y = element_blank(),
         axis.title.y = element_blank(),
         axis.ticks.y = element_blank(),
-        axis.text.x = element_text(size = 10))
+        axis.text.x = element_text(size = 14),
+	axis.title.x = element_text(size = 16))
 ```
 
