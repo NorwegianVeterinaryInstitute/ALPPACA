@@ -8,7 +8,7 @@ if (workflow == "ani") {
     rmarkdown::render(
       input  = 'ani_report.Rmd',
       params = list(
-        ani_data = "FASTANI_results.txt",
+        ani_data = "FASTANI_results.txt"
       )
     )
 }
