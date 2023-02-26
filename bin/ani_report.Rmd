@@ -1,0 +1,164 @@
+---
+title: "ALPPACA ANI Report"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    mathjax: null
+    code_folding: "hide"
+    toc: true
+    toc_float:
+      collapsed: false
+params:
+  ani_data:
+    value: x
+---
+# Run information
+
+Date generated: `r Sys.Date()`
+
+## R Packages
+These are the R packages used to generate this report.
+```{r, message=FALSE, warning=FALSE}
+library(dplyr)
+library(stringr)
+library(ggplot2)
+library(patchwork)
+library(readr)
+library(formattable)
+library(kableExtra)
+library(ggdist)
+
+packages <- (.packages())
+clean_pkg_version <- function(x) {
+  y <- getNamespaceVersion(x)
+  
+  z <- data.frame("Package" = x,
+                  "Version" = y)
+  
+  row.names(z) <- NULL
+  
+  return(z)
+}
+lapply(packages, function(x) clean_pkg_version(x)) %>%
+  bind_rows() %>%
+  kbl() %>%
+  kable_styling(bootstrap_options = c("striped",
+                                      "hover",
+                                      "responsive"),
+                full_width = TRUE)
+```
+
+<br>
+
+## Tool versions
+These are the tools used to run the analysis within the ani workflow of ALPPACA.
+```{r, message=FALSE, warning=FALSE}
+tool_data <- data.frame(
+  Tool = c("FastANI"),
+  Version = c("1.33")
+)
+tool_data %>%
+  kbl() %>%
+  kable_styling(bootstrap_options = c("striped",
+                                      "hover",
+                                      "responsive"),
+                full_width = TRUE)
+```
+
+<br>
+
+<br>
+
+# Tool information
+
+## FastANI
+The figure below presents the summarised average nucleotide identity (ANI)
+density for all included isolates. The black diamond and the bold line 
+in the boxplot represent the median value. Vertical blue lines represent
+each data point. The blue area above the horizontal line represent the
+density of samples for each ANI value. 
+
+```{r, dpi=600, fig.height=6, fig.width=10, message=FALSE, warning=FALSE}
+# helper Sorting order to remove duplicates
+keysort <- function(x,y) {
+  sorted <- sort(c(x,y))
+  paste0(sorted[1], "_", sorted[2])
+}
+
+# Removes paths and extension from ID
+regex_pattern <- regex(
+  "^(.*/)|([:punct:]?.((fasta)|(fna)|(fa)))"
+  )
+
+file_list <- list.files(pattern = "_fastani.txt")
+
+fastani_data <- lapply(file_list, function(x) {
+  read_delim(
+    x, 
+    delim = "\t",
+    col_names = FALSE
+    )
+  }
+) %>% 
+  bind_rows() %>%
+  rename("ID1" = X1,
+         "ID2" = X2,
+         "ANI" = X3,
+         "Count Bidirectional Fragments Mappings" = X4,
+         "Total Query Fragments" = X5) %>%
+  dplyr::mutate(ID1 = str_remove_all(ID1, regex_pattern),
+                ID2 = str_remove_all(ID2,  regex_pattern),
+                ANI = as.numeric(ANI),
+                sortkey =  purrr::map2(ID1, ID2, ~keysort(.x, .y))) %>%
+  # removal self comparison
+  filter(ID1 != ID2) %>%
+  arrange(sortkey) %>%
+  group_by(sortkey) %>%
+  # keep first one of comparison (ID1,ID2) == (ID2,ID1)
+  slice(1) %>%
+  ungroup() %>%
+  select(-sortkey)
+
+write.table(fastani_data,
+            "FASTANI_cleaned.txt",
+            sep = "\t",
+            row.names = FALSE,
+            quote = FALSE)
+
+ggplot(fastani_data, aes(x = ANI, y = 1)) +
+  geom_point(
+    aes(y = 1 - 0.03),
+    shape = "|",
+    color = "#1f78b4",
+    size = 8,
+    alpha = 0.33
+  ) +
+  stat_boxplot(
+    aes(y = 1 - 0.09),
+    geom = "errorbar",
+    width = 0.05
+  ) +
+  geom_boxplot(
+    aes(y = 1 - 0.09),
+    width = 0.05,
+    fill = "#a6cee3"
+  ) +
+  stat_halfeye(
+    shape = 18,
+    point_size = 4,
+    interval_size = 1.8,
+    adjust = 0.5,
+    trim = TRUE,
+    height = 0.8,
+    .width = c(0,1),
+    fill = "#a6cee3"
+  ) +
+  theme_bw() +
+  theme(panel.grid = element_blank(),
+        axis.text.y = element_blank(),
+        axis.title.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.text.x = element_text(size = 14),
+	axis.title.x = element_text(size = 16))
+```
+

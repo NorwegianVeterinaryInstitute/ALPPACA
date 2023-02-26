@@ -4,6 +4,15 @@ args <- commandArgs(trailingOnly = TRUE)
 workflow <- args[1]
 
 # Generate rmarkdown report from ALPPACA run
+if (workflow == "ani") {
+    rmarkdown::render(
+      input  = 'ani_report.Rmd',
+      params = list(
+        ani_data = "FASTANI_results.txt"
+      )
+    )
+}
+
 if (workflow == "core_genome") {
     rmarkdown::render(
       input  = 'core_genome_report.Rmd',
