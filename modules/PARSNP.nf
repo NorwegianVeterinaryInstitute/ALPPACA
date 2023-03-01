@@ -15,7 +15,7 @@ process PARSNP {
         script:
         """
 	parsnp --version > parsnp.version
-        parsnp -d *.fasta -p 4 --skip-phylogeny -o results -r $params.parsnp_ref -v -c &> parsnp.log
+        parsnp -d *.fasta -p 4 --skip-phylogeny -u -o results -r $params.parsnp_ref -v -c &> parsnp.log
 	mv results/* .
 	harvesttools -x *xmfa -M parsnp_alignment.fasta
         """
