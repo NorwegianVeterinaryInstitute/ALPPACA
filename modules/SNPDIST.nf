@@ -1,6 +1,6 @@
 process SNPDIST {
-	conda (params.enable_conda ? 'bioconda::snp-dists=0.8.2' : null)
-	container 'quay.io/biocontainers/snp-dists:0.8.2--h5bf99c6_0'
+	conda (params.enable_conda ? 'bioconda::psdm=0.2.0' : null)
+	container 'quay.io/biocontainers/psdm:0.2.0--hec16e2b_1'
 	
         input:
         file(snp_alignment)
@@ -10,9 +10,15 @@ process SNPDIST {
 	path "snp_dists.tab", emit: snpdists_results_ch
 
         script:
-        """
-	snp-dists -v > snp-dists.version
-        snp-dists $snp_alignment > snp_dists.tab
-        """
+        if (params.snp_long)
+		"""
+		psdm -V > psdm.version
+		psdm -t $task.cpus -l $snp_alignment > snp_dists.tab
+        	"""
+	else
+		"""
+		psdm -V > psdm.version
+                psdm -t $task.cpus $snp_alignment > snp_dists.tab
+		"""
 }
 
