@@ -9,8 +9,9 @@ process CHEWBBACA_DOWNLOAD_SCHEMA {
     val(id)
 
     output:
-    file ("*")
-    path "./schema/*", emit: schema_ch
+    path "*"
+    path "schema/*", emit: schema_ch
+    path "schema"
 
     script:
     """
@@ -27,8 +28,8 @@ process CHEWBBACA_PREP_SCHEMA {
     path(ptf)
 
     output:
-    file ("*")
-    path "./prepped_schema", emit: schema_ch
+    path "*"
+    path "prepped_schema", emit: schema_ch
 
     script:
     """
@@ -50,16 +51,17 @@ process CHEWBBACA_ALLELECALL {
     label 'process_high_memory_time'
 
     input:
-    path(input_file)
+    path(input)
     path(schema)
 
     output:
-    path "results*/results_alleles.tsv", emit: typing_ch
-    file ("*")
+    path "results/results_alleles.tsv", emit: typing_ch
+    path "**"
 
     script:
     """
-    chewBBACA.py AlleleCall -i $input_file\
+    chewBBACA.py --version > chewbbaca.version
+    chewBBACA.py AlleleCall -i .\
 	-g $schema\
 	-o results\
 	--force-continue\
