@@ -56,6 +56,7 @@ process CHEWBBACA_ALLELECALL {
 
     output:
     path "results/results_alleles.tsv", emit: typing_ch
+    path "results/results_statistics.tsv", emit: allelecall_stats_ch
     path "**"
 
     script:
