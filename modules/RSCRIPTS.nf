@@ -27,7 +27,7 @@ process CALCULATE_DISTANCES {
         output:
         path "*"
         path "dissimilarity_matrix.tsv", emit: dissimilarity_ch
-	path "hamming_matrix.tsv", emit: hamming_ch
+	path "hamming_distances.tsv", emit: hamming_ch
 	path "dendrogram.phylo", emit: tree_ch
 
         script:
