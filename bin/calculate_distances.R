@@ -10,7 +10,7 @@ library(dplyr)
 library(tidyr)
 library(tibble)
 library(cluster)
-library(cultevo)
+library(purrr)
 library(ape)
 
 # Import data
@@ -43,20 +43,30 @@ write_delim(
 )
 
 # Calculate hamming distance
-rows <- rownames(data)
+transposed_data <- as.data.frame(as.matrix(t(data)))
 
-hamming <- as.data.frame(
-  as.matrix(
-    hammingdists(data)
-    )
-  ) %>%
-  rename_all(function(x) rows) %>%
-  mutate(FILE = rows) %>%
-  select(FILE, everything())
+hamming <- combn(colnames(transposed_data), 2, simplify = FALSE) %>%
+  map_df(function(col) {
+    data.frame(
+      isolate1 = col[1], 
+      isolate2 = col[2], 
+      hamming = sum(
+        transposed_data[,col[1]] != transposed_data[,col[2]],
+        na.rm = TRUE
+        ),
+      compared_alleles = sum(
+        !is.na(transposed_data[,col[1]]) & !is.na(transposed_data[,col[2]])
+      ),
+      missing_alleles = sum(
+        is.na(transposed_data[,col[1]]) | is.na(transposed_data[,col[2]])
+        )
+      )
+  }
+  )
 
 write_delim(
   hamming,
-  "hamming_matrix.tsv",
+  "hamming_distances.tsv",
   delim = "\t"
 )
 
