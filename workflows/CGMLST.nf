@@ -2,6 +2,7 @@ include { CHEWBBACA_ALLELECALL      } from "../modules/CHEWBBACA.nf"
 include { CHEWBBACA_DOWNLOAD_SCHEMA } from "../modules/CHEWBBACA.nf"
 include { CHEWBBACA_PREP_SCHEMA     } from "../modules/CHEWBBACA.nf"
 include { CLEAN_AND_FILTER          } from "../modules/RSCRIPTS.nf"
+include { CALCULATE_DISTANCES       } from "../modules/RSCRIPTS.nf"
 
 // VALIDATE INPUTS
 if(!params.input) {
@@ -71,6 +72,12 @@ workflow CGMLST {
 	max_missing_alleles_ch = Channel
 		.value(params.max_missing)
 
+	clustering_method_ch = Channel
+		.value(params.clustering_method)
+
 	CLEAN_AND_FILTER(CHEWBBACA_ALLELECALL.out.typing_ch,
 			 max_missing_alleles_ch)
+
+	CALCULATE_DISTANCES(CLEAN_AND_FILTER.out.filtered_alleles_ch,
+			    clustering_method_ch)
 }
