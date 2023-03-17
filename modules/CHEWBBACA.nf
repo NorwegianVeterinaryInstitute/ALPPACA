@@ -45,6 +45,24 @@ process CHEWBBACA_PREP_SCHEMA {
     """
 }
 
+process CHEWBBACA_EVAL_SCHEMA {
+    conda (params.enable_conda ? 'bioconda::chewbbaca=3.1.2' : null)
+    container 'quay.io/biocontainers/chewbbaca:3.1.2--pyhdfd78af_0'
+
+    input:
+    path(schema)
+
+    output:
+    path "**"
+
+    script:
+    """
+    chewBBACA.py SchemaEvaluator -i $schema\
+        -o results\
+        --cpu $task.cpus
+    """
+}
+
 process CHEWBBACA_ALLELECALL {
     conda (params.enable_conda ? 'bioconda::chewbbaca=3.1.2' : null)
     container 'quay.io/biocontainers/chewbbaca:3.1.2--pyhdfd78af_0'
