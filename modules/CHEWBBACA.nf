@@ -30,6 +30,7 @@ process CHEWBBACA_PREP_SCHEMA {
     output:
     path "*"
     path "prepped_schema", emit: schema_ch
+    path "prepped_schema_summary_stats.tsv", emit: schema_stats_ch
 
     script:
     """
@@ -57,6 +58,7 @@ process CHEWBBACA_ALLELECALL {
     output:
     path "results/results_alleles.tsv", emit: typing_ch
     path "results/results_statistics.tsv", emit: allelecall_stats_ch
+    path "results/loci_summary_stats.tsv", emit: loci_stats_ch
     path "**"
 
     script:
