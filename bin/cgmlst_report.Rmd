@@ -1,0 +1,316 @@
+---
+title: "ALPPACA CGMLST Report"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    mathjax: null
+    code_folding: "hide"
+    toc: true
+    toc_float:
+      collapsed: false
+params:
+  allelecall_data:
+    value: x
+  schema_summary:
+    value: x
+  loci_summary:
+    value: x
+  result_stats:
+    value: x
+  hamming_dists:
+    value: x
+  dendrogram:
+    value: x
+---
+
+```{r, include=FALSE, message=FALSE, warning=FALSE}
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(patchwork)
+library(readr)
+library(ggtree)
+library(plotly)
+library(kableExtra)
+```
+
+---
+
+# Schema information
+These tables contain information about the schema used in the cgMLST analysis.
+```{r, message=FALSE, warning=FALSE}
+schema_data <- read_delim(
+  params$schema_summary,
+  delim = "\t",
+  col_names = TRUE
+)
+
+excluded_genes <- schema_data %>%
+  filter(Number_representatives == 0)
+
+excluded_genes %>%
+  kbl(caption = "Number of invalid genes in the schema.") %>%
+  kable_styling(bootstrap_options = c("striped",
+                                      "hover",
+                                      "responsive"),
+                full_width = TRUE)
+
+```
+
+The schema had a total of `r nrow(schema_data)` genes. Of these, `r nrow(excluded_genes)` genes were excluded. 
+
+
+```{r, message=FALSE, warning=FALSE, dpi=600, fig.width=8, fig.height=5, fig.cap="**Figure 1**: Schema loci summary stats.", fig.align='center'}
+loci_data <- read_delim(
+  params$loci_summary,
+  delim = "\t",
+  col_names = TRUE
+) %>%
+  pivot_longer(cols = -Locus,
+               names_to = "Type",
+               values_to = "n") %>%
+  mutate(Type = factor(Type,
+                       levels = c(
+                         "EXC",
+                         "INF",
+                         "LNF",
+                         "PLNF",
+                         "PLOT3",
+                         "PLOT5",
+                         "LOTSC",
+                         "NIPH",
+                         "NIPHEM",
+                         "PAMA",
+                         "ALM",
+                         "ASM",
+                         "Total_CDS"
+                       )))
+
+palette_ids <- unique(loci_data$Type)
+palette <- RColorBrewer::brewer.pal(name = "Paired", n = 12)
+names(palette) <- palette_ids
+
+ggplot(loci_data, aes(Type, n, fill = Type)) +
+  stat_boxplot(geom = "errorbar",
+               width = 0.5) +
+  geom_boxplot() +
+  scale_fill_manual(values = palette) +
+  theme_bw() +
+  theme(legend.position = "none",
+        panel.grid = element_blank())
+```
+
+
+
+<br>
+
+---
+
+# AlleleCalling stats
+
+This section presents the AlleleCalling results and statistics. 
+
+```{r, message=FALSE, warning=FALSE, fig.height=5, fig.width=8, dpi=600, fig.cap="**Figure 2**: AlleleCall result overview.", fig.align='center'}
+allelecalling_data <- read_delim(
+  params$allelecall_data,
+  delim = "\t",
+  col_names = TRUE
+) %>%
+  pivot_longer(cols = -FILE,
+               names_to = "Type",
+               values_to = "n") %>%
+  mutate(Type = factor(Type,
+                       levels = c(
+                         "EXC",
+                         "INF",
+                         "LNF",
+                         "PLNF",
+                         "PLOT3",
+                         "PLOT5",
+                         "LOTSC",
+                         "NIPH",
+                         "NIPHEM",
+                         "PAMA",
+                         "ALM",
+                         "ASM"
+                       )))
+
+ggplot(allelecalling_data, aes(Type, n, fill = Type)) +
+  stat_boxplot(geom = "errorbar",
+               width = 0.5) +
+  geom_boxplot() +
+  scale_fill_manual(values = palette) +
+  theme_bw() +
+  theme(legend.position = "none",
+        panel.grid = element_blank())
+
+```
+<br>
+
+```{r, message=FALSE, warning=FALSE, dpi=600, fig.height=8, fig.width=8, fig.cap="**Figure 3**: Number of compared and missing alleles per isolate.", fig.align='center'}
+allele_data <- read_delim(
+  params$hamming_dists,
+  delim = "\t",
+  col_names = TRUE
+)
+
+compared_alleles <- ggplot(allele_data, aes(isolate1, compared_alleles)) +
+  stat_boxplot(geom = "errorbar", width = 0.3) +
+  geom_boxplot(fill = "grey70", width = 0.5) +
+  labs(y = "N Compared Alleles") +
+  theme_bw() +
+  theme(axis.text.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.title.x = element_blank(),
+        panel.grid = element_blank())
+
+missing_alleles <- ggplot(allele_data, aes(isolate1, missing_alleles)) +
+  stat_boxplot(geom = "errorbar", width = 0.3) +
+  geom_boxplot(fill = "grey70", width = 0.5) +
+  labs(x = "Isolates",
+       y = "N Missing Alleles") +
+  theme_bw() +
+  theme(axis.text.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        panel.grid = element_blank())
+
+compared_alleles / missing_alleles
+```
+
+
+<br>
+
+---
+
+# Distance calculations
+
+```{r, message=FALSE, warning=FALSE, dpi=600, fig.height=5, fig.width=8, fig.cap="**Figure 4**: Hamming distance and number of compared and missing alleles.", fig.align='center'}
+hamming_distances <- read_delim(
+  params$hamming_dists,
+  delim = "\t",
+  col_names = TRUE
+) %>%
+  rename("Hamming" = hamming,
+         "Compared alleles" = compared_alleles,
+         "Missing alleles" = missing_alleles) %>%
+  pivot_longer(cols = -c(isolate1, isolate2),
+               names_to = "Type",
+               values_to = "value") %>%
+  mutate(Type = factor(Type,
+                       levels = c("Hamming",
+                                  "Compared alleles",
+                                  "Missing alleles")))
+
+p1 <- hamming_distances %>%
+  filter(Type == "Hamming") %>%
+  ggplot(aes(Type, value)) +
+  geom_violin(trim = FALSE,
+              scale = "count",
+              fill = "#fdb462") +
+  stat_boxplot(geom = "errorbar", width = 0.05) +
+  geom_boxplot(width = 0.05) +
+  geom_jitter(width = 0.2,
+              alpha = 0.2) +
+  labs(y = "Hamming Distance") +
+  theme_bw() +
+  theme(panel.grid = element_blank(),
+        axis.title.x = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank())
+
+
+p2 <- hamming_distances %>%
+  filter(Type != "Hamming") %>%
+  ggplot(aes(Type, value, fill = Type)) +
+  geom_violin(trim = FALSE,
+              scale = "count") +
+  stat_boxplot(geom = "errorbar", width = 0.05) +
+  geom_boxplot(width = 0.05) +
+  geom_jitter(width = 0.2,
+              alpha = 0.2) +
+  scale_fill_manual(values = c("Compared alleles" = "#80b1d3",
+                               "Missing alleles" = "#fb8072")) +
+  labs(y = "N") +
+  theme_bw() +
+  theme(panel.grid = element_blank(),
+        axis.title.x = element_blank(),
+        legend.position = "none")
+
+
+p1 + p2 +
+  plot_layout(widths = c(0.5, 1))
+
+
+```
+
+<br>
+
+---
+
+# Clustering
+
+```{r, warning=FALSE, message=FALSE, fig.cap="**Figure 5**: Dendrogram based on the selected clustering method.", fig.align='center'}
+tree <- read.tree(
+  params$dendrogram
+)
+
+tree_plot <- ggtree(tree) +
+  geom_text(aes(label = label),
+            hjust = 0,
+	    size = 4) +
+  geom_treescale()
+
+ggplotly(tree_plot) %>%
+  plotly::style(textposition = "right")
+```
+
+---
+
+<details>
+  <summary>Tool and package versions</summary>
+
+Date generated: `r Sys.Date()`
+
+**R Packages**
+
+These are the R packages used to generate this report.
+```{r, message=FALSE, warning=FALSE}
+packages <- (.packages())
+clean_pkg_version <- function(x) {
+  y <- getNamespaceVersion(x)
+  
+  z <- data.frame("Package" = x,
+                  "Version" = y)
+  
+  row.names(z) <- NULL
+  
+  return(z)
+}
+
+lapply(packages, function(x) clean_pkg_version(x)) %>%
+  bind_rows() %>%
+  kbl() %>%
+  kable_styling(bootstrap_options = c("striped",
+                                      "hover",
+                                      "responsive"),
+                full_width = TRUE)
+```
+
+**Tool versions**
+
+These are the tools used to run the analysis within the cgMLST workflow of ALPPACA.
+```{r, message=FALSE, warning=FALSE}
+tool_data <- data.frame(
+  Tool = c("ChewBBACA","R"),
+  Version = c("3.1.2","4.1.2")
+)
+tool_data %>%
+  kbl() %>%
+  kable_styling(bootstrap_options = c("striped",
+                                      "hover",
+                                      "responsive"),
+                full_width = TRUE)
+```
+
+</details>
+
