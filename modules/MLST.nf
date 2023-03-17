@@ -6,7 +6,7 @@ process MLST {
 
     input:
     path(input)
-    path(schema)
+    val(schema)
 
     output:
     path "mlst_report.tsv", emit: mlst_ch
