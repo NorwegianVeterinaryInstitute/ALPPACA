@@ -60,7 +60,6 @@ workflow CGMLST {
                 id_ch      = Channel.value(params.id_value)
 
                 CHEWBBACA_DOWNLOAD_SCHEMA(species_ch, id_ch)
-		CHEWBBACA_EVAL_SCHEMA(CHEWBBACA_DOWNLOAD_SCHEMA.out.schema_ch)
                 CHEWBBACA_ALLELECALL(input_list_ch,
                                      CHEWBBACA_DOWNLOAD_SCHEMA.out.schema_ch)
         }
@@ -77,16 +76,32 @@ workflow CGMLST {
                         	.fromPath(params.ptf, checkIfExists: true)
 
 			CHEWBBACA_PREP_SCHEMA(schema_dir_ch, ptf_ch)
-			CHEWBBACA_EVAL_SCHEMA(CHEWBBACA_PREP_SCHEMA.out.schema_ch)
 			CHEWBBACA_ALLELECALL(input_list_ch,
 					     CHEWBBACA_PREP_SCHEMA.out.schema_ch)
 		}
 		if (params.prepped_schema) {
-			CHEWBBACA_EVAL_SCHEMA(schema_dir_ch)
 			CHEWBBACA_ALLELECALL(input_list_ch,
 					     schema_dir_ch)
 		}
 	}
+	
+	// Schema evaluation
+
+	if (!params.skip_schema_eval) {
+		if (params.download_external) {
+			CHEWBBACA_EVAL_SCHEMA(CHEWBBACA_DOWNLOAD_SCHEMA.out.schema_ch)
+		}
+		if (!params.download_external) {
+			if (!params.prepped_schema) {
+				CHEWBBACA_EVAL_SCHEMA(CHEWBBACA_PREP_SCHEMA.out.schema_ch)
+			}
+			if (params.prepped_schema) {
+				CHEWBBACA_EVAL_SCHEMA(schema_dir_ch)
+			}
+		}
+	}
+
+	// Cleaning and filtering
 
 	max_missing_alleles_ch = Channel
 		.value(params.max_missing)
