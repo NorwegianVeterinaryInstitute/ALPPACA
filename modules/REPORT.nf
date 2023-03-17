@@ -25,7 +25,6 @@ process REPORT_CGMLST {
 
         input:
         path(allelecall_data)
-	path(schema_summary)
 	path(loci_stats)
 	path(results_stats)
 	path(hamming_dists)
