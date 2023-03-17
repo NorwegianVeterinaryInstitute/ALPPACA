@@ -11,8 +11,6 @@ output:
 params:
   allelecall_data:
     value: x
-  schema_summary:
-    value: x
   loci_summary:
     value: x
   result_stats:
@@ -37,29 +35,6 @@ library(kableExtra)
 ---
 
 # Schema information
-These tables contain information about the schema used in the cgMLST analysis.
-```{r, message=FALSE, warning=FALSE}
-schema_data <- read_delim(
-  params$schema_summary,
-  delim = "\t",
-  col_names = TRUE
-)
-
-excluded_genes <- schema_data %>%
-  filter(Number_representatives == 0)
-
-excluded_genes %>%
-  kbl(caption = "Number of invalid genes in the schema.") %>%
-  kable_styling(bootstrap_options = c("striped",
-                                      "hover",
-                                      "responsive"),
-                full_width = TRUE)
-
-```
-
-The schema had a total of `r nrow(schema_data)` genes. Of these, `r nrow(excluded_genes)` genes were excluded. 
-
-
 ```{r, message=FALSE, warning=FALSE, dpi=600, fig.width=8, fig.height=5, fig.cap="**Figure 1**: Schema loci summary stats.", fig.align='center'}
 loci_data <- read_delim(
   params$loci_summary,
