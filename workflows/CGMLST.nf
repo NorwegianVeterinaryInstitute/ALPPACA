@@ -1,35 +1,38 @@
 include { CHEWBBACA_ALLELECALL      } from "../modules/CHEWBBACA.nf"
 include { CHEWBBACA_DOWNLOAD_SCHEMA } from "../modules/CHEWBBACA.nf"
 include { CHEWBBACA_PREP_SCHEMA     } from "../modules/CHEWBBACA.nf"
+include { CHEWBBACA_EVAL_SCHEMA     } from "../modules/CHEWBBACA.nf"
 include { MLST                      } from "../modules/MLST.nf" 
 include { CLEAN_AND_FILTER          } from "../modules/RSCRIPTS.nf"
 include { CALCULATE_DISTANCES       } from "../modules/RSCRIPTS.nf"
 include { REPORT_CGMLST             } from "../modules/REPORT.nf"
 
 // VALIDATE INPUTS
-if(!params.input) {
+if (!params.input) {
 	exit 1, "Missing input file"
 }
 
-if(!params.mlst_schema) {
-	exit 1, "Missing MLST schema"
+if (!params.skip_mlst) {
+	if (!params.mlst_schema) {
+		exit 1, "Missing MLST schema"
+	}
 }
 
-if(params.download_external) {
-	if(!params.species_value) {
+if (params.download_external) {
+	if (!params.species_value) {
 		exit 1, "Missing species value"
 	}
-	if(!params.id_value) {
+	if (!params.id_value) {
 		exit 1, "Missing dataset ID value"
 	}
 }
 
-if(!params.download_external) {
-	if(!params.schema) {
+if (!params.download_external) {
+	if (!params.schema) {
 		exit 1, "Missing schema path"
 	}
-	if(!params.prepped_schema) {
-		if(!params.ptf) {
+	if (!params.prepped_schema) {
+		if (!params.ptf) {
 			exit 1, "Missing prodigal training file"
 		}
 	}
@@ -44,10 +47,12 @@ workflow CGMLST {
                 .map { file(it.path, checkIfExists: true) }
                 .collect()
 
-	mlst_schema_ch = Channel
-		.value(params.mlst_schema)
+	if (!params.skip_mlst) {
+		mlst_schema_ch = Channel
+			.value(params.mlst_schema)
 
-	MLST(input_list_ch, mlst_schema_ch)
+		MLST(input_list_ch, mlst_schema_ch)
+	}
 
         if (params.download_external) {
 
@@ -55,6 +60,7 @@ workflow CGMLST {
                 id_ch      = Channel.value(params.id_value)
 
                 CHEWBBACA_DOWNLOAD_SCHEMA(species_ch, id_ch)
+		CHEWBBACA_EVAL_SCHEMA(CHEWBBACA_DOWNLOAD_SCHEMA.out.schema_ch)
                 CHEWBBACA_ALLELECALL(input_list_ch,
                                      CHEWBBACA_DOWNLOAD_SCHEMA.out.schema_ch)
         }
@@ -71,10 +77,12 @@ workflow CGMLST {
                         	.fromPath(params.ptf, checkIfExists: true)
 
 			CHEWBBACA_PREP_SCHEMA(schema_dir_ch, ptf_ch)
+			CHEWBBACA_EVAL_SCHEMA(CHEWBBACA_PREP_SCHEMA.out.schema_ch)
 			CHEWBBACA_ALLELECALL(input_list_ch,
 					     CHEWBBACA_PREP_SCHEMA.out.schema_ch)
 		}
 		if (params.prepped_schema) {
+			CHEWBBACA_EVAL_SCHEMA(schema_dir_ch)
 			CHEWBBACA_ALLELECALL(input_list_ch,
 					     schema_dir_ch)
 		}
@@ -92,14 +100,9 @@ workflow CGMLST {
 	CALCULATE_DISTANCES(CLEAN_AND_FILTER.out.filtered_alleles_ch,
 			    clustering_method_ch)
 
-	if (!params.download_external) {
-		if (!params.prepped_schema) {
-			REPORT_CGMLST(CLEAN_AND_FILTER.out.filtered_alleles_ch,
-				      CHEWBBACA_PREP_SCHEMA.out.schema_stats_ch,
-				      CHEWBBACA_ALLELECALL.out.loci_stats_ch,
-				      CHEWBBACA_ALLELECALL.out.allelecall_stats_ch,
-				      CALCULATE_DISTANCES.out.hamming_ch,
-				      CALCULATE_DISTANCES.out.tree_ch)
-		}
-	}
+	REPORT_CGMLST(CLEAN_AND_FILTER.out.filtered_alleles_ch,
+		      CHEWBBACA_ALLELECALL.out.loci_stats_ch,
+		      CHEWBBACA_ALLELECALL.out.allelecall_stats_ch,
+		      CALCULATE_DISTANCES.out.hamming_ch,
+		      CALCULATE_DISTANCES.out.tree_ch)
 }
