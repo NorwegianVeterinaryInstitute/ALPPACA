@@ -18,7 +18,6 @@ if (workflow == "cgmlst") {
       input  = 'cgmlst_report.Rmd',
       params = list(
         allelecall_data = "filtered_allele_results.tsv",
-	schema_summary = "prepped_schema_summary_stats.tsv",
 	loci_summary = "loci_summary_stats.tsv",
 	result_stats = "results_statistics.tsv",
 	hamming_dists = "hamming_distances.tsv",
