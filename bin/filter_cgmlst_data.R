@@ -33,7 +33,7 @@ data_clean <- data %>%
 # missing alleles
 data_filtered <- data_clean %>%
   mutate(NA_count = apply(., 1, function(x) sum(is.na(x)))) %>%
-  filter(NA_count > max_missing) %>%
+  filter(NA_count <= max_missing) %>%
   select(-NA_count)
 
 # Write output
