@@ -17,6 +17,30 @@ process REPORT_ANI {
         """
 }
 
+process REPORT_CGMLST {
+        conda (params.enable_conda ? './assets/r_env.yml' : null)
+        container 'evezeyl/r_docker:latest'
+
+        label 'process_short'
+
+        input:
+        path(allelecall_data)
+	path(schema_summary)
+	path(loci_stats)
+	path(results_stats)
+	path(hamming_dists)
+	path(tree)
+
+        output:
+        file("*")
+
+        script:
+        """
+        cp $baseDir/bin/cgmlst_report.Rmd .
+        Rscript $baseDir/bin/gen_report.R "cgmlst"
+        """
+}
+
 process REPORT_CORE_GENOME {
 	conda (params.enable_conda ? './assets/r_env.yml' : null)
 	container 'evezeyl/r_docker:latest'
