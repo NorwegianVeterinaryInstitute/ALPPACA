@@ -112,8 +112,12 @@ workflow CGMLST {
 	CLEAN_AND_FILTER(CHEWBBACA_ALLELECALL.out.typing_ch,
 			 max_missing_alleles_ch)
 
+	n_lines = CLEAN_AND_FILTER.out.filtered_alleles_ch
+		.map{ it -> it.countLines() }
+
 	CALCULATE_DISTANCES(CLEAN_AND_FILTER.out.filtered_alleles_ch,
-			    clustering_method_ch)
+			    clustering_method_ch,
+			    n_lines)
 
 	REPORT_CGMLST(CLEAN_AND_FILTER.out.filtered_alleles_ch,
 		      CHEWBBACA_ALLELECALL.out.loci_stats_ch,
