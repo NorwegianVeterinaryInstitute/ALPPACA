@@ -87,7 +87,7 @@ This section presents the AlleleCalling results and statistics.
 
 ```{r, message=FALSE, warning=FALSE, fig.height=5, fig.width=8, dpi=600, fig.cap="**Figure 2**: AlleleCall result overview.", fig.align='center'}
 allelecalling_data <- read_delim(
-  params$allelecall_data,
+  params$result_stats,
   delim = "\t",
   col_names = TRUE
 ) %>%
@@ -167,6 +167,7 @@ hamming_distances <- read_delim(
 ) %>%
   rename("Hamming" = hamming,
          "Compared alleles" = compared_alleles,
+         "Typed alleles" = typed_alleles,
          "Missing alleles" = missing_alleles) %>%
   pivot_longer(cols = -c(isolate1, isolate2),
                names_to = "Type",
@@ -174,6 +175,7 @@ hamming_distances <- read_delim(
   mutate(Type = factor(Type,
                        levels = c("Hamming",
                                   "Compared alleles",
+                                  "Typed alleles",
                                   "Missing alleles")))
 
 p1 <- hamming_distances %>%
@@ -193,7 +195,6 @@ p1 <- hamming_distances %>%
         axis.text.x = element_blank(),
         axis.ticks.x = element_blank())
 
-
 p2 <- hamming_distances %>%
   filter(Type != "Hamming") %>%
   ggplot(aes(Type, value, fill = Type)) +
@@ -204,6 +205,7 @@ p2 <- hamming_distances %>%
   geom_jitter(width = 0.2,
               alpha = 0.2) +
   scale_fill_manual(values = c("Compared alleles" = "#80b1d3",
+                               "Typed alleles" = "#8dd3c7",
                                "Missing alleles" = "#fb8072")) +
   labs(y = "N") +
   theme_bw() +
@@ -211,11 +213,8 @@ p2 <- hamming_distances %>%
         axis.title.x = element_blank(),
         legend.position = "none")
 
-
 p1 + p2 +
-  plot_layout(widths = c(0.5, 1))
-
-
+  plot_layout(widths = c(0.3, 1))
 ```
 
 <br>
