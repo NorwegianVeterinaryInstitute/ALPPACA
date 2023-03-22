@@ -23,7 +23,6 @@ process CALCULATE_DISTANCES {
         input:
         path(report)
         val(clustering_method)
-	val(n_lines)
 
         output:
         path "*"
@@ -31,11 +30,8 @@ process CALCULATE_DISTANCES {
 	path "hamming_distances.tsv", emit: hamming_ch
 	path "dendrogram.phylo", emit: tree_ch
 
-	when: n_lines >= 3
-
-        script:
-        """
-        Rscript $baseDir/bin/calculate_distances.R $clustering_method
-        """
+	script:
+	"""
+	Rscript $baseDir/bin/calculate_distances.R $clustering_method
+	"""
 }
-
