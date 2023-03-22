@@ -11,7 +11,7 @@ output:
 params:
   allelecall_data:
     value: x
-  loci_summary:
+  filtered_allelecall_data:
     value: x
   result_stats:
     value: x
@@ -34,47 +34,38 @@ library(kableExtra)
 
 ---
 
-# Schema information
-```{r, message=FALSE, warning=FALSE, dpi=600, fig.width=8, fig.height=5, fig.cap="**Figure 1**: Schema loci summary stats.", fig.align='center'}
-loci_data <- read_delim(
-  params$loci_summary,
-  delim = "\t",
-  col_names = TRUE
-) %>%
-  pivot_longer(cols = -Locus,
-               names_to = "Type",
-               values_to = "n") %>%
-  mutate(Type = factor(Type,
-                       levels = c(
-                         "EXC",
-                         "INF",
-                         "LNF",
-                         "PLNF",
-                         "PLOT3",
-                         "PLOT5",
-                         "LOTSC",
-                         "NIPH",
-                         "NIPHEM",
-                         "PAMA",
-                         "ALM",
-                         "ASM",
-                         "Total_CDS"
-                       )))
+# Filtering
+This section presents the filtering results, based on the --max_missing parameter.
 
-palette_ids <- unique(loci_data$Type)
-palette <- RColorBrewer::brewer.pal(name = "Paired", n = 12)
-names(palette) <- palette_ids
+```{r, message=FALSE, warning=FALSE}
+pre_filt_data <- read_delim(
+  params$allelecall_data,
+  delim = "\t"
+)
 
-ggplot(loci_data, aes(Type, n, fill = Type)) +
-  stat_boxplot(geom = "errorbar",
-               width = 0.5) +
-  geom_boxplot() +
-  scale_fill_manual(values = palette) +
-  theme_bw() +
-  theme(legend.position = "none",
-        panel.grid = element_blank())
+post_filt_data <- read_delim(
+  params$filtered_allelecall_data,
+  delim = "\t"
+)
+
+if (sum(! pre_filt_data$FILE %in% post_filt_data$FILE) > 0) {
+  
+  n_filtered <- sum(! pre_filt_data$FILE %in% post_filt_data$FILE)
+  
+  paste0("A total of ", n_filtered, " samples were filtered out.")
+  
+  pre_filt_data %>%
+    filter(! FILE %in% post_filt_data$FILE) %>%
+    select(FILE) %>%
+    kbl(caption = "**Table 1**: Genomes that were removed from the analysis due to too many missing alleles.") %>%
+    kable_styling("striped") %>%
+    scroll_box(width = "100%")
+  
+} else {
+  "All genomes passed filtering."
+}
+
 ```
-
 
 
 <br>
@@ -83,9 +74,9 @@ ggplot(loci_data, aes(Type, n, fill = Type)) +
 
 # AlleleCalling stats
 
-This section presents the AlleleCalling results and statistics. 
+This section presents the main AlleleCalling results.
 
-```{r, message=FALSE, warning=FALSE, fig.height=5, fig.width=8, dpi=600, fig.cap="**Figure 2**: AlleleCall result overview.", fig.align='center'}
+```{r, message=FALSE, warning=FALSE, fig.height=5, fig.width=8, dpi=600, fig.cap="**Figure 1**: AlleleCall result statistics.", fig.align='center'}
 allelecalling_data <- read_delim(
   params$result_stats,
   delim = "\t",
@@ -110,6 +101,10 @@ allelecalling_data <- read_delim(
                          "ASM"
                        )))
 
+palette_ids <- unique(allelecalling_data$Type)
+palette <- RColorBrewer::brewer.pal(name = "Paired", n = 12)
+names(palette) <- palette_ids
+
 ggplot(allelecalling_data, aes(Type, n, fill = Type)) +
   stat_boxplot(geom = "errorbar",
                width = 0.5) +
@@ -118,17 +113,15 @@ ggplot(allelecalling_data, aes(Type, n, fill = Type)) +
   theme_bw() +
   theme(legend.position = "none",
         panel.grid = element_blank())
-
 ```
 <br>
 
-```{r, message=FALSE, warning=FALSE, dpi=600, fig.height=8, fig.width=8, fig.cap="**Figure 3**: Number of compared and missing alleles per isolate.", fig.align='center'}
+```{r, message=FALSE, warning=FALSE, dpi=600, fig.height=8, fig.width=8, fig.cap="**Figure 2**: Number of compared and missing alleles per isolate.", fig.align='center'}
 allele_data <- read_delim(
   params$hamming_dists,
   delim = "\t",
   col_names = TRUE
 )
-
 compared_alleles <- ggplot(allele_data, aes(isolate1, compared_alleles)) +
   stat_boxplot(geom = "errorbar", width = 0.3) +
   geom_boxplot(fill = "grey70", width = 0.5) +
@@ -159,7 +152,7 @@ compared_alleles / missing_alleles
 
 # Distance calculations
 
-```{r, message=FALSE, warning=FALSE, dpi=600, fig.height=5, fig.width=8, fig.cap="**Figure 4**: Hamming distance and number of compared and missing alleles.", fig.align='center'}
+```{r, message=FALSE, warning=FALSE, dpi=600, fig.height=5, fig.width=8, fig.cap="**Figure 3**: Hamming distance and number of compared and missing alleles.", fig.align='center'}
 hamming_distances <- read_delim(
   params$hamming_dists,
   delim = "\t",
@@ -177,7 +170,6 @@ hamming_distances <- read_delim(
                                   "Compared alleles",
                                   "Typed alleles",
                                   "Missing alleles")))
-
 p1 <- hamming_distances %>%
   filter(Type == "Hamming") %>%
   ggplot(aes(Type, value)) +
@@ -223,7 +215,7 @@ p1 + p2 +
 
 # Clustering
 
-```{r, warning=FALSE, message=FALSE, fig.cap="**Figure 5**: Dendrogram based on the selected clustering method.", fig.align='center'}
+```{r, warning=FALSE, message=FALSE, fig.cap="**Figure 4**: Dendrogram based on the selected clustering method.", fig.align='center'}
 tree <- read.tree(
   params$dendrogram
 )
@@ -278,6 +270,7 @@ tool_data <- data.frame(
   Tool = c("ChewBBACA","R"),
   Version = c("3.1.2","4.1.2")
 )
+
 tool_data %>%
   kbl() %>%
   kable_styling(bootstrap_options = c("striped",
@@ -287,4 +280,3 @@ tool_data %>%
 ```
 
 </details>
-
