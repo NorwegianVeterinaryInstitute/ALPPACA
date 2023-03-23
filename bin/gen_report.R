@@ -17,8 +17,8 @@ if (workflow == "cgmlst") {
     rmarkdown::render(
       input  = 'cgmlst_report.Rmd',
       params = list(
-        allelecall_data = "filtered_allele_results.tsv",
-	loci_summary = "loci_summary_stats.tsv",
+        allelecall_data = "results_alleles.tsv",
+	filtered_allelecall_data = "filtered_allele_results.tsv",
 	result_stats = "results_statistics.tsv",
 	hamming_dists = "hamming_distances.tsv",
 	dendrogram = "dendrogram.phylo"

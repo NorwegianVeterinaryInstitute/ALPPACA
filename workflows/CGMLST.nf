@@ -115,8 +115,8 @@ workflow CGMLST {
 	CALCULATE_DISTANCES(CLEAN_AND_FILTER.out.filtered_alleles_ch,
 			    clustering_method_ch)
 
-	REPORT_CGMLST(CLEAN_AND_FILTER.out.filtered_alleles_ch,
-		      CHEWBBACA_ALLELECALL.out.loci_stats_ch,
+	REPORT_CGMLST(CHEWBBACA_ALLELECALL.out.typing_ch,
+		      CLEAN_AND_FILTER.out.filtered_alleles_ch,
 		      CHEWBBACA_ALLELECALL.out.allelecall_stats_ch,
 		      CALCULATE_DISTANCES.out.hamming_ch,
 		      CALCULATE_DISTANCES.out.tree_ch)
