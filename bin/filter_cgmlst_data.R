@@ -24,7 +24,7 @@ data_clean <- data %>%
   mutate_at(vars(-FILE),
             function(x) str_replace_all(
               x,
-              "(PLOT5)|(PLOT3)|(LNF)|(ASM)|(ALM)|(NIPH)|(NIPHEM)",
+              "(PLOT5)|(PLOT3)|(LNF)|(ASM)|(ALM)|(NIPH)|(NIPHEM)|(PAMA)|(PLNF)|(LOTSC)",
               NA_character_)) %>%
   mutate_at(vars(-FILE),
             as.factor)
