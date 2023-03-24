@@ -23,6 +23,7 @@ process CALCULATE_DISTANCES {
         input:
         path(report)
         val(clustering_method)
+	val(n_length)
 
         output:
         path "*"
@@ -31,7 +32,11 @@ process CALCULATE_DISTANCES {
 	path "dendrogram.phylo", emit: tree_ch
 
 	script:
-	"""
-	Rscript $baseDir/bin/calculate_distances.R $clustering_method
-	"""
+	if (n_length < 25) {
+	    throw GroovyException("Too few genomes passed filtering, please adjust --max_missing")
+	} else {
+	    """
+	    Rscript $baseDir/bin/calculate_distances.R $clustering_method
+	    """
+	}
 }
