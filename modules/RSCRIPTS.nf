@@ -32,7 +32,7 @@ process CALCULATE_DISTANCES {
 	path "dendrogram.phylo", emit: tree_ch
 
 	script:
-	if (n_length < 25) {
+	if (n_length < 4) {
 	    throw GroovyException("Too few genomes passed filtering, please adjust --max_missing")
 	} else {
 	    """
