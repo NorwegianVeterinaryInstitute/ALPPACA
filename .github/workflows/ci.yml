@@ -47,7 +47,7 @@ jobs:
 
       - name: Run cgmlst track test
         run: |
-          nextflow run ${GITHUB_WORKSPACE} -profile test_cgmlst,docker --schema ${{ github.workspace }}/test_schema/ --out_dir ./results
+          nextflow run ${GITHUB_WORKSPACE} -profile test_cgmlst,docker --out_dir ./results
 
       - name: Run core genome track test
         run: |
