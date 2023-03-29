@@ -27,6 +27,13 @@ jobs:
       - name: Check out pipeline code
         uses: actions/checkout@v2
 
+      - name: Check out test data
+        uses: actions/checkout@v3
+        with:
+          repository: NorwegianVeterinaryInstitute/ALPPACA
+          ref: testdata
+          path: assets/data/test_schema
+
       - name: Install Nextflow
         env:
           NXF_VER: ${{ matrix.NXF_VER }}
@@ -53,4 +60,3 @@ jobs:
       - name: Run mapping track test
         run: |
           nextflow run ${GITHUB_WORKSPACE} -profile test_mapping,docker --out_dir ./results
-
