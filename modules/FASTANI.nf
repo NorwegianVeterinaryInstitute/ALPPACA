@@ -14,7 +14,6 @@ process FASTANI {
 
         script:
         """
-	fastANI --version &> fastani.version
 	fastANI -q $fasta\
 		--rl $refs\
 		-k $params.kmer_size\
@@ -24,4 +23,15 @@ process FASTANI {
 		-o ${id}_fastani.txt	
         """
 }
+
+process FASTANI_VERSION {
+        conda (params.enable_conda ? 'bioconda::fastani=1.33' : null)
+        container 'quay.io/biocontainers/fastani:1.33--h0fdf51a_1'
+
+        script:
+        """
+        fastANI --version &> fastani.version
+        """
+}
+
 
