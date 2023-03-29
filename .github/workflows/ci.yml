@@ -34,6 +34,12 @@ jobs:
           ref: testdata
           path: assets/data/test_schema
 
+      - name: where are we
+        run: pwd
+
+      - name: check schema content
+        run: ls -R assets/
+
       - name: Install Nextflow
         env:
           NXF_VER: ${{ matrix.NXF_VER }}
