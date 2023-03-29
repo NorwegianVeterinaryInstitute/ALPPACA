@@ -1,0 +1,288 @@
+---
+title: "ALPPACA CGMLST Report"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    mathjax: null
+    code_folding: "hide"
+    toc: true
+    toc_float:
+      collapsed: false
+params:
+  allelecall_data:
+    value: x
+  filtered_allelecall_data:
+    value: x
+  result_stats:
+    value: x
+  hamming_dists:
+    value: x
+  dendrogram:
+    value: x
+---
+
+```{r, include=FALSE, message=FALSE, warning=FALSE}
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(patchwork)
+library(readr)
+library(ggtree)
+library(plotly)
+library(kableExtra)
+library(stringr)
+```
+
+---
+
+# Filtering
+
+This section presents the filtering results, based on the `--max_missing` parameter.
+
+```{r, message=FALSE, warning=FALSE}
+pre_filt_data <- read_delim(
+  params$allelecall_data,
+  delim = "\t"
+)
+
+post_filt_data <- read_delim(
+  params$filtered_allelecall_data,
+  delim = "\t"
+)
+
+if (sum(! pre_filt_data$FILE %in% post_filt_data$FILE) > 0) {
+  
+  n_filtered <- sum(! pre_filt_data$FILE %in% post_filt_data$FILE)
+  
+  pre_filt_data %>%
+    mutate_at(vars(-FILE),
+              function(x) str_remove_all(x, "INF-")) %>%
+    mutate_at(vars(-FILE),
+              function(x) str_replace_all(
+              x,
+              "(PLOT5)|(PLOT3)|(LNF)|(ASM)|(ALM)|(NIPH)|(NIPHEM)",
+              NA_character_)) %>%
+    mutate_at(vars(-FILE),
+              as.factor) %>%
+    filter(! FILE %in% post_filt_data$FILE) %>%
+    mutate(missing_alleles = apply(., 1, function(x) sum(is.na(x))),
+           ID = 1:n()) %>%
+    rename("Genome" = FILE,
+           "Missing Alleles" = missing_alleles) %>%
+    select(ID, Genome, `Missing Alleles`) %>%
+    kbl(
+      caption = paste0("**Table 1**: Genomes that were removed from the analysis due to too many missing alleles. A total of ",
+                       n_filtered, " genomes were removed.")) %>%
+    kable_styling("striped") %>%
+    scroll_box(width = "100%", height = "400px")
+  
+} else {
+  "All genomes passed filtering."
+}
+
+```
+
+<br>
+
+---
+
+# AlleleCalling stats
+
+This section presents the main allelecalling results. The values in the
+figure below represent the different scenarios for the allelecalling
+process, see
+[here](https://chewbbaca.readthedocs.io/en/latest/user/modules/AlleleCall.html)
+for details.
+
+-   EXC = Exact match
+-   INF = Inferred new allele, highly similar to another loci
+-   LNF = Locus not found
+-   PLNF = Probable locus not found (only for mode 1, 2, and 3)
+-   PLOT3/5 = Possible locus on 3'/5' tip of query genome contig
+-   LOTSC = Contig of query genome smaller than the matched allele
+-   NIPH = Non-informative paralogous hit
+-   NIPHEM = Non-informative paralogous hit, specifically referring to
+    exact matches
+-   PAMA = Paralogous match, CDS highly similar to more than one locus
+-   ALM/ASM = Alleles 20% larger/smaller than the length mode of the
+    distribution of matched loci
+
+```{r, message=FALSE, warning=FALSE, fig.height=5, fig.width=8, dpi=600, fig.cap="**Figure 1**: AlleleCall result statistics.", fig.align='center'}
+allelecalling_data <- read_delim(
+  params$result_stats,
+  delim = "\t",
+  col_names = TRUE
+) %>%
+  pivot_longer(cols = -FILE,
+               names_to = "Type",
+               values_to = "n") %>%
+  mutate(Type = factor(Type,
+                       levels = c(
+                         "EXC",
+                         "INF",
+                         "LNF",
+                         "PLNF",
+                         "PLOT3",
+                         "PLOT5",
+                         "LOTSC",
+                         "NIPH",
+                         "NIPHEM",
+                         "PAMA",
+                         "ALM",
+                         "ASM"
+                       )))
+
+palette_ids <- unique(allelecalling_data$Type)
+palette <- RColorBrewer::brewer.pal(name = "Paired", n = 12)
+names(palette) <- palette_ids
+
+ggplot(allelecalling_data, aes(Type, n, fill = Type)) +
+  stat_boxplot(geom = "errorbar",
+               width = 0.5) +
+  geom_boxplot() +
+  scale_fill_manual(values = palette) +
+  theme_bw() +
+  theme(legend.position = "none",
+        panel.grid = element_blank())
+```
+
+<br>
+
+---
+
+# Distance calculations
+
+This plot shows the distance calculations from the filtered data between
+pairs of genomes (hamming distance, number of loci differences), as well
+as the number of compared loci and typed loci.
+The number of typed and compared loci should be relatively similar.
+
+```{r, message=FALSE, warning=FALSE, dpi=600, fig.height=5, fig.width=8, fig.cap="**Figure 3**: Hamming distance, and number of compared and typed loci.", fig.align='center'}
+hamming_distances <- read_delim(
+  params$hamming_dists,
+  delim = "\t",
+  col_names = TRUE
+) %>%
+  rename("Hamming" = hamming,
+         "Compared loci" = compared_alleles,
+         "Typed loci" = typed_alleles) %>%
+  select(-missing_alleles) %>%
+  pivot_longer(cols = -c(isolate1, isolate2),
+               names_to = "Type",
+               values_to = "value") %>%
+  mutate(Type = factor(Type,
+                       levels = c("Hamming",
+                                  "Compared loci",
+                                  "Typed loci")))
+
+p1 <- hamming_distances %>%
+  filter(Type == "Hamming") %>%
+  ggplot(aes(Type, value)) +
+  geom_violin(trim = TRUE,
+              scale = "count",
+              fill = "#fdb462") +
+  stat_boxplot(geom = "errorbar", width = 0.05) +
+  geom_boxplot(width = 0.05) +
+  labs(y = "Hamming Distance") +
+  theme_bw() +
+  theme(panel.grid = element_blank(),
+        axis.title.x = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank())
+
+p2 <- hamming_distances %>%
+  filter(Type != "Hamming") %>%
+  ggplot(aes(Type, value, fill = Type)) +
+  ggdist::stat_halfeye(trim = TRUE) +
+  labs(x = NULL,
+       y = "N Alleles") +
+  scale_fill_manual(values = c("Compared loci" = "#80b1d3",
+                               "Typed loci" = "#8dd3c7")) +
+  theme_bw() +
+  theme(legend.position = "none",
+        panel.grid = element_blank(),
+        axis.title.x = element_blank())
+
+p1 + p2 +
+  plot_layout(widths = c(0.3, 1))
+```
+
+<br>
+
+---
+
+# Clustering
+
+This is the dendrogram generated from the clustering method chosen by
+the user. Note: This is not a phylogenetic tree!
+
+```{r, warning=FALSE, message=FALSE, fig.height=5, fig.width=8, fig.cap="**Figure 4**: Dendrogram based on the selected clustering method.", fig.align='center'}
+tree <- read.tree(
+  params$dendrogram
+)
+
+tree_plot <- ggtree(tree) +
+  geom_text(aes(label = label),
+            hjust = 0,
+	    size = 3) +
+  geom_treescale()
+
+ggplotly(tree_plot) %>%
+  plotly::style(textposition = "right")
+```
+
+---
+
+<details>
+
+<summary>Tool and package versions</summary>
+
+Date generated: `r Sys.Date()`
+
+**R Packages**
+
+These are the R packages used to generate this report.
+
+```{r, message=FALSE, warning=FALSE}
+packages <- (.packages())
+clean_pkg_version <- function(x) {
+  y <- getNamespaceVersion(x)
+  
+  z <- data.frame("Package" = x,
+                  "Version" = y)
+  
+  row.names(z) <- NULL
+  
+  return(z)
+}
+
+lapply(packages, function(x) clean_pkg_version(x)) %>%
+  bind_rows() %>%
+  kbl() %>%
+  kable_styling(bootstrap_options = c("striped",
+                                      "hover",
+                                      "responsive"),
+                full_width = TRUE)
+```
+
+**Tool versions**
+
+These are the tools used to run the analysis within the cgMLST workflow
+of ALPPACA.
+
+```{r, message=FALSE, warning=FALSE}
+tool_data <- data.frame(
+  Tool = c("ChewBBACA","R"),
+  Version = c("3.1.2","4.1.2")
+)
+
+tool_data %>%
+  kbl() %>%
+  kable_styling(bootstrap_options = c("striped",
+                                      "hover",
+                                      "responsive"),
+                full_width = TRUE)
+```
+
+</details>
+

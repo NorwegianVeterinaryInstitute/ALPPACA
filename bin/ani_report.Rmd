@@ -10,15 +10,10 @@ output:
       collapsed: false
 params:
   ani_data:
-    value: x
+  value: x
 ---
-# Run information
 
-Date generated: `r Sys.Date()`
-
-## R Packages
-These are the R packages used to generate this report.
-```{r, message=FALSE, warning=FALSE}
+```{r, include=FALSE, message=FALSE, warning=FALSE}
 library(dplyr)
 library(stringr)
 library(ggplot2)
@@ -27,51 +22,9 @@ library(readr)
 library(formattable)
 library(kableExtra)
 library(ggdist)
-
-packages <- (.packages())
-clean_pkg_version <- function(x) {
-  y <- getNamespaceVersion(x)
-  
-  z <- data.frame("Package" = x,
-                  "Version" = y)
-  
-  row.names(z) <- NULL
-  
-  return(z)
-}
-lapply(packages, function(x) clean_pkg_version(x)) %>%
-  bind_rows() %>%
-  kbl() %>%
-  kable_styling(bootstrap_options = c("striped",
-                                      "hover",
-                                      "responsive"),
-                full_width = TRUE)
 ```
 
-<br>
-
-## Tool versions
-These are the tools used to run the analysis within the ani workflow of ALPPACA.
-```{r, message=FALSE, warning=FALSE}
-tool_data <- data.frame(
-  Tool = c("FastANI"),
-  Version = c("1.33")
-)
-tool_data %>%
-  kbl() %>%
-  kable_styling(bootstrap_options = c("striped",
-                                      "hover",
-                                      "responsive"),
-                full_width = TRUE)
-```
-
-<br>
-
-<br>
-
-# Tool information
-
-## FastANI
+# FastANI
 The figure below presents the summarised average nucleotide identity (ANI)
 density for all included isolates. The black diamond and the bold line 
 in the boxplot represent the median value. Vertical blue lines represent
@@ -88,17 +41,16 @@ keysort <- function(x,y) {
 # Removes paths and extension from ID
 regex_pattern <- regex(
   "^(.*/)|([:punct:]?.((fasta)|(fna)|(fa)))"
-  )
+)
 
 file_list <- list.files(pattern = "_fastani.txt")
-
 fastani_data <- lapply(file_list, function(x) {
   read_delim(
     x, 
     delim = "\t",
     col_names = FALSE
-    )
-  }
+  )
+}
 ) %>% 
   bind_rows() %>%
   rename("ID1" = X1,
@@ -159,6 +111,55 @@ ggplot(fastani_data, aes(x = ANI, y = 1)) +
         axis.title.y = element_blank(),
         axis.ticks.y = element_blank(),
         axis.text.x = element_text(size = 14),
-	axis.title.x = element_text(size = 16))
+        axis.title.x = element_text(size = 16))
+
 ```
 
+---
+
+<details>
+  <summary>Tool and package versions</summary>
+
+Date generated: `r Sys.Date()`
+
+**R Packages**
+
+These are the R packages used to generate this report.
+```{r, message=FALSE, warning=FALSE}
+packages <- (.packages())
+clean_pkg_version <- function(x) {
+  y <- getNamespaceVersion(x)
+  
+  z <- data.frame("Package" = x,
+                  "Version" = y)
+  
+  row.names(z) <- NULL
+  
+  return(z)
+}
+lapply(packages, function(x) clean_pkg_version(x)) %>%
+  bind_rows() %>%
+  kbl() %>%
+  kable_styling(bootstrap_options = c("striped",
+                                      "hover",
+                                      "responsive"),
+                full_width = TRUE)
+```
+
+**Tool versions**
+
+These are the tools used to run the analysis within the ani workflow of ALPPACA.
+```{r, message=FALSE, warning=FALSE}
+tool_data <- data.frame(
+  Tool = c("FastANI"),
+  Version = c("1.33")
+)
+tool_data %>%
+  kbl() %>%
+  kable_styling(bootstrap_options = c("striped",
+                                      "hover",
+                                      "responsive"),
+                full_width = TRUE)
+```
+
+</details>

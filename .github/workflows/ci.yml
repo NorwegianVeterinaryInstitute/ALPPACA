@@ -27,6 +27,19 @@ jobs:
       - name: Check out pipeline code
         uses: actions/checkout@v2
 
+      - name: Check out test data
+        uses: actions/checkout@v3
+        with:
+          repository: NorwegianVeterinaryInstitute/ALPPACA
+          ref: testdata
+          path: testdata/
+
+      - name: where are we
+        run: pwd
+
+      - name: check schema content
+        run: ls -R assets/
+
       - name: Install Nextflow
         env:
           NXF_VER: ${{ matrix.NXF_VER }}
@@ -37,6 +50,10 @@ jobs:
       - name: Run ani track test
         run: |
           nextflow run ${GITHUB_WORKSPACE} -profile test_ani,docker --out_dir ./results
+
+      - name: Run cgmlst track test
+        run: |
+          nextflow run ${GITHUB_WORKSPACE} -profile test_cgmlst,docker --schema ${{ github.workspace }}/assets/data/test_schema/ --out_dir ./results
 
       - name: Run core genome track test
         run: |
@@ -49,4 +66,3 @@ jobs:
       - name: Run mapping track test
         run: |
           nextflow run ${GITHUB_WORKSPACE} -profile test_mapping,docker --out_dir ./results
-
