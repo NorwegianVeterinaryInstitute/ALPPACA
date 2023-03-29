@@ -1,17 +1,18 @@
 ---
-  title: "ALPPACA ANI Report"
+title: "ALPPACA ANI Report"
 date: "`r Sys.Date()`"
 output:
   html_document:
-  mathjax: null
-code_folding: "hide"
-toc: true
-toc_float:
-  collapsed: false
+    mathjax: null
+    code_folding: "hide"
+    toc: true
+    toc_float:
+      collapsed: false
 params:
   ani_data:
   value: x
 ---
+
 ```{r, include=FALSE, message=FALSE, warning=FALSE}
 library(dplyr)
 library(stringr)
@@ -36,10 +37,12 @@ keysort <- function(x,y) {
   sorted <- sort(c(x,y))
   paste0(sorted[1], "_", sorted[2])
 }
+
 # Removes paths and extension from ID
 regex_pattern <- regex(
   "^(.*/)|([:punct:]?.((fasta)|(fna)|(fa)))"
 )
+
 file_list <- list.files(pattern = "_fastani.txt")
 fastani_data <- lapply(file_list, function(x) {
   read_delim(
@@ -67,11 +70,13 @@ fastani_data <- lapply(file_list, function(x) {
   slice(1) %>%
   ungroup() %>%
   select(-sortkey)
+
 write.table(fastani_data,
             "FASTANI_cleaned.txt",
             sep = "\t",
             row.names = FALSE,
             quote = FALSE)
+
 ggplot(fastani_data, aes(x = ANI, y = 1)) +
   geom_point(
     aes(y = 1 - 0.03),
@@ -107,6 +112,7 @@ ggplot(fastani_data, aes(x = ANI, y = 1)) +
         axis.ticks.y = element_blank(),
         axis.text.x = element_text(size = 14),
         axis.title.x = element_text(size = 16))
+
 ```
 
 ---
