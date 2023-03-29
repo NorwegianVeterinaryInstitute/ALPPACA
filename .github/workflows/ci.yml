@@ -32,7 +32,7 @@ jobs:
         with:
           repository: NorwegianVeterinaryInstitute/ALPPACA
           ref: testdata
-          path: assets/data/test_schema
+          path: assets/
 
       - name: where are we
         run: pwd
