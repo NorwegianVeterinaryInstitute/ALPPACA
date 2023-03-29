@@ -8,6 +8,10 @@ include { REPORT_CORE_GENOME        } from "../modules/REPORT.nf"
 include { PARSNP                    } from "../modules/PARSNP.nf"
 
 workflow CORE_GENOME {
+	 if (!params.input) {
+                exit 1, "Missing input file"
+        }
+
 	assemblies_ch = Channel
 		.fromPath(params.input, checkIfExists: true)
 		.splitCsv(header:true, sep:",")

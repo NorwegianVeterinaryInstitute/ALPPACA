@@ -4,8 +4,9 @@ FROM r-base:4.1.2
 RUN apt-get update && apt-get install -y libssl-dev \
     libcurl4-openssl-dev libfontconfig1-dev libxml2-dev procps \
     pandoc libmariadb-dev libmagick++-dev libudunits2-dev \
-    libharfbuzz-dev libfribidi-dev libgdal-dev libpq-dev
- 
+    libharfbuzz-dev libfribidi-dev libgdal-dev libpq-dev \
+    cargo
+
 # R libraries
 RUN R --slave -e 'install.packages("devtools", lib = "/usr/lib/R/library")' 
 RUN R --slave -e 'devtools::install_url("https://bioconductor.org/packages/3.16/bioc/src/contrib/ggtree_3.6.2.tar.gz", dependencies = TRUE, upgrade = "always")' 
@@ -20,6 +21,17 @@ RUN R --slave -e 'devtools::install_url("https://cran.r-project.org/src/contrib/
 RUN R --slave -e 'devtools::install_url("https://cran.r-project.org/src/contrib/kableExtra_1.3.4.tar.gz", dependencies = TRUE, upgrade = "always")'
 RUN R --slave -e 'devtools::install_url("https://cran.r-project.org/src/contrib/patchwork_1.1.2.tar.gz", dependencies = TRUE, upgrade = "always")' 
 RUN R --slave -e 'devtools::install_url("https://cran.r-project.org/src/contrib/ggdist_3.2.1.tar.gz", dependencies = TRUE, upgrade = "always")'
+RUN R --slave -e 'devtools::install_url("https://cran.r-project.org/src/contrib/cultevo_1.0.2.tar.gz", dependencies = TRUE, upgrade = "always")'
+RUN R --slave -e 'devtools::install_url("https://cran.r-project.org/src/contrib/cluster_2.1.4.tar.gz", dependencies = TRUE, upgrade = "always")'
+RUN R --slave -e 'devtools::install_url("https://cran.r-project.org/src/contrib/optparse_1.7.3.tar.gz", dependencies = TRUE, upgrade = "always")'
+RUN R --slave -e 'devtools::install_url("https://cran.r-project.org/src/contrib/ape_5.7-1.tar.gz", dependencies = TRUE, upgrade = "always")'
+RUN R --slave -e 'devtools::install_url("https://cran.r-project.org/src/contrib/pacman_0.5.1.tar.gz", dependencies = TRUE, upgrade = "always")'
+RUN R --slave -e 'devtools::install_url("https://cran.r-project.org/src/contrib/knitr_1.42.tar.gz", dependencies = TRUE, upgrade = "always")'
+RUN R --slave -e 'devtools::install_url("https://cran.r-project.org/src/contrib/prettydoc_0.4.1.tar.gz", dependencies = TRUE, upgrade = "always")'
+RUN R --slave -e 'devtools::install_url("https://cran.r-project.org/src/contrib/magrittr_2.0.3.tar.gz", dependencies = TRUE, upgrade = "always")'
+RUN R --slave -e 'install.packages("BiocManager", dependencies = TRUE); BiocManager::install("treeio")' 
+
+
 # Environments
 ENV LC_ALL=C
 ENV PATH="$PATH:/usr/bin"

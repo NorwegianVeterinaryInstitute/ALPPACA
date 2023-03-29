@@ -18,14 +18,18 @@ log.info "".center(74, "=")
 nextflow.enable.dsl=2
 
 // Define workflows
-include { MAPPING      } from "./workflows/MAPPING.nf"
-include { CORE_GENE    } from "./workflows/CORE_GENE.nf"
-include { CORE_GENOME  } from "./workflows/CORE_GENOME.nf"
-include { ANI } from "./workflows/ANI.nf"
+include { MAPPING     } from "./workflows/MAPPING.nf"
+include { CORE_GENE   } from "./workflows/CORE_GENE.nf"
+include { CORE_GENOME } from "./workflows/CORE_GENOME.nf"
+include { ANI         } from "./workflows/ANI.nf"
+include { CGMLST      } from "./workflows/CGMLST.nf"
 
 workflow {
 	if (params.track == "ani") {
 		ANI()
+	}
+	if (params.track == "cgmlst") {
+		CGMLST()
 	}
 	if (params.track == "mapping") {
 		MAPPING()
