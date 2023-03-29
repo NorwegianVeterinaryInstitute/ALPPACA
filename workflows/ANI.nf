@@ -3,6 +3,10 @@ include { FASTANI        } from "../modules/FASTANI.nf"
 include { REPORT_ANI     } from "../modules/REPORT.nf"
 
 workflow ANI {
+	 if (!params.input) {
+                exit 1, "Missing input file"
+        }
+
 	assemblies_ch = Channel
 		.fromPath(params.input, checkIfExists: true)
 		.splitCsv(header:true, sep:",")

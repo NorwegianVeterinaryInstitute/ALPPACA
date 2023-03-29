@@ -7,39 +7,37 @@ include { CLEAN_AND_FILTER          } from "../modules/RSCRIPTS.nf"
 include { CALCULATE_DISTANCES       } from "../modules/RSCRIPTS.nf"
 include { REPORT_CGMLST             } from "../modules/REPORT.nf"
 
-// VALIDATE INPUTS
-if (!params.input) {
-	exit 1, "Missing input file"
-}
-
-if (!params.skip_mlst) {
-	if (!params.mlst_schema) {
-		exit 1, "Missing MLST schema"
-	}
-}
-
-if (params.download_external) {
-	if (!params.species_value) {
-		exit 1, "Missing species value"
-	}
-	if (!params.id_value) {
-		exit 1, "Missing dataset ID value"
-	}
-}
-
-if (!params.download_external) {
-	if (!params.schema) {
-		exit 1, "Missing schema path"
-	}
-	if (!params.prepped_schema) {
-		if (!params.ptf) {
-			exit 1, "Missing prodigal training file"
-		}
-	}
-}
-
 // WORKFLOW
 workflow CGMLST {
+	if (!params.input) {
+        	exit 1, "Missing input file"
+	}
+
+	if (!params.skip_mlst) {
+        	if (!params.mlst_schema) {
+                	exit 1, "Missing MLST schema"
+        	}
+	}
+
+	if (params.download_external) {
+        	if (!params.species_value) {
+                	exit 1, "Missing species value"
+        	}
+        	if (!params.id_value) {
+                	exit 1, "Missing dataset ID value"
+        	}
+	}
+
+	if (!params.download_external) {
+        	if (!params.schema) {
+                	exit 1, "Missing schema path"
+        	}
+        	if (!params.prepped_schema) {
+                	if (!params.ptf) {
+                        	exit 1, "Missing prodigal training file"
+                	}
+        	}	
+	}
 
 	input_list_ch = Channel
                 .fromPath(params.input, checkIfExists: true)

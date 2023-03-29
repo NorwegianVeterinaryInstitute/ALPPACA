@@ -7,6 +7,10 @@ include { IQTREE; IQTREE_FCONST         } from "../modules/IQTREE.nf"
 include { REPORT_CORE_GENE		} from "../modules/REPORT.nf"
 
 workflow CORE_GENE {
+	 if (!params.input) {
+                exit 1, "Missing input file"
+        }
+
 	assemblies_ch = Channel
 		.fromPath(params.input, checkIfExists: true)
 		.splitCsv(header:true, sep:",")

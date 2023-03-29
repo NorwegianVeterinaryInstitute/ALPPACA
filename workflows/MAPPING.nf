@@ -9,6 +9,13 @@ include { REPORT_MAPPING	    } from "../modules/REPORT.nf"
 
 
 workflow MAPPING {
+	 if (!params.input) {
+                exit 1, "Missing input file"
+        }
+	if (!params.snippyref) {
+		exit 1, "Missing Snippy reference"
+	}
+
 	reads_ch = Channel
 		.fromPath(params.input, checkIfExists: true)
 		.splitCsv(header:true, sep:",")
