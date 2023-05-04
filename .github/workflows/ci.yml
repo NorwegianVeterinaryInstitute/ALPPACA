@@ -22,7 +22,7 @@ jobs:
         # Nextflow versions
         include:
           # Test pipeline minimum Nextflow version
-          - NXF_VER: "21.10.6"
+          - NXF_VER: "23.04.1"
     steps:
       - name: Check out pipeline code
         uses: actions/checkout@v2
