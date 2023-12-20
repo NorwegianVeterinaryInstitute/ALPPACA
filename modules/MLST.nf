@@ -1,6 +1,6 @@
 process MLST {
-    conda (params.enable_conda ? 'bioconda::mlst=2.23.0' : null)
-    container 'quay.io/biocontainers/mlst:2.23.0--hdfd78af_1'
+    conda (params.enable_conda ? 'bioconda::mlst=2.19.0' : null)
+    container 'quay.io/biocontainers/mlst:2.19.0--hdfd78af_1'
 
     label 'process_high_cpu_time'
 
