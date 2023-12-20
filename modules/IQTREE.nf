@@ -12,6 +12,7 @@ process IQTREE {
         file("*")
         path "*.treefile", emit: R_tree
 	path "iqtree.iqtree", emit: iqtree_results_ch
+	path "*contree", optional: true
 
         script:
 	if (params.fast_mode)
