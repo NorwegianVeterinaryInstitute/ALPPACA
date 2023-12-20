@@ -164,9 +164,13 @@ hamming_distances <- read_delim(
   col_names = TRUE
 ) %>%
   rename("Hamming" = hamming,
-         "Compared loci" = compared_alleles,
-         "Typed loci" = typed_alleles) %>%
-  select(-missing_alleles) %>%
+         "Compared loci" = compared_alleles_pair,
+         "Typed loci" = typed_alleles_pair) %>%
+  select(-c(missing_alleles_pair,
+	    typed_alleles_isolate1,
+	    typed_alleles_isolate2,
+	    missing_alleles_isolate1,
+	    missing_alleles_isolate2)) %>%
   pivot_longer(cols = -c(isolate1, isolate2),
                names_to = "Type",
                values_to = "value") %>%
