@@ -1,6 +1,6 @@
 process BAKTA {
 	conda (params.enable_conda ? 'bioconda::bakta=1.9.1' : null)
-	container 'quay.io/biocontainers/bakta:1.9.1--pyhdfd78af_0'
+	container 'evezeyl/bakta:1.9.1'
 
         input:
         file(assembly)
