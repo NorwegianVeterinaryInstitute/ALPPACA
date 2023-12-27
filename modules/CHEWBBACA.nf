@@ -34,7 +34,7 @@ process CHEWBBACA_PREP_SCHEMA {
 
     script:
     """
-    chewBBACA.py PrepExternalSchema -i $schema\
+    chewBBACA.py PrepExternalSchema -g $schema\
 	-o ./prepped_schema\
 	--ptf $ptf\
 	--bsr $params.bsr\
