@@ -53,7 +53,7 @@ process CHEWBBACA_EVAL_SCHEMA {
     path(schema)
 
     output:
-    path "**"
+    path "*"
 
     script:
     """
