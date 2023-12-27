@@ -1,4 +1,4 @@
-include { PROKKA                        } from "../modules/PROKKA.nf"
+include { BAKTA                         } from "../modules/BAKTA.nf"
 include { PANAROO_QC; PANAROO_PANGENOME } from "../modules/PANAROO.nf"
 include { DEDUPLICATE                   } from "../modules/SEQKIT.nf"
 include { SNPDIST                       } from "../modules/SNPDIST.nf"
@@ -16,16 +16,16 @@ workflow CORE_GENE {
 		.splitCsv(header:true, sep:",")
 		.map { file(it.path, checkIfExists: true) }
 
-        PROKKA(assemblies_ch)
+        BAKTA(assemblies_ch)
 
 	if (params.qc) {
 		refdb_ch = Channel.fromPath(params.refdb)
 
-                PANAROO_QC(PROKKA.out.prokka_ch.collect(),
+                PANAROO_QC(BAKTA.out.bakta_ch.collect(),
                            refdb_ch)
 	}
 
-        PANAROO_PANGENOME(PROKKA.out.prokka_ch.collect())
+        PANAROO_PANGENOME(BAKTA.out.bakta_ch.collect())
         if (params.deduplicate) {
                 DEDUPLICATE(PANAROO_PANGENOME.out.core_alignment_ch)
                 SNPDIST(DEDUPLICATE.out.seqkit_ch)
