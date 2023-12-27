@@ -10,8 +10,15 @@ process BAKTA {
         file("*")
 
         script:
-        """
-	bakta --version > bakta.version
-        bakta --db /bakta_db/db --skip-plot --prefix $assembly.baseName --cpus $task.cpus $assembly
-        """
+        if (!params.bakta_db)
+            """
+	    bakta --version > bakta.version
+            bakta --db /bakta_db/db --skip-plot --prefix $assembly.baseName --cpus $task.cpus $assembly
+            """
+        else
+            """
+            bakta --version > bakta.version
+            bakta --db $params.bakta_db --skip-plot --prefix $assembly.baseName --cpus $task.cpus $assembly
+            """
+
 }
