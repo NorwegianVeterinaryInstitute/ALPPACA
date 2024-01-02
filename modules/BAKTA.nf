@@ -6,9 +6,10 @@ process BAKTA {
 
         input:
         file(assembly)
+	path db
 
         output:
-        path "*.gff", emit: bakta_ch
+        path "*.gff3", emit: bakta_ch
         file("*")
 
         script:
@@ -20,7 +21,7 @@ process BAKTA {
         else
             """
             bakta --version > bakta.version
-            bakta --db $params.bakta_db --skip-plot --prefix $assembly.baseName --threads $task.cpus $assembly
+            bakta --db $db --skip-plot --prefix $assembly.baseName --threads $task.cpus $assembly
             """
 
 }

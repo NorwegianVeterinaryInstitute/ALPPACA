@@ -16,7 +16,7 @@ workflow CORE_GENE {
 		.splitCsv(header:true, sep:",")
 		.map { file(it.path, checkIfExists: true) }
 
-        BAKTA(assemblies_ch)
+        BAKTA(assemblies_ch, params.bakta_db)
 
 	if (params.qc) {
 		refdb_ch = Channel.fromPath(params.refdb)
