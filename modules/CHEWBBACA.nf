@@ -1,6 +1,6 @@
 process CHEWBBACA_DOWNLOAD_SCHEMA {
-    conda (params.enable_conda ? 'bioconda::chewbbaca=3.1.2' : null)
-    container 'quay.io/biocontainers/chewbbaca:3.1.2--pyhdfd78af_0'
+    conda (params.enable_conda ? 'bioconda::chewbbaca=3.3.1' : null)
+    container 'quay.io/biocontainers/chewbbaca:3.3.1--pyhdfd78af_0'
 
     label 'process_local'
 
@@ -20,8 +20,8 @@ process CHEWBBACA_DOWNLOAD_SCHEMA {
 }
 
 process CHEWBBACA_PREP_SCHEMA {
-    conda (params.enable_conda ? 'bioconda::chewbbaca=3.1.2' : null)
-    container 'quay.io/biocontainers/chewbbaca:3.1.2--pyhdfd78af_0'
+    conda (params.enable_conda ? 'bioconda::chewbbaca=3.3.1' : null)
+    container 'quay.io/biocontainers/chewbbaca:3.3.1--pyhdfd78af_0'
 
     input:
     path(schema)
@@ -34,7 +34,7 @@ process CHEWBBACA_PREP_SCHEMA {
 
     script:
     """
-    chewBBACA.py PrepExternalSchema -i $schema\
+    chewBBACA.py PrepExternalSchema -g $schema\
 	-o ./prepped_schema\
 	--ptf $ptf\
 	--bsr $params.bsr\
@@ -46,26 +46,26 @@ process CHEWBBACA_PREP_SCHEMA {
 }
 
 process CHEWBBACA_EVAL_SCHEMA {
-    conda (params.enable_conda ? 'bioconda::chewbbaca=3.1.2' : null)
-    container 'quay.io/biocontainers/chewbbaca:3.1.2--pyhdfd78af_0'
+    conda (params.enable_conda ? 'bioconda::chewbbaca=3.3.1' : null)
+    container 'quay.io/biocontainers/chewbbaca:3.3.1--pyhdfd78af_0'
 
     input:
     path(schema)
 
     output:
-    path "**"
+    path "*"
 
     script:
     """
-    chewBBACA.py SchemaEvaluator -i $schema\
+    chewBBACA.py SchemaEvaluator -g $schema\
         -o results\
         --cpu $task.cpus
     """
 }
 
 process CHEWBBACA_ALLELECALL {
-    conda (params.enable_conda ? 'bioconda::chewbbaca=3.1.2' : null)
-    container 'quay.io/biocontainers/chewbbaca:3.1.2--pyhdfd78af_0'
+    conda (params.enable_conda ? 'bioconda::chewbbaca=3.3.1' : null)
+    container 'quay.io/biocontainers/chewbbaca:3.3.1--pyhdfd78af_0'
 
     label 'process_high_memory_cpu_time'
 

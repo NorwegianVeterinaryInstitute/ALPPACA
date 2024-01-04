@@ -33,7 +33,7 @@ if (workflow == "core_genome") {
         parsnp_report = "parsnpAligner.log",
         phylo_data = "iqtree.iqtree",
         snpdist_report = "snp_dists.tab",
-        phylo_tree = "iqtree.contree"
+        phylo_tree = "iqtree.treefile"
       )
     ) 
 }
@@ -45,7 +45,7 @@ if (workflow == "core_gene") {
         pangenome_data = "summary_statistics.txt",
         phylo_data = "iqtree.iqtree",
         snpdist_report = "snp_dists.tab",
-        phylo_tree = "iqtree.contree"
+        phylo_tree = "iqtree.treefile"
       )
     )
 }
@@ -57,7 +57,7 @@ if (workflow == "mapping") {
         snippy_report = "core.txt",
         phylo_data = "iqtree.iqtree",
         snpdist_report = "snp_dists.tab",
-        phylo_tree = "iqtree.contree"
+        phylo_tree = "iqtree.treefile"
       )
     )
 }

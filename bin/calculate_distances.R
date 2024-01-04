@@ -54,14 +54,26 @@ hamming <- combn(colnames(transposed_data), 2, simplify = FALSE) %>%
         transposed_data[,col[1]] != transposed_data[,col[2]],
         na.rm = TRUE
       ),
-      compared_alleles = sum(
+      compared_alleles_pair = sum(
         !is.na(transposed_data[,col[1]]) & !is.na(transposed_data[,col[2]])
       ),
-      typed_alleles = sum(
+      typed_alleles_pair = sum(
         !is.na(transposed_data[,col[1]]) | !is.na(transposed_data[,col[2]])
       ),
-      missing_alleles = sum(
+      missing_alleles_pair = sum(
         is.na(transposed_data[,col[1]]) | is.na(transposed_data[,col[2]])
+      ),
+      typed_alleles_isolate1 = sum(
+        !is.na(transposed_data[,col[1]])
+      ),
+      typed_alleles_isolate2 = sum(
+        !is.na(transposed_data[,col[2]])
+      ),
+      missing_alleles_isolate1 = sum(
+        is.na(transposed_data[,col[1]])
+      ),
+      missing_alleles_isolate2 = sum(
+        is.na(transposed_data[,col[2]])
       )
     )
   }
