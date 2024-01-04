@@ -5,16 +5,18 @@ process BAKTA {
 	label 'process_medium_memory'
 
         input:
-        file(assembly)
-	path db
+        path assembly
 
         output:
         path "*.gff3", emit: bakta_ch
         file("*")
 
         script:
+
+	def db_path = "/bakta_db/db" ?: params.bakta_db
+
         """
         bakta --version > bakta.version
-        bakta --db $db --skip-plot --prefix $assembly.baseName --threads $task.cpus $assembly
+        bakta --db $db_path --skip-plot --prefix $assembly.baseName --threads $task.cpus $assembly
         """
 }
