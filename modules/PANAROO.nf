@@ -38,7 +38,7 @@ process PANAROO_PANGENOME {
         script:
         """
 	panaroo --version > panaroo.version
-        panaroo -i $gffs -o . -t $task.cpus -a core --clean-mode $params.clean_mode --aligner mafft --threshold $params.identity_threshold --len_dif_percent $params.len_dif_percent &> panaroo_pangenome.log
+        panaroo -i $gffs -o . -t $task.cpus -a core --clean-mode $params.clean_mode --remove-invalid-genes --aligner mafft --threshold $params.identity_threshold --len_dif_percent $params.len_dif_percent &> panaroo_pangenome.log
         """
 }
 
