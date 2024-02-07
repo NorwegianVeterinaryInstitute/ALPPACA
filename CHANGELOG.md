@@ -3,6 +3,7 @@
 
 ## Version 2.3.1
 - Updated the version of ParSNP to 2.0.3, as of issue #112
+- Updated Panaroo to version 1.3.4
 - Bumped software versions in all reports
 - Added gffs as optional output with the command `--output_gffs`, as of issue #113
 
