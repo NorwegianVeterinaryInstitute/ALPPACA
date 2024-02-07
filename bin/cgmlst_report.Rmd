@@ -277,7 +277,7 @@ of ALPPACA.
 ```{r, message=FALSE, warning=FALSE}
 tool_data <- data.frame(
   Tool = c("ChewBBACA","R"),
-  Version = c("3.1.2","4.1.2")
+  Version = c("3.3.1","4.1.2")
 )
 
 tool_data %>%

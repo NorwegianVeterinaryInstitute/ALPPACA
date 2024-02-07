@@ -189,16 +189,16 @@ lapply(packages, function(x) clean_pkg_version(x)) %>%
 These are the tools used to run the analysis within the core genome workflow of ALPPACA.
 ```{r, message=FALSE, warning=FALSE}
 tool_data <- data.frame(
-  Tool = c("Prokka",
+  Tool = c("Bakta",
            "Panaroo",
            "Snp-dists",
            "Snp-sites",
            "IQTree"),
-  Version = c("1.14.6",
+  Version = c("1.9.1",
               "1.2.9",
               "0.8.2",
               "2.5.1",
-              "2.2.0.3")
+              "2.2.6")
 )
 tool_data %>%
   kbl() %>%
