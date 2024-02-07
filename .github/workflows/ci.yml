@@ -24,11 +24,16 @@ jobs:
           # Test pipeline minimum Nextflow version
           - NXF_VER: "23.04.4"
     steps:
+      - name: Free Disk Space (Ubuntu)
+        uses: jlumbroso/free-disk-space@main
+        with:
+          tool_cache: true
+
       - name: Check out pipeline code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Check out test data
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: NorwegianVeterinaryInstitute/ALPPACA
           ref: testdata
