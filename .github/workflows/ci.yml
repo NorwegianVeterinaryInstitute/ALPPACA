@@ -12,14 +12,6 @@ env:
   NXF_ANSI_LOG: false
 
 jobs:
-  free-disk-space:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Free Disk Space (Ubuntu)
-        uses: jlumbroso/free-disk-space@main
-        with:
-          tool_cache: true
-
   test:
     name: Run pipeline with test data
     # Only run on push if this is the nf-core dev branch (merged PRs)
@@ -32,6 +24,11 @@ jobs:
           # Test pipeline minimum Nextflow version
           - NXF_VER: "23.04.4"
     steps:
+      - name: Free Disk Space (Ubuntu)
+        uses: jlumbroso/free-disk-space@main
+        with:
+          tool_cache: true
+
       - name: Check out pipeline code
         uses: actions/checkout@v4
 
