@@ -1,6 +1,12 @@
 
 # Changelog
 
+## Version 2.3.1
+- Updated the version of ParSNP to 2.0.3, as of issue #112
+- Bumped software versions in all reports
+- Added gffs as optional output with the command `--output_gffs`, as of issue #113
+
+
 ## Version 2.3.0
 - Gubbins have been updated to version 3.3.2, and the `--seed` parameter now sets the seed for both IQ-Tree and Gubbins, as of isse #109
 - Added Bakta as a replacement to Prokka in the core gene track, as of issue #54
