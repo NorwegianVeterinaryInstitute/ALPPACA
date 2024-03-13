@@ -1,6 +1,6 @@
 process GUBBINS {
-	conda (params.enable_conda ? 'bioconda::gubbins=3.2.0' : null)
-	container 'evezeyl/gubbins:3.3.2'
+	conda (params.enable_conda ? 'bioconda::gubbins=3.3.3' : null)
+	container 'quay.io/biocontainers/gubbins:3.3.3--py310pl5321he4a0461_1'
 
 	label 'process_high_memory_time'
 
