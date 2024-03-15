@@ -5,7 +5,7 @@ process PARSNP {
 	label 'process_long'
 
         input:
-        file("*")
+        file(fasta)
 
         output:
 	path "parsnp_alignment.fasta", emit: fasta_alignment_ch
@@ -15,7 +15,7 @@ process PARSNP {
         script:
         """
 	parsnp --version > parsnp.version
-        parsnp -d *.fasta -p $task.cpus --skip-phylogeny -u -o results -r $params.parsnp_ref -v -c &> parsnp.log
+        parsnp -d $fasta -p $task.cpus --skip-phylogeny -u -o results -r $params.parsnp_ref -v -c &> parsnp.log
 	mv results/log/parsnpAligner.log .
 	mv results/parsnp.ggr .
 	mv results/parsnp.xmfa .
