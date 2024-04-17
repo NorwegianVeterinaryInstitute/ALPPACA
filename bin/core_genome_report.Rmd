@@ -225,7 +225,7 @@ tool_data <- data.frame(
            "Snp-sites",
            "IQTree"),
   Version = c("2.0.3",
-              "3.3.2",
+              "3.3.4",
               "0.5--1",
               "0.8.2",
               "2.5.1",

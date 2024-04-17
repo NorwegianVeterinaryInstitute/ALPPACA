@@ -1,6 +1,11 @@
 
 # Changelog
 
+## Version 2.3.2
+- Corrected an issue with the input to ParSNP, as of issue #117
+- Updated the version of Gubbins to 3.3.4
+- Added home mount to the CI test pipeline due to updates with nextflow
+
 ## Version 2.3.1
 - Updated the version of ParSNP to 2.0.3, as of issue #112
 - Updated Panaroo to version 1.3.4
