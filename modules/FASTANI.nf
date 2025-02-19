@@ -1,6 +1,6 @@
 process FASTANI {
-	conda (params.enable_conda ? 'bioconda::fastani=1.33' : null)
-	container 'quay.io/biocontainers/fastani:1.33--h0fdf51a_1'
+	conda (params.enable_conda ? 'bioconda::fastani=1.34' : null)
+	container 'quay.io/biocontainers/fastani:1.34--hb66fcc3_5'
 
 	label 'process_high_cpu_time'
 
@@ -25,8 +25,8 @@ process FASTANI {
 }
 
 process FASTANI_VERSION {
-        conda (params.enable_conda ? 'bioconda::fastani=1.33' : null)
-        container 'quay.io/biocontainers/fastani:1.33--h0fdf51a_1'
+        conda (params.enable_conda ? 'bioconda::fastani=1.34' : null)
+        container 'quay.io/biocontainers/fastani:1.34--hb66fcc3_5'
 
         script:
         """

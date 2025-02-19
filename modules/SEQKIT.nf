@@ -1,6 +1,6 @@
 process DEDUPLICATE {
-	conda (params.enable_conda ? 'bioconda::seqkit=2.1.0' : null)
-	container 'quay.io/biocontainers/seqkit:2.1.0--h9ee0642_0'
+	conda (params.enable_conda ? 'bioconda::seqkit=2.9:0' : null)
+	container 'quay.io/biocontainers/seqkit:2.9.0--h9ee0642_0'
 
         input:
         file(fasta)

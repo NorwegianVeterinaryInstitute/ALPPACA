@@ -1,6 +1,6 @@
 process PANAROO_QC {
-	conda (params.enable_conda ? 'bioconda::panaroo=1.3.4' : null)
-	container 'quay.io/biocontainers/panaroo:1.3.4--pyhdfd78af_0'
+	conda (params.enable_conda ? 'bioconda::panaroo=1.5.1' : null)
+	container 'quay.io/biocontainers/panaroo:1.5.1--pyhdfd78af_0'
 
 	label 'process_high_memory_time'
 
@@ -22,8 +22,8 @@ process PANAROO_QC {
 }
 
 process PANAROO_PANGENOME {
-	conda (params.enable_conda ? 'bioconda::panaroo=1.3.4' : null)
-        container 'quay.io/biocontainers/panaroo:1.3.4--pyhdfd78af_0'
+	conda (params.enable_conda ? 'bioconda::panaroo=1.5.1' : null)
+        container 'quay.io/biocontainers/panaroo:1.5.1--pyhdfd78af_0'
 
 	label 'process_high_cpu_time'
 
