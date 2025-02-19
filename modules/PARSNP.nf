@@ -1,6 +1,6 @@
 process PARSNP {
-	conda (params.enable_conda ? 'bioconda::parsnp=2.0.3' : null)
-	container 'quay.io/biocontainers/parsnp:2.0.3--hdcf5f25_0'
+	conda (params.enable_conda ? 'bioconda::parsnp=2.1.3' : null)
+	container 'quay.io/biocontainers/parsnp:2.1.3--h077b44d_0'
 
 	label 'process_long'
 

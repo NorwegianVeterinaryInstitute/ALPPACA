@@ -1,6 +1,6 @@
 process IQTREE {
-	conda (params.enable_conda ? 'bioconda::iqtree=2.2.6' : null)
-	container 'quay.io/biocontainers/iqtree:2.2.6--h21ec9f0_0'
+	conda (params.enable_conda ? 'bioconda::iqtree=2.4.0' : null)
+	container 'quay.io/biocontainers/iqtree:2.4.0--h503566f_0'
 
 	label 'process_long'
 
