@@ -1,6 +1,6 @@
 process BAKTA {
-	conda (params.enable_conda ? 'bioconda::bakta=1.9.1' : null)
-	container 'evezeyl/bakta:1.9.1'
+	conda (params.enable_conda ? 'bioconda::bakta=1.10.4' : null)
+	container 'evezeyl/bakta:1.10.4'
 
 	label 'process_medium_memory'
 
