@@ -4,22 +4,37 @@ process PARSNP {
 
 	label 'process_long'
 
-        input:
-        file(fasta)
+    input:
+    file(fasta)
 
-        output:
+    output:
 	path "parsnp_alignment.fasta", emit: fasta_alignment_ch
 	path "parsnpAligner.log", emit: parsnp_results_ch
 	file("*")
 
-        script:
-        """
+    script:
+    """
 	parsnp --version > parsnp.version
-        parsnp -d $fasta -p $task.cpus --skip-phylogeny -u -o results -r $params.parsnp_ref -v -c &> parsnp.log
+	parsnp -d $fasta -p $task.cpus --skip-phylogeny -u -o results -r $params.parsnp_ref -v -c &> parsnp.log
+
+	if [ -d "results/partition" ]; then
+		touch results/log/parsnpAligner.log
+		for file in results/partition/chunk-*/parsnpAligner.log; do
+            cat "\$file" >> results/log/parsnpAligner.log
+        done
+	fi 
+	
+	if [ -d "results/partition" ]; then
+		touch results/parsnp.unalign
+		for file in results/partition/chunk-*/parsnp.unalign; do
+            cat "\$file" >> results/parsnp.unalign
+        done
+	fi 
+
 	mv results/log/parsnpAligner.log .
 	mv results/parsnp.ggr .
 	mv results/parsnp.xmfa .
 	mv results/parsnp.unalign . 
 	harvesttools -x *xmfa -M parsnp_alignment.fasta
-        """
+    """
 }
